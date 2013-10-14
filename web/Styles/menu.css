@@ -10,6 +10,7 @@
     float: right;
 }
 #cssmenu #ulLogin form{
+    display: inline-block;
     margin: 0 !important;
     padding-top: 10px;
     padding-right: 10px;

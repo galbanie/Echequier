@@ -37,6 +37,39 @@ body{
 #parties h4,
 #connectes h4{
     color: #FFFFFF;
+    padding: 10px;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #FFFFFF;
+    
+}
+
+#parties input[type='search'],
+#connectes input[type='search']{
+    width: 212px;
+    margin: 5px 0;
+    
+}
+
+#parties ol,
+#connectes ol{
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+#parties ol>li,
+#connectes ol>li{
+    padding: 5px;
+}
+
+#parties ol>li>a,
+#connectes ol>li>a{
+    text-decoration: none;
+    font-size: medium;
+    color: #FFFFFF;
+    font-weight: bolder;
+    cursor: pointer;
 }
 
 #main{
@@ -44,8 +77,20 @@ body{
     width: 800px;
     height: 600px;
     background-color: #ccc;
+    border: 4px double #000000;
 }
 
 #piedPage{
     clear: both;
+}
+
+.btnS{
+    display: block;
+    position: absolute;
+    margin-top:-32px;
+    margin-left: 202px;
+    width: 20px;
+    height: 20px;
+    text-decoration: none;
+    background: url('images/icon_search.png') center no-repeat;
 }
