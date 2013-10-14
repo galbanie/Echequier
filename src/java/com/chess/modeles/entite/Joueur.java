@@ -16,6 +16,7 @@ public class Joueur extends Membre{
     private Integer[] inviteurs;
     private int nombreInviteurs = 0;
     private boolean partie = false;
+    private int points = 0;
 
     public Joueur(int id, String identifiant, String email, String password) {
         super(id, identifiant, email, password);
@@ -90,6 +91,14 @@ public class Joueur extends Membre{
      */
     public void setInviteur(int index, int newInviteur) {
         if(index > 0 && index < MAX_JOUEURS)inviteurs[index] = new Integer(newInviteur);
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points += points;
     }
       
 }

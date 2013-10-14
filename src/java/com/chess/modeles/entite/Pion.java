@@ -17,6 +17,7 @@ public class Pion extends Piece{
     
     @Override
     public boolean deplacer(Position position) {
+        // algo incorrect j'y travaille
         if(this.position.distanceDirectionColonne(position) == 1 ){
             if(this.position.distanceDirectionLigne(position) == 1 || this.position.distanceDirectionLigne(position) == -1){
                 this.position = position;

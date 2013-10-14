@@ -21,6 +21,7 @@ public class Reine extends Piece{
     
     @Override
     public boolean deplacer(Position position){
+        // algo à valider
         if(this.position.distanceDirectionColonne(position) <= 7 && this.position.distanceDirectionColonne(position) >= -7){
             if(this.position.distanceDirectionLigne(position) <= 7 && this.position.distanceDirectionLigne(position) >= -7){
                 this.position = position;
