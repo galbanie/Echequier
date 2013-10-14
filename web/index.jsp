@@ -9,12 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="Styles/base.css" rel="stylesheet" type="text/css">
-        <link href="Styles/style.css" rel="stylesheet" type="text/css">
-        <link href="Styles/menu.css" rel="stylesheet" type="text/css">
-        <script src="Scrypts/jquery-1.10.2.js" type="text/javascript" ></script>
-        <script src="Scrypts/fonction_gs.js" type="text/javascript" ></script>
-        <script src="Scrypts/chess.js" type="text/javascript" ></script>
+        <link href="css/natif/base.css" rel="stylesheet" type="text/css">
+        <link href="css/natif/style.css" rel="stylesheet" type="text/css">
+        <link href="css/natif/menu.css" rel="stylesheet" type="text/css">
+        <link href="css/ui-darkness/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
+        
+        <script src="js/jquery-1.9.1.js" type="text/javascript" ></script>
+        <script src="js/jquery-ui-1.10.3.custom.js" type="text/javascript" ></script>
+        
+        <script src="js/fonction_gs.js" type="text/javascript" ></script>
+        <script src="js/chess.js" type="text/javascript" ></script>
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
