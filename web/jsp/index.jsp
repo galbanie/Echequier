@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/natif/base.css" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/css/natif/base.css" />" rel="stylesheet" type="text/css">
         <link href="css/natif/style.css" rel="stylesheet" type="text/css">
         <link href="css/natif/menu.css" rel="stylesheet" type="text/css">
         <link href="css/ui-darkness/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">

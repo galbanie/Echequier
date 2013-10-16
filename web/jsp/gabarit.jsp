@@ -1,11 +1,10 @@
 <%-- 
-    Document   : index
-    Created on : 2013-10-10, 13:02:15
+    Document   : gabarit
+    Created on : 2013-10-15, 06:55:36
     Author     : galbanie
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
