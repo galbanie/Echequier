@@ -27,7 +27,6 @@ public class UrlFiltre implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        //String path = req.getRequestURI().substring(req.getContextPath().length());
         
         String path = req.getRequestURI();
         
@@ -35,9 +34,18 @@ public class UrlFiltre implements Filter{
             chain.doFilter(request, response);
         }
         else{
-            //request.getRequestDispatcher("/run/").forward(request, response);
             String[] controles = req.getRequestURI().split("/");
-            if(controles.length > 2)request.getRequestDispatcher("/run/"+controles[2]).forward(request, response);
+            String cible = "";
+            if(controles.length > 2){
+                
+                if(controles[2].equals("run")){
+                    if(controles.length > 3) cible = controles[3];
+                }
+                else cible = controles[2];
+                
+                request.getRequestDispatcher("/run/"+cible).forward(request, response);
+                
+            }
             else request.getRequestDispatcher("/run").forward(request, response);
         }
         
