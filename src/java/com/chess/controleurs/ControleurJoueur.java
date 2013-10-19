@@ -8,10 +8,12 @@ import com.chess.modeles.entite.Joueur;
 import com.chess.modeles.manager.JoueurManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.persistence.EntityManager;
+import java.util.LinkedList;
+import java.util.List;
+/*import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.Persistence;*/
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,8 +50,10 @@ public class ControleurJoueur extends HttpServlet {
         // on recupere l'action venant du controleur frontale
         String action = (String)request.getAttribute("action");
         
+        LinkedList<Joueur> connectes;
+        
         // on cree un pointeur sur un Joueur null
-        Joueur joueur = null;
+        Joueur joueur;
         
         // on cree un joueurManager qui sera chargé de faire interface entre la BD et la servlet
         JoueurManager joueurManager = new JoueurManager();
@@ -64,19 +68,35 @@ public class ControleurJoueur extends HttpServlet {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();*/
         
+        
+        /*synchronized(this){
+            
+        }*/
+        
+        
         if(session.getAttribute("joueur") == null){
             if(action.equals("connecter")){
-                //joueur = (Joueur)em.createQuery("SELECT * FROM JOUEUR WHERE IDENTIFIANT = "+(String)request.getParameter("username")).getSingleResult();
                 joueur = joueurManager.findJoueurByUsername((String)request.getParameter("username"));
                 if(joueur != null){
-                    if(joueur.getPassword().equals((String)request.getParameter("password"))) session.setAttribute("joueur", joueur);
+                    if(joueur.getPassword().equals((String)request.getParameter("password"))) {
+                        session.setAttribute("joueur", joueur);
+                        // on syncronise le scope application
+                        //on y rajoute le joueur connectée
+                        synchronized(this){
+                            if(getServletContext().getAttribute("connectes") == null){
+                                getServletContext().setAttribute("connectes", new LinkedList<Joueur>());
+                            }
+                            connectes = (LinkedList<Joueur>)getServletContext().getAttribute("connectes");
+                            connectes.addFirst(joueur);
+                            getServletContext().setAttribute("connectes", connectes);
+                        }
+                    }
                     if(request.getParameter("method").equals("ajax")){
                         out.print("Member");
                         return;
                     }
                     else{
                         request.setAttribute("section", "home");
-                        this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
                     }
                 }
                 else{
@@ -86,9 +106,23 @@ public class ControleurJoueur extends HttpServlet {
                     }
                     else{
                         request.setAttribute("section", "home");
-                        this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
                     }
                 }
+            }
+            else if(action.equals("deconnexion")){
+                if(session.getAttribute("joueur") != null){
+                    joueur = (Joueur)session.getAttribute("joueur");
+                    synchronized(this){
+                        if(getServletContext().getAttribute("connectes") == null){
+                            getServletContext().setAttribute("connectes", new LinkedList<Joueur>());
+                        }
+                        connectes = (LinkedList<Joueur>)getServletContext().getAttribute("connectes");
+                        connectes.remove(joueur);
+                        getServletContext().setAttribute("connectes", connectes);
+                    }
+                    session.removeAttribute("joueur");
+                }
+                request.setAttribute("section", "home");
             }
             else if(action.equals("inscrire")){
                 request.setAttribute("section", "inscription");
@@ -105,6 +139,7 @@ public class ControleurJoueur extends HttpServlet {
         /*transaction.commit();
         em.close();
         emf.close(); */
+        this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
         joueurManager.closeEntityManager();
     }
 

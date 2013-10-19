@@ -4,6 +4,7 @@
  */
 package com.chess.controleurs;
 
+import com.chess.modeles.entite.Joueur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,6 +37,8 @@ public class ControleurFrontal extends HttpServlet {
          */
         String[] controles = request.getRequestURI().split("/");
         
+        Joueur joueur = request.getSession(true).getAttribute("joueur") != null ? (Joueur)request.getSession(true).getAttribute("joueur"): null;
+        
         // Si il y a un contrôle autre que celui du controleur Frontal {Echequier}
         if(controles.length > 3){
             
@@ -59,7 +62,11 @@ public class ControleurFrontal extends HttpServlet {
                 request.setAttribute("action", controles[3]);
                 this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
             }
-            else if(request.getSession(true).getAttribute("joueur") != null && controles[3].matches((String)request.getSession(true).getAttribute("joueur"))){
+            else if(joueur != null && controles[3].matches(joueur.getIdentifiant())){
+                request.setAttribute("action", controles[3]);
+                this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
+            }
+            else if(joueur != null && controles[3].matches("deconnexion")){
                 request.setAttribute("action", controles[3]);
                 this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
             }
