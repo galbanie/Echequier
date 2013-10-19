@@ -6,12 +6,12 @@ package com.chess.modeles.entite;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
+/*import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.EntityTransaction;*/
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Persistence;
+//import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -121,7 +121,7 @@ public class Joueur extends Membre{
         this.points += points;
     }
     
-    public static void main(String[] argv){
+    /*public static void main(String[] argv){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
         EntityManager em = emf.createEntityManager();
         EntityTransaction transac = em.getTransaction();
@@ -130,9 +130,15 @@ public class Joueur extends Membre{
         Joueur galbanie = new Joueur("galbanie", "galbanie@moi.toi","1234567");
         em.persist(galbanie);
         
+        
+        
+        //Joueur nouveau = (Joueur)em.createQuery("SELECT j FROM Joueur j WHERE j.identifiant = 'galbanie'").getSingleResult();
+        
+        //System.out.println(nouveau.getIdentifiant());
+        
         transac.commit();
         em.close();
         emf.close();
-    }
+    }*/
       
 }

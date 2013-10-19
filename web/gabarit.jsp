@@ -23,6 +23,9 @@
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <style>
+            
+        </style>
         <title>Echequier</title>
     </head>
     <body>
@@ -41,8 +44,8 @@
                          <c:when test="${empty sessionScope.joueur}" >
                              <li id="liForm">
                                 <form name="formLogin" id="formLogin" method="POST" action="" style="display: none;">
-                                    <input type="text" name="username" placeholder="Identifiant" />
-                                    <input type="password" name="password" placeholder="Mot de passe" />
+                                    <input type="text" name="username" placeholder="Identifiant" title="Entrer votre identifiant dans ce champs." />
+                                    <input type="password" name="password" placeholder="Mot de passe" title="Entrer votre mot de passe dans ce champs." />
                                     <input type="submit" value="Connexion" />
                                 </form>
                             </li>
@@ -59,7 +62,7 @@
         <section id="sidebar">
             <aside id="parties">
                 <h4>Parties</h4>
-                <a href="#" id="btnSP" class="btnS"></a>
+                <a href="#" id="btnSP" class="btnS" title="Rechercher une partie en cours."></a>
                 <input type="search" id="searchBarP" style="display: none;" />
                 <ol id="listePartie">
                     <li><a href="#">galbanie vs yanis</a></li>
@@ -68,7 +71,7 @@
 
             <aside id="connectes">
                 <h4>Connectés</h4>
-                <a href="#" id="btnSC" class="btnS"></a>
+                <a href="#" id="btnSC" class="btnS" title="Rechercher un joueur libre."></a>
                 <input type="search" id="searchBarC"  style="display: none;"/>
                 <ol id="listeConnecte">
                     <li><a href="#">galbanie</a></li>

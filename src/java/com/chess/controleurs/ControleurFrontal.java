@@ -49,7 +49,7 @@ public class ControleurFrontal extends HttpServlet {
             }
             else if(controles[3].matches("connecter")){
                 request.setAttribute("action", controles[3]);
-                this.getServletContext().getRequestDispatcher("/run/jeu").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
             }
             else if(controles[3].matches("inscrire")){
                 request.setAttribute("action", controles[3]);

@@ -80,6 +80,15 @@ body{
     border: 4px double #000000;
 }
 
+#main h3{
+    color:#FFFFFF;
+    text-align: center;
+    font-weight: bolder;
+    text-shadow: 1.5px 1px;
+    background-color: #2e7db2;
+    opacity: .7;
+}
+
 #piedPage{
     clear: both;
 }
@@ -93,4 +102,41 @@ body{
     height: 20px;
     text-decoration: none;
     background: url('images/icon_search.png') center no-repeat;
+}
+
+#scrore{
+    
+}
+
+#scrore table{
+    width: 80%;
+    margin: 10px auto;
+    border: 2px threeddarkshadow;
+}
+
+#scrore table td,#scrore table th{
+    padding: 5px;
+    text-align: left;
+    border: 1px solid #000000;
+}
+
+#scrore table th {
+    color: #FFFFFF;
+    background-color: #141414;
+}
+
+#scrore table td{
+    
+}
+
+.table-joueur{
+    width: 30%;
+}
+
+.table-chiffre{
+    width: 15%;
+}
+
+.table-score{
+    width: 20%;
 }
