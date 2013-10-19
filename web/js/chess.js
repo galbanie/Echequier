@@ -90,10 +90,10 @@ $(document).ready(function(){
             success: function(data, textStatus, jqXHR) {
                 alert(data);
                 if(data.test("Member")){
-                    
+                    window.location = window.location;
                 }
                 else{
-                    
+                    alert(data);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {

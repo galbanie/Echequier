@@ -109,31 +109,31 @@ public class ControleurJoueur extends HttpServlet {
                     }
                 }
             }
-            else if(action.equals("deconnexion")){
-                if(session.getAttribute("joueur") != null){
-                    joueur = (Joueur)session.getAttribute("joueur");
-                    synchronized(this){
-                        if(getServletContext().getAttribute("connectes") == null){
-                            getServletContext().setAttribute("connectes", new LinkedList<Joueur>());
-                        }
-                        connectes = (LinkedList<Joueur>)getServletContext().getAttribute("connectes");
-                        connectes.remove(joueur);
-                        getServletContext().setAttribute("connectes", connectes);
-                    }
-                    session.removeAttribute("joueur");
-                }
-                request.setAttribute("section", "home");
-            }
             else if(action.equals("inscrire")){
                 request.setAttribute("section", "inscription");
             }
         }
         else{
+            joueur = (Joueur)session.getAttribute("joueur");
             if(action.equals("modifier")){
             
             }
-            else if(action.equals(session.getAttribute("joueur"))){
+            else if(action.equals(joueur.getIdentifiant())){
                
+            }
+            else if(action.equals("deconnexion")){
+                joueur = (Joueur)session.getAttribute("joueur");
+                synchronized(this){
+                    if(getServletContext().getAttribute("connectes") == null){
+                        getServletContext().setAttribute("connectes", new LinkedList<Joueur>());
+                    }
+                    connectes = (LinkedList<Joueur>)getServletContext().getAttribute("connectes");
+                    connectes.remove(joueur);
+                    getServletContext().setAttribute("connectes", connectes);
+                }
+                session.setAttribute("joueur", null);
+                session.removeAttribute("joueur");
+                request.setAttribute("section", "home");
             }
         }
         /*transaction.commit();
