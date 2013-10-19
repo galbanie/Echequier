@@ -29,21 +29,29 @@
         <header>
             <nav id="cssmenu">
                 <ul>
-                    <li><a>Echec</a></li>
-                    <li><a>Inscription</a></li>
-                    <li><a>Règles</a></li>
+                    <li><a href="${pageContext.servletContext.contextPath}/">Echec</a></li>
+                    <c:if test="${empty sessionScope.joueur}" >
+                        <li><a href="${pageContext.servletContext.contextPath}/inscrire">Inscription</a></li>
+                    </c:if>
+                    <li><a href="${pageContext.servletContext.contextPath}/regles">Règles</a></li>
                 </ul>
                 
                 <ul id="ulLogin">
-                    <li id="liForm">
-                        <form name="formLogin" id="formLogin" method="POST" action="" style="display: none;">
-                            <input type="text" name="username" placeholder="Identifiant" />
-                            <input type="password" name="password" placeholder="Mot de passe" />
-                            <input type="submit" value="Connexion" />
-                        </form>
-                    </li>
-                    <li ><a href="#" id="seConnecter">Connexion</a></li>
-                    
+                    <c:choose >
+                         <c:when test="${empty sessionScope.joueur}" >
+                             <li id="liForm">
+                                <form name="formLogin" id="formLogin" method="POST" action="" style="display: none;">
+                                    <input type="text" name="username" placeholder="Identifiant" />
+                                    <input type="password" name="password" placeholder="Mot de passe" />
+                                    <input type="submit" value="Connexion" />
+                                </form>
+                            </li>
+                            <li ><a href="#" id="seConnecter">Connexion</a></li>
+                        </c:when>
+                        <c:otherwise>
+                        <li ><a href="#" id=""><c:out value="${sessionScope.joueur.identifiant}" /></a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </nav>
         </header>
@@ -71,7 +79,12 @@
         
         
         <section id="main">
-            
+            <c:choose >
+                <c:when test="${empty requestScope.section}" >
+                    <jsp:include page="jsp/home.jsp" />
+                </c:when>
+                <c:otherwise><jsp:include page="jsp/${requestScope.section}.jsp" /></c:otherwise>
+            </c:choose>
         </section>
         
         <footer id="piedPage">

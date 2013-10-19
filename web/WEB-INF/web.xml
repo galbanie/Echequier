@@ -32,7 +32,7 @@
     
     <servlet-mapping>
         <servlet-name>ControleurJeu</servlet-name>
-        <url-pattern>/run/jouer</url-pattern>
+        <url-pattern>/run/jeu</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>

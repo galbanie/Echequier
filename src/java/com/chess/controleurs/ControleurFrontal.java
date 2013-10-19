@@ -40,26 +40,41 @@ public class ControleurFrontal extends HttpServlet {
         if(controles.length > 3){
             
             if(controles[3].matches("jouer")){
-                this.getServletContext().getRequestDispatcher("/run/jouer").forward(request, response);
+                request.setAttribute("action", controles[3]);
+                this.getServletContext().getRequestDispatcher("/run/jeu").forward(request, response);
             }
             else if(controles[3].matches("regarder")){
-                this.getServletContext().getRequestDispatcher("/run/jouer").forward(request, response);
+                request.setAttribute("action", controles[3]);
+                this.getServletContext().getRequestDispatcher("/run/jeu").forward(request, response);
             }
             else if(controles[3].matches("connecter")){
-                this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
+                request.setAttribute("action", controles[3]);
+                this.getServletContext().getRequestDispatcher("/run/jeu").forward(request, response);
             }
             else if(controles[3].matches("inscrire")){
+                request.setAttribute("action", controles[3]);
                 this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
             }
             else if(controles[3].matches("modifier")){
+                request.setAttribute("action", controles[3]);
                 this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
             }
+            else if(request.getSession(true).getAttribute("joueur") != null && controles[3].matches((String)request.getSession(true).getAttribute("joueur"))){
+                request.setAttribute("action", controles[3]);
+                this.getServletContext().getRequestDispatcher("/run/joueur").forward(request, response);
+            }
+            else if(controles[3].matches("regles")){
+                request.setAttribute("section", controles[3]);
+                this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
+            }
             else{
-                this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                request.setAttribute("section", "home");
+                this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
             }
         }
         else{
-            this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            request.setAttribute("section", "home");
+            this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
         }
         
         /*PrintWriter out = response.getWriter();

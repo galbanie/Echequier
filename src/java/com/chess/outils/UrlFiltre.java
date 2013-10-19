@@ -30,7 +30,7 @@ public class UrlFiltre implements Filter{
         
         String path = req.getRequestURI();
         
-        if(path.endsWith(".css") || path.endsWith(".js") || path.endsWith(".jsp")){
+        if(path.endsWith(".css") || path.endsWith(".js") || path.endsWith(".jsp") || path.endsWith(".jpg") || path.endsWith(".png")){
             chain.doFilter(request, response);
         }
         else{

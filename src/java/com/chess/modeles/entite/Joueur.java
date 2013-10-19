@@ -4,22 +4,42 @@
  */
 package com.chess.modeles.entite;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Persistence;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  *
  * @author galbanie
  */
+@Entity
+@Table(name="JOUEUR")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Joueur extends Membre{
-    
+    @Transient
     private final int MAX_JOUEURS = 10;
 
-    
+    @Transient
     private Integer[] inviteurs;
+    @Transient
     private int nombreInviteurs = 0;
+    @Transient
     private boolean partie = false;
-    private int points = 0;
+    @Column
+    private int points;
 
-    public Joueur(int id, String identifiant, String email, String password) {
-        super(id, identifiant, email, password);
+    public Joueur() {
+    }
+
+    public Joueur(String identifiant, String email, String password) {
+        super(identifiant, email, password);
         inviteurs = new Integer[MAX_JOUEURS];
     }
     
@@ -99,6 +119,20 @@ public class Joueur extends Membre{
 
     public void setPoints(int points) {
         this.points += points;
+    }
+    
+    public static void main(String[] argv){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transac = em.getTransaction();
+        transac.begin();
+        
+        Joueur galbanie = new Joueur("galbanie", "galbanie@moi.toi","1234567");
+        em.persist(galbanie);
+        
+        transac.commit();
+        em.close();
+        emf.close();
     }
       
 }

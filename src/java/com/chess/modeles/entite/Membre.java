@@ -1,19 +1,38 @@
 package com.chess.modeles.entite;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author galbanie
  */
-public class Membre extends Entite{
-    
+@Entity
+//@Table(name = "membre")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Membre implements Serializable{
+     @Id
+     @GeneratedValue(strategy = GenerationType.AUTO)
+     private int id;
+     @Column(nullable = false, unique = true)
      private String identifiant;
+     @Column(nullable = true)
      private String nom;
+     @Column(nullable = true)
      private String prenom;
+     @Column(nullable = false, unique = true)
      private String email;
+     @Column(nullable = false)
      private String password;
+     
+     
 
-    public Membre(int id, String identifiant, String nom, String prenom, String email, String password) {
-        this.setId(id);
+    public Membre(String identifiant, String nom, String prenom, String email, String password) {
+        super();
         this.identifiant = identifiant;
         this.nom = nom;
         this.prenom = prenom;
@@ -21,14 +40,23 @@ public class Membre extends Entite{
         this.password = password;
     }
 
-    public Membre(int id,String identifiant, String email, String password) {
-        this(id,identifiant,"","",email,password);
+    public Membre(String identifiant, String email, String password) {
+        this(identifiant,"","",email,password);
     }
     
     public Membre(){
-        this(0,"","","","","");
+        this("","","","","");
     }
-     
+    
+    /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public int getId() {
+        return id;
+    }
+    
     /**
      * Get the value of password
      *
