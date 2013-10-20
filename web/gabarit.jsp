@@ -23,6 +23,9 @@
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <script type="text/javascript">
+            
+        </script>
         <style>
             
         </style>
@@ -43,7 +46,7 @@
                     <c:choose >
                          <c:when test="${empty sessionScope.joueur}" >
                              <li id="liForm">
-                                <form name="formLogin" id="formLogin" method="POST" action="" style="display: none;">
+                                <form name="formLogin" id="formLogin" method="POST" action="${pageContext.servletContext.contextPath}/connecter" style="display: none;">
                                     <input type="text" name="username" placeholder="Identifiant" title="Entrer votre identifiant dans ce champs." />
                                     <input type="password" name="password" placeholder="Mot de passe" title="Entrer votre mot de passe dans ce champs." />
                                     <input type="submit" value="Connexion" />
@@ -52,7 +55,8 @@
                             <li ><a href="#" id="seConnecter">Connexion</a></li>
                         </c:when>
                         <c:otherwise>
-                        <li ><a href="#" id=""><c:out value="${sessionScope.joueur.identifiant}" /></a></li>
+                        <li ><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}" id="identifiantMenu"><c:out value="${sessionScope.joueur.identifiant}" /></a></li>
+                        <li ><a href="${pageContext.servletContext.contextPath}/deconnexion" id="">deconnexion</a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -73,9 +77,12 @@
                 <h4>Connectés</h4>
                 <a href="#" id="btnSC" class="btnS" title="Rechercher un joueur libre."></a>
                 <input type="search" id="searchBarC"  style="display: none;"/>
-                <ol id="listeConnecte">
-                    <li><a href="#">galbanie</a></li>
-                    <li><a href="#">yanis</a></li>
+                <ol id="listeConnecte" onload="">
+                    <!--li><a href="#">galbanie</a></li>
+                    <li><a href="#">yanis</a></li-->
+                    <c:forEach var="joueur" items="${applicationScope.connectes}">
+                        <li><a href="#">${joueur.identifiant}</a></li>
+                    </c:forEach>
                 </ol>
             </aside>
         </section>

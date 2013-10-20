@@ -2,7 +2,7 @@
  * Auteur : galbanie
  */
 
-var oXHR = creationXHR();
+/*var oXHR = creationXHR();
 
 function refresh(){
     function processStateChange(){
@@ -15,7 +15,7 @@ function refresh(){
     
     oXHR.open('POST','/Echequier/refresh');
     oXHR.send(null);
-}
+}*/
 
 // Section formulaire
 var check = {};
@@ -43,10 +43,18 @@ check['password'] = function(element){
 
 
 $(document).ready(function(){
+    
+    function refresh(){
+        $('#listeConnecte').load('/Echequier/ #listeConnecte').fadeIn("slow");
+        $('#listePartie').load('/Echequier/ #listePartie').fadeIn("slow");
+    }
+    //setInterval(refresh(), 1000);
+    
     // on active les tooltips dans une fonction anonyme
-     $(function() {
+    $(function() {
         $( document ).tooltip();
     });
+    
     // show hide formulaire de connexion
     $('#seConnecter').click(function(){
         if($('#formLogin').css('display') === 'none'){
@@ -68,6 +76,7 @@ $(document).ready(function(){
             $('#searchBarP').fadeOut('slow');
         }
     });
+    
     // show hide barre de recherche Connecte
     $('#btnSC').click(function(){
         if($('#searchBarC').css('display') === 'none'){
@@ -77,35 +86,35 @@ $(document).ready(function(){
             $('#searchBarC').fadeOut('slow');
         }
     });
+    
     // verification du formulaire de connexion
     $('#formLogin').submit(function(){
         //var result = false;
-        var inputs = $('#formLogin input');
-        
-        $.ajax({
+        //var inputs = $('#formLogin input');
+        /*$.ajax({
             type: 'POST',
             url: '/Echequier/connecter',
             timeout: 3000,
             data: {username : inputs[0].value, password : inputs[1].value, method : 'ajax'},
             success: function(data, textStatus, jqXHR) {
-                alert(data);
+                alert(textStatus);
                 if(data.test("Member")){
-                    window.location = window.location;
+                    
                 }
                 else{
                     alert(data);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
+                alert(textStatus);
             }
-        });
-        
+        });*/
         /*for(var i = 0; i < inputs.length; i++){
             if(inputs[i].type === 'text' || inputs[i].type === 'password') result = check[inputs[i].name](inputs[i]) && result;
         }*/
-        
         //return result;
     });
+    
+    
     
 });
