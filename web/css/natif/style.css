@@ -12,13 +12,15 @@ body{
     background-color: #4E4E4E;
 }
 
-#sidebar,
-#main{
+#sidebarGauche,
+#main,
+#sidebarDroit{
     float: left;
     margin-top: 20px;
 }
 
-#sidebar{
+#sidebarGauche,
+#sidebarDroit{
     display: inline-block;
     width: 240px;
     margin-left: 20px;
@@ -26,7 +28,9 @@ body{
 }
 
 #parties,
-#connectes{
+#connectes,
+#demande,
+#recu{
     min-height: 280px;
     margin-bottom: 10px;
     padding: 5px;
@@ -35,7 +39,9 @@ body{
 }
 
 #parties h4,
-#connectes h4{
+#connectes h4,
+#demande h4,
+#recu h4{
     color: #FFFFFF;
     padding: 10px;
     border-width: 0 0 1px 0;
@@ -52,19 +58,25 @@ body{
 }
 
 #parties ol,
-#connectes ol{
+#connectes ol,
+#demande ol,
+#recu ol{
     list-style-type: none;
     padding: 5px;
     margin: 5px 0;
 }
 
 #parties ol>li,
-#connectes ol>li{
+#connectes ol>li,
+#demande ol>li,
+#recu ol>li{
     padding: 5px;
 }
 
 #parties ol>li>a,
-#connectes ol>li>a{
+#connectes ol>li>a,
+#demande ol>li>a,
+#recu ol>li>a{
     text-decoration: none;
     font-size: medium;
     color: #FFFFFF;
@@ -84,7 +96,6 @@ body{
     color:#FFFFFF;
     text-align: center;
     font-weight: bolder;
-    text-shadow: 1.5px 1px;
     background-color: #2e7db2;
     opacity: .7;
 }

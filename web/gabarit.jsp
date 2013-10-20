@@ -24,14 +24,16 @@
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script type="text/javascript">
-            
+            function re(){
+                //refresh();
+            }
         </script>
         <style>
             
         </style>
         <title>Echequier</title>
     </head>
-    <body>
+    <body onload="setInterval('re()', 1000);">
         <header>
             <nav id="cssmenu">
                 <ul>
@@ -63,7 +65,7 @@
             </nav>
         </header>
         
-        <section id="sidebar">
+        <section id="sidebarGauche">
             <aside id="parties">
                 <h4>Parties</h4>
                 <a href="#" id="btnSP" class="btnS" title="Rechercher une partie en cours."></a>
@@ -80,9 +82,9 @@
                 <ol id="listeConnecte" onload="">
                     <!--li><a href="#">galbanie</a></li>
                     <li><a href="#">yanis</a></li-->
-                    <c:forEach var="joueur" items="${applicationScope.connectes}">
+                    <%--c:forEach var="joueur" items="${applicationScope.connectes}">
                         <li><a href="#">${joueur.identifiant}</a></li>
-                    </c:forEach>
+                    </c:forEach--%>
                 </ol>
             </aside>
         </section>
@@ -96,6 +98,28 @@
                 <c:otherwise><jsp:include page="jsp/${requestScope.section}.jsp" /></c:otherwise>
             </c:choose>
         </section>
+        
+        <c:if test="${!empty sessionScope.joueur}" >
+            <section id="sidebarDroit">
+                <aside id="demande">
+                    <h4>Mes demandes</h4>
+                    <ol id="listeDemande">
+                        <li><a href="#">galbanie vs yanis</a></li>
+                    </ol>
+                </aside>
+
+                <aside id="recu">
+                    <h4>Demandes reçues</h4>
+                    <ol id="listeRecu" onload="">
+                        <!--li><a href="#">galbanie</a></li>
+                        <li><a href="#">yanis</a></li-->
+                        <%--c:forEach var="joueur" items="${applicationScope.connectes}">
+                            <li><a href="#">${joueur.identifiant}</a></li>
+                        </c:forEach--%>
+                    </ol>
+                </aside>
+            </section>
+        </c:if>
         
         <footer id="piedPage">
             

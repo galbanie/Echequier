@@ -34,6 +34,14 @@ public class Joueur extends Membre{
     private boolean partie = false;
     @Column
     private int points;
+    @Column
+    private int nombrePartieJouees;
+    @Column
+    private int victoire;
+    @Column
+    private int defaite;
+    @Column
+    private int partieNull;
 
     public Joueur() {
     }

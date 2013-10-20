@@ -10,6 +10,7 @@ import com.chess.modeles.entite.Joueur;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,40 +27,43 @@ public class JoueurManager  {
     
     private final EntityManagerFactory emf;
     private final EntityManager em;
+    private final EntityTransaction tx;
 
     public JoueurManager() {
         this.emf = Persistence.createEntityManagerFactory("EchequierPersistance");
         this.em = emf.createEntityManager();
+        this.tx = em.getTransaction();
     }
     
     
     public Joueur createJoueur(Joueur joueur){
         if(joueur == null) return null;
+        tx.begin();
         em.persist(joueur);
-        em.getTransaction().commit();
+        tx.commit();
         return joueur;
     }
     
     public Joueur findJoueur(int joueurId){
-        em.getTransaction().begin();
+        tx.begin();
         Joueur joueur = em.find(Joueur.class, joueurId);
-        em.getTransaction().commit();
+        tx.commit();
         return joueur;
     }
     
     public Joueur updateJoueur(Joueur joueur){
         if(joueur == null) return null;
-        em.getTransaction().begin();
+        tx.begin();
         em.merge(joueur);
-        em.getTransaction().commit();
+        tx.commit();
         return joueur;
     }
     
     public void deleteJoueur(Joueur joueur){
         if(joueur != null){
-            em.getTransaction().begin();
+            tx.begin();
             em.remove(em.merge(joueur));
-            em.getTransaction().commit();
+            tx.commit();
         }
     }
     

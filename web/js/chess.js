@@ -17,6 +17,24 @@ function refresh(){
     oXHR.send(null);
 }*/
 
+function refresh(){
+        /*$('#listeConnecte').load('/Echequier/ #listeConnecte').fadeIn("slow");
+        $('#listePartie').load('/Echequier/ #listePartie').fadeIn("slow");*/
+    $.ajax({
+        type: 'POST',
+        url: '/Echequier/refresh',
+        timeout: 3000,
+        success: function(data, textStatus, jqXHR) {
+            $('#listeConnecte').ready(function(){
+                
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(textStatus);
+        }
+    });
+}
+
 // Section formulaire
 var check = {};
 
@@ -43,12 +61,6 @@ check['password'] = function(element){
 
 
 $(document).ready(function(){
-    
-    function refresh(){
-        $('#listeConnecte').load('/Echequier/ #listeConnecte').fadeIn("slow");
-        $('#listePartie').load('/Echequier/ #listePartie').fadeIn("slow");
-    }
-    //setInterval(refresh(), 1000);
     
     // on active les tooltips dans une fonction anonyme
     $(function() {
