@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 @Entity
 //@Table(name = "membre")
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@XmlType (propOrder = {"id","identifiant"})
 public class Membre implements Serializable{
      @Id
      @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,6 +65,7 @@ public class Membre implements Serializable{
      *
      * @return the value of password
      */
+    @XmlElement(nillable = true)
     public String getPassword() {
         return password;
     }
@@ -81,6 +85,7 @@ public class Membre implements Serializable{
      *
      * @return the value of email
      */
+    @XmlElement(nillable = true)
     public String getEmail() {
         return email;
     }
@@ -100,6 +105,7 @@ public class Membre implements Serializable{
      *
      * @return the value of prenom
      */
+    @XmlElement(nillable = true)
     public String getPrenom() {
         return prenom;
     }
@@ -119,6 +125,7 @@ public class Membre implements Serializable{
      *
      * @return the value of nom
      */
+    @XmlElement(nillable = true)
     public String getNom() {
         return nom;
     }

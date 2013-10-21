@@ -83,7 +83,7 @@
                     <!--li><a href="#">galbanie</a></li>
                     <li><a href="#">yanis</a></li-->
                     <%--c:forEach var="joueur" items="${applicationScope.connectes}">
-                        <li><a href="#">${joueur.identifiant}</a></li>
+                        <li><a href="#">${joueur.value.identifiant}</a></li>
                     </c:forEach--%>
                 </ol>
             </aside>

@@ -12,7 +12,7 @@ package com.chess.modeles.entite;
  */
 public class Tour extends Piece{
 
-    private static final Position[][] POSITIONS = {{new Position(1,3), new Position(8,3)},{new Position(1,6), new Position(8,6)}};
+    private static final Position[][] POSITIONS = {{new Position(1,1), new Position(8,1)},{new Position(1,8), new Position(8,8)}};
 
     public Tour(int codeColor, int cote,int emplacement) {
         this.setCouleur(codeColor);

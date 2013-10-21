@@ -8,7 +8,7 @@ import com.chess.modeles.entite.Joueur;
 import com.chess.modeles.manager.JoueurManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
+import java.util.HashMap;
 import javax.persistence.NoResultException;
 /*import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,7 +55,7 @@ public class ControleurJoueur extends HttpServlet {
         // on recupere l'action venant du controleur frontale
         String action = (String)request.getAttribute("action");
         
-        LinkedList<Joueur> connectes;
+        HashMap<String,Joueur> connectes;
         
         // on cree un pointeur sur un Joueur null
         Joueur joueur;
@@ -94,10 +94,10 @@ public class ControleurJoueur extends HttpServlet {
                             // on y rajoute le joueur connectée
                             synchronized(this){
                                 if(getServletContext().getAttribute("connectes") == null){
-                                    getServletContext().setAttribute("connectes", new LinkedList<Joueur>());
+                                    getServletContext().setAttribute("connectes", new HashMap<String,Joueur>());
                                 }
-                                connectes = (LinkedList<Joueur>)getServletContext().getAttribute("connectes");
-                                connectes.addFirst(joueur);
+                                connectes = (HashMap<String,Joueur>)getServletContext().getAttribute("connectes");
+                                if(!connectes.containsKey(String.valueOf(joueur.getId()))) connectes.put(String.valueOf(joueur.getId()), joueur);
                                 getServletContext().setAttribute("connectes", connectes);
                             }
                         }
@@ -135,8 +135,8 @@ public class ControleurJoueur extends HttpServlet {
             else if(action.equals("deconnexion")){
                 joueur = (Joueur)session.getAttribute("joueur");
                 synchronized(this){
-                    connectes = (LinkedList<Joueur>)getServletContext().getAttribute("connectes");
-                    connectes.remove(joueur);
+                    connectes = (HashMap<String,Joueur>)getServletContext().getAttribute("connectes");
+                    connectes.remove(String.valueOf(joueur.getId()));
                     getServletContext().setAttribute("connectes", connectes);
                 }
                 session.setAttribute("joueur", null);
