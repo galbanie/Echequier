@@ -23,14 +23,18 @@ function refresh(){
     $.ajax({
         type: 'POST',
         url: '/Echequier/refresh',
-        timeout: 3000,
+        //dataType: 'JSON',
         success: function(data, textStatus, jqXHR) {
+            alert(textStatus+" = "+data+"   "+data.connectes);
+            //alert(data.connectes);
+            /*var reponse = $.parseJSON(data);
+            var connectes = reponse.connectes;*/
             $('#listeConnecte').ready(function(){
                 
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert(textStatus);
+            alert(textStatus+"--->"+errorThrown);
         }
     });
 }

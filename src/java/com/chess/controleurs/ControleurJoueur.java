@@ -8,7 +8,7 @@ import com.chess.modeles.entite.Joueur;
 import com.chess.modeles.manager.JoueurManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import javax.persistence.NoResultException;
 /*import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,7 +55,7 @@ public class ControleurJoueur extends HttpServlet {
         // on recupere l'action venant du controleur frontale
         String action = (String)request.getAttribute("action");
         
-        HashMap<String,Joueur> connectes;
+        LinkedHashSet<Joueur> connectes;
         
         // on cree un pointeur sur un Joueur null
         Joueur joueur;
@@ -92,14 +92,14 @@ public class ControleurJoueur extends HttpServlet {
                             session.setAttribute("joueur", joueur);
                             // on syncronise le scope application
                             // on y rajoute le joueur connectée
-                            synchronized(this){
-                                if(getServletContext().getAttribute("connectes") == null){
-                                    getServletContext().setAttribute("connectes", new HashMap<String,Joueur>());
-                                }
-                                connectes = (HashMap<String,Joueur>)getServletContext().getAttribute("connectes");
-                                if(!connectes.containsKey(String.valueOf(joueur.getId()))) connectes.put(String.valueOf(joueur.getId()), joueur);
-                                getServletContext().setAttribute("connectes", connectes);
+                            
+                            if(getServletContext().getAttribute("connectes") == null){
+                                getServletContext().setAttribute("connectes", new LinkedHashSet<Joueur>());
                             }
+                            connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+                            if(!connectes.contains(joueur)) connectes.add(joueur);
+                            this.getServletContext().setAttribute("connectes", connectes);
+                                
                         }
                         if(request.getParameter("method")!= null && request.getParameter("method").equals("ajax")){
                             out.print("Member");
@@ -134,13 +134,13 @@ public class ControleurJoueur extends HttpServlet {
             }
             else if(action.equals("deconnexion")){
                 joueur = (Joueur)session.getAttribute("joueur");
-                synchronized(this){
-                    connectes = (HashMap<String,Joueur>)getServletContext().getAttribute("connectes");
-                    connectes.remove(String.valueOf(joueur.getId()));
-                    getServletContext().setAttribute("connectes", connectes);
-                }
                 session.setAttribute("joueur", null);
                 session.removeAttribute("joueur");
+                // on recupere et supprime le joueur dans le scope application
+                connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+                if(connectes.contains(joueur))connectes.remove(joueur);
+                this.getServletContext().setAttribute("connectes", connectes);
+                
                 request.setAttribute("section", "home");
             }
         }

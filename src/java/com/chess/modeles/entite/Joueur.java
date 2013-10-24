@@ -4,6 +4,8 @@
  */
 package com.chess.modeles.entite;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 /*import javax.persistence.EntityManager;
@@ -14,6 +16,8 @@ import javax.persistence.InheritanceType;
 //import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.json.simple.JSONAware;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -22,14 +26,10 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="JOUEUR")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Joueur extends Membre{
-    @Transient
-    private final int MAX_JOUEURS = 10;
+public class Joueur extends Membre implements JSONAware{
 
     @Transient
-    private Integer[] inviteurs;
-    @Transient
-    private int nombreInviteurs = 0;
+    private Map<Integer,Joueur> inviteurs;
     @Transient
     private boolean partie = false;
     @Column
@@ -48,7 +48,7 @@ public class Joueur extends Membre{
 
     public Joueur(String identifiant, String email, String password) {
         super(identifiant, email, password);
-        inviteurs = new Integer[MAX_JOUEURS];
+        inviteurs = new HashMap<Integer,Joueur>();
     }
     
     /**
@@ -75,7 +75,7 @@ public class Joueur extends Membre{
      * @return the value of nombreInviteurs
      */
     public int getNombreInviteurs() {
-        return nombreInviteurs;
+        return inviteurs.size();
     }
 
 
@@ -84,8 +84,12 @@ public class Joueur extends Membre{
      *
      * @return the value of inviteurs
      */
-    public Integer[] getInviteurs() {
+    public Map<Integer,Joueur> getInviteurs() {
         return inviteurs;
+    }
+    
+    public Joueur getInviteur(int key) {
+        return inviteurs.get(new Integer(key));
     }
 
     /**
@@ -93,32 +97,12 @@ public class Joueur extends Membre{
      *
      * @param inviteurs new value of inviteurs
      */
-    public void setInviteurs(Integer[] inviteurs) {
-        this.inviteurs = inviteurs;
-        nombreInviteurs = 0;
-        for(int i = 0; i < MAX_JOUEURS; i++){
-            if(this.inviteurs[i] != null) nombreInviteurs++;
-        }
+    public void setInviteurs(Map<Integer,Joueur> inviteurs) {
+        if(inviteurs != null) this.inviteurs = inviteurs;
     }
 
-    /**
-     * Get the value of inviteur at specified index
-     *
-     * @param index
-     * @return the value of inviteurs at specified index
-     */
-    public int getInviteur(int index) {
-        return (index > 0 && index < this.nombreInviteurs)?this.inviteurs[index]: null;
-    }
-
-    /**
-     * Set the value of inviteur at specified index.
-     *
-     * @param index
-     * @param newInviteur new value of inviteurs at specified index
-     */
-    public void setInviteur(int index, int newInviteur) {
-        if(index > 0 && index < MAX_JOUEURS)inviteurs[index] = new Integer(newInviteur);
+    public void setInviteur(Joueur inviteur) {
+        if(!inviteurs.containsValue(inviteur)) inviteurs.put(new Integer(inviteur.getId()), inviteur);
     }
 
     public int getPoints() {
@@ -128,6 +112,40 @@ public class Joueur extends Membre{
     public void setPoints(int points) {
         this.points += points;
     }
+
+    public int getNombrePartieJouees() {
+        return nombrePartieJouees;
+    }
+
+    public void setNombrePartieJouees(int nombrePartieJouees) {
+        this.nombrePartieJouees = nombrePartieJouees;
+    }
+
+    public int getVictoire() {
+        return victoire;
+    }
+
+    public void setVictoire(int victoire) {
+        this.victoire = victoire;
+    }
+
+    public int getDefaite() {
+        return defaite;
+    }
+
+    public void setDefaite(int defaite) {
+        this.defaite = defaite;
+    }
+
+    public int getPartieNull() {
+        return partieNull;
+    }
+
+    public void setPartieNull(int partieNull) {
+        this.partieNull = partieNull;
+    }
+    
+    
     
     /*public static void main(String[] argv){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
@@ -135,7 +153,7 @@ public class Joueur extends Membre{
         EntityTransaction transac = em.getTransaction();
         transac.begin();
         
-        Joueur galbanie = new Joueur("galbanie", "galbanie@moi.toi","1234567");
+        Joueur galbanie = new Joueur("yanis", "rootKiller@moi.toi","1234567");
         em.persist(galbanie);
         
         
@@ -148,5 +166,67 @@ public class Joueur extends Membre{
         em.close();
         emf.close();
     }*/
+    
+    @Override
+    public String toJSONString() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("{");
+        
+        sb.append(JSONObject.escape("id"));
+        sb.append(":");
+        sb.append(getId());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("identifiant"));
+        sb.append(":");
+        sb.append("\""+getIdentifiant()+"\"");
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("points"));
+        sb.append(":");
+        sb.append(getPoints());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("isPartie"));
+        sb.append(":");
+        sb.append(isPartie());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("nombrePartieJouees"));
+        sb.append(":");
+        sb.append(getNombrePartieJouees());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("victoire"));
+        sb.append(":");
+        sb.append(getVictoire());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("null"));
+        sb.append(":");
+        sb.append(getPartieNull());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("defaite"));
+        sb.append(":");
+        sb.append(getDefaite());
+        
+        sb.append("}");
+        
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return this.toJSONString();
+    }
       
 }

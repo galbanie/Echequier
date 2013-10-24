@@ -7,13 +7,16 @@
 package com.chess.outils;
 
 
+import com.chess.modeles.entite.Joueur;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.json.*;
+import java.util.LinkedHashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 /**
  *
@@ -32,21 +35,24 @@ public class Refresh extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
-        response.setContentType("text/html;charset=UTF-8");
+        
+        JSONObject jsonObjet = new JSONObject();
+        
+        LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+        
+        jsonObjet.put("connectes", connectes);
+        //response.setContentType("application/json");
+        response.setContentType("text/plain;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        //
         
         
         
+        //if(connectes.iterator().hasNext())System.out.println(connectes.iterator().next().toJSONString());
+        //System.out.println(jsonObjet.toJSONString());
         
+        out.println(jsonObjet.toJSONString());
         
-        try {
-            
-            
-            
-        } finally {
-            out.close();
-        }
+        //out.println("ok");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
