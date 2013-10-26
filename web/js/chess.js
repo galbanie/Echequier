@@ -25,11 +25,24 @@ function refresh(){
         url: '/Echequier/refresh',
         //dataType: 'JSON',
         success: function(data, textStatus, jqXHR) {
-            alert(textStatus+" = "+data+"   "+data.connectes);
+            //alert(textStatus+" = "+data+"   "+data.connectes);
             //alert(data.connectes);
-            /*var reponse = $.parseJSON(data);
-            var connectes = reponse.connectes;*/
+            var reponse = $.parseJSON(data);
+            //var connectes = reponse.connectes;
+            //alert(data.connectes[0].id);
             $('#listeConnecte').ready(function(){
+                //alert(reponse.connectes);
+                if(reponse.connectes !== null){
+                    var content = '';
+                    for(var connecte in reponse.connectes){
+                        content += '<li><a href="#">'+connecte.identifiant+'</a></li>'
+                    }
+                    //alert(content);
+                    $('#listeConnecte').html(content);
+                }
+            });
+            
+            $('#listePartie').ready(function(){
                 
             });
         },

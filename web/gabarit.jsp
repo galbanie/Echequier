@@ -25,7 +25,7 @@
         <![endif]-->
         <script type="text/javascript">
             function re(){
-                //refresh();
+                refresh();
             }
         </script>
         <style>

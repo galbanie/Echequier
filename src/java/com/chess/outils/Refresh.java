@@ -46,13 +46,7 @@ public class Refresh extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         
-        
-        //if(connectes.iterator().hasNext())System.out.println(connectes.iterator().next().toJSONString());
-        //System.out.println(jsonObjet.toJSONString());
-        
         out.println(jsonObjet.toJSONString());
-        
-        //out.println("ok");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
