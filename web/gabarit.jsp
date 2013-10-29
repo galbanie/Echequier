@@ -102,22 +102,12 @@
         <c:if test="${!empty sessionScope.joueur}" >
             <section id="sidebarDroit">
                 <aside id="demande">
-                    <h4>Mes demandes</h4>
+                    <h4>Les demandes</h4>
                     <ol id="listeDemande">
                         <li><a href="#">galbanie vs yanis</a></li>
                     </ol>
                 </aside>
 
-                <aside id="recu">
-                    <h4>Demandes reçues</h4>
-                    <ol id="listeRecu" onload="">
-                        <!--li><a href="#">galbanie</a></li>
-                        <li><a href="#">yanis</a></li-->
-                        <%--c:forEach var="joueur" items="${applicationScope.connectes}">
-                            <li><a href="#">${joueur.identifiant}</a></li>
-                        </c:forEach--%>
-                    </ol>
-                </aside>
             </section>
         </c:if>
         

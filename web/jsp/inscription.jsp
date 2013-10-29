@@ -5,4 +5,32 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-Inscription
+<article id="inscription">
+    <h3>Inscription</h3>
+    <form method="POST" action="${pageContext.servletContext.contextPath}/inscrire">
+        <div>
+            <label>Identifiant : </label>
+            <input type="text" name="username" title="Votre pseudonyme Ex : JeanJean" />
+        </div>
+        
+        <div>
+            <label>Email : </label>
+            <input type="text" name="email" title="Une addresse mail valide" />
+        </div>
+        
+        <div>
+            <label>Mot de passe : </label>
+            <input type="password" name="password" title="Plus de 8 caractères" />
+        </div>
+        
+        <div>
+            <label>Confirmer : </label>
+            <input type="text" name="email" title="Par sécurité rentrer le à nouveau" />
+        </div>
+        
+        <div>
+            <input type="submit" value="S'inscrire" />
+            <input type="reset" value="Retablir" />
+        </div>
+    </form>
+</article>
