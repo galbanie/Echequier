@@ -66,7 +66,28 @@ check['username'] = function(element){
     
 };
 
+check['email'] = function(element){
+    if(/[a-zA-Z0-9]{5,14}/.test(element.value)){
+        return true;
+    }
+    else{
+        $(element).effect('bounce',{},500);
+        return false;
+    }
+    
+};
+
 check['password'] = function(element){
+    if(/[a-zA-Z0-9]{5,14}/.test(element.value)){
+        return true;
+    }
+    else{
+        $(element).effect('bounce',{},500);
+        return false;
+    } 
+};
+
+check['confirm'] = function(element){
     if(/[a-zA-Z0-9]{5,14}/.test(element.value)){
         return true;
     }
@@ -117,31 +138,31 @@ $(document).ready(function(){
     });
     
     // verification du formulaire de connexion
-    $('#formLogin').submit(function(){
-        //var result = false;
-        //var inputs = $('#formLogin input');
-        /*$.ajax({
+    $('#formSignIn').submit(function(){
+        var result = false;
+        var inputs = $('#formLogin input');
+        $.ajax({
             type: 'POST',
-            url: '/Echequier/connecter',
+            url: '/Echequier/inscrire',
             timeout: 3000,
-            data: {username : inputs[0].value, password : inputs[1].value, method : 'ajax'},
+            data: {username : inputs[0].value, method : 'ajax'},
             success: function(data, textStatus, jqXHR) {
                 alert(textStatus);
                 if(data.test("Member")){
-                    
+                    alert('deja existant');
                 }
                 else{
                     alert(data);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus);
+                alert(textStatus+' --- > '+errorThrown);
             }
-        });*/
-        /*for(var i = 0; i < inputs.length; i++){
+        });
+        for(var i = 0; i < inputs.length; i++){
             if(inputs[i].type === 'text' || inputs[i].type === 'password') result = check[inputs[i].name](inputs[i]) && result;
-        }*/
-        //return result;
+        }
+        return result;
     });
     
     

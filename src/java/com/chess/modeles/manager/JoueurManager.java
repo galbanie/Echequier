@@ -71,11 +71,9 @@ public class JoueurManager  {
         if(username == null || "".equals(username)) return null;
         Query query;
         Joueur joueur;
-        //em.getTransaction().begin();
         query = em.createQuery("SELECT j FROM Joueur j WHERE j.identifiant = :identifiant");
         query.setParameter("identifiant", username);
         joueur = (Joueur) query.getSingleResult();
-        //em.getTransaction().commit();
         return joueur;
     }
     

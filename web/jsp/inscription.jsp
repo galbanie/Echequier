@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <article id="inscription">
     <h3>Inscription</h3>
-    <form method="POST" action="${pageContext.servletContext.contextPath}/inscrire">
+    <form id="formSignIn" method="POST" action="${pageContext.servletContext.contextPath}/inscrire">
         <div>
             <label>Identifiant : </label>
             <input type="text" name="username" title="Votre pseudonyme Ex : JeanJean" />
@@ -25,7 +25,7 @@
         
         <div>
             <label>Confirmer : </label>
-            <input type="text" name="email" title="Par sécurité rentrer le à nouveau" />
+            <input type="password" name="confirm" title="Par sécurité rentrer le à nouveau" />
         </div>
         
         <div>

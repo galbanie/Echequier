@@ -54,8 +54,9 @@ public class ControleurJoueur extends HttpServlet {
         
         // on recupere l'action venant du controleur frontale
         String action = (String)request.getAttribute("action");
+        String reponseAjax = "";
         
-        LinkedHashSet<Joueur> connectes;
+        LinkedHashSet<Joueur> connectes = new LinkedHashSet<Joueur>();
         
         // on cree un pointeur sur un Joueur null
         Joueur joueur;
@@ -67,6 +68,10 @@ public class ControleurJoueur extends HttpServlet {
         joueurManager.createJoueur(new Joueur("roro", "roro@elle.moi", "123456789"));*/
         
         
+        if(getServletContext().getAttribute("connectes") == null){
+            getServletContext().setAttribute("connectes", connectes);
+        }
+        
         
         /*EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
         EntityManager em = emf.createEntityManager();
@@ -74,76 +79,71 @@ public class ControleurJoueur extends HttpServlet {
         transaction.begin();*/
         
         
-        /*synchronized(this){
-            
-        }*/
         
         
-        if(session.getAttribute("joueur") == null){
-            if(action.equals("connecter")){
-                if(request.getParameter("username") != null && request.getParameter("password") != null){
-                    try{
+        // si il y a un membre dans la session on le recupere
+        if(session.getAttribute("joueur") != null)joueur = (Joueur)session.getAttribute("joueur");
+        else {
+            if(request.getParameter("username") != null && !request.getParameter("username").equals("")){
+                try{
                     joueur = joueurManager.findJoueurByUsername((String)request.getParameter("username"));
-                    }catch(NoResultException e){
-                        joueur = null;
-                    }
-                    if(joueur != null){
-                        if(joueur.getPassword().equals((String)request.getParameter("password"))) {
-                            session.setAttribute("joueur", joueur);
-                            // on syncronise le scope application
-                            // on y rajoute le joueur connectée
-                            
-                            if(getServletContext().getAttribute("connectes") == null){
-                                getServletContext().setAttribute("connectes", new LinkedHashSet<Joueur>());
-                            }
-                            connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
-                            if(!connectes.contains(joueur)) connectes.add(joueur);
-                            this.getServletContext().setAttribute("connectes", connectes);
-                                
-                        }
-                        if(request.getParameter("method")!= null && request.getParameter("method").equals("ajax")){
-                            out.print("Member");
-                            return;
-                        }
-                        else{
-                            request.setAttribute("section", "home");
-                        }
-                    }
-                    else{
-                        if(request.getParameter("method")!= null && request.getParameter("method").equals("ajax")){
-                            out.print("No Member");
-                            return;
-                        }
-                        else{
-                            request.setAttribute("section", "home");
-                        }
-                    }
+                    reponseAjax = "Member";
+                }catch(NoResultException e){
+                    joueur = null;
+                    reponseAjax = "NoMember";
                 }
             }
-            else if(action.equals("inscrire")){
-                request.setAttribute("section", "inscription");
+            else {
+                joueur = null;
+                reponseAjax = "NoMember";
             }
         }
-        else{
-            joueur = (Joueur)session.getAttribute("joueur");
-            if(action.equals("modifier")){
-            
-            }
-            else if(action.equals(joueur.getIdentifiant())){
-               
-            }
-            else if(action.equals("deconnexion")){
-                joueur = (Joueur)session.getAttribute("joueur");
-                session.setAttribute("joueur", null);
-                session.removeAttribute("joueur");
-                // on recupere et supprime le joueur dans le scope application
-                connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
-                if(connectes.contains(joueur))connectes.remove(joueur);
-                this.getServletContext().setAttribute("connectes", connectes);
+        
+        
+        if(action.equals("connecter") && session.getAttribute("joueur") == null){
+
+                if(joueur != null){
+                    if(request.getParameter("password") != null && joueur.getPassword().equals((String)request.getParameter("password"))) {
+                        session.setAttribute("joueur", joueur);
+
+                        // on y rajoute le joueur connectée
+                        connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+                        if(!connectes.contains(joueur)) connectes.add(joueur);
+                        this.getServletContext().setAttribute("connectes", connectes);
+
+                    }
+                    else{
+                        request.setAttribute("section", "home");
+                    }
+                }
                 
-                request.setAttribute("section", "home");
-            }
         }
+        else if(action.equals("inscrire")){
+            if(request.getParameter("method")!= null && request.getParameter("method").equals("ajax")){
+
+                out.print(reponseAjax);
+                joueurManager.closeEntityManager();
+                return;
+            }
+            request.setAttribute("section", "inscription");
+        }
+        else if(action.equals("modifier")){
+            
+        }
+        else if(joueur != null && action.equals(joueur.getIdentifiant())){
+            request.setAttribute("section", "profil");
+        }
+        else if(action.equals("deconnexion") && session.getAttribute("joueur") != null){
+            session.setAttribute("joueur", null);
+            session.removeAttribute("joueur");
+            // on recupere et supprime le joueur dans le scope application
+            connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+            if(connectes.contains(joueur))connectes.remove(joueur);
+            this.getServletContext().setAttribute("connectes", connectes);
+
+            request.setAttribute("section", "home");
+        }
+       
         /*transaction.commit();
         em.close();
         emf.close(); */
