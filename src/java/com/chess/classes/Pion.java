@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.chess.modeles.entite;
+package com.chess.classes;
 
 /**
  *

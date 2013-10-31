@@ -68,9 +68,9 @@ public class ControleurJoueur extends HttpServlet {
         joueurManager.createJoueur(new Joueur("roro", "roro@elle.moi", "123456789"));*/
         
         
-        if(getServletContext().getAttribute("connectes") == null){
+        /*if(getServletContext().getAttribute("connectes") == null){
             getServletContext().setAttribute("connectes", connectes);
-        }
+        }*/
         
         
         /*EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
@@ -105,7 +105,10 @@ public class ControleurJoueur extends HttpServlet {
                 if(joueur != null){
                     if(request.getParameter("password") != null && joueur.getPassword().equals((String)request.getParameter("password"))) {
                         session.setAttribute("joueur", joueur);
-
+                        
+                        //Syncronisation temps
+                        
+                        
                         // on y rajoute le joueur connectée
                         connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
                         if(!connectes.contains(joueur)) connectes.add(joueur);
@@ -125,6 +128,7 @@ public class ControleurJoueur extends HttpServlet {
                 joueurManager.closeEntityManager();
                 return;
             }
+            
             request.setAttribute("section", "inscription");
         }
         else if(action.equals("modifier")){

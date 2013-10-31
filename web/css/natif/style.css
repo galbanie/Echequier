@@ -30,13 +30,13 @@ body{
 #parties,
 #connectes,
 #demande{
-    min-height: 280px;
+    height: 280px;
     margin-bottom: 10px;
     padding: 5px;
     border: 4px double #FFFFFF;
 }
 
-#demande{min-height: 480px;}
+/*#demande{min-height: 480px;}*/
 
 #parties h4,
 #connectes h4,
@@ -169,4 +169,8 @@ body{
 #inscription form div input[type="text"],
 #inscription form div input[type="password"]{
     width: 370px;   
+}
+
+.enPartie{
+    color: #cd0a0a;
 }

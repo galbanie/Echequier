@@ -25,19 +25,25 @@ function refresh(){
         url: '/Echequier/refresh',
         //dataType: 'JSON',
         success: function(data, textStatus, jqXHR) {
-            //alert(textStatus+" = "+data+"   "+data.connectes);
             //alert(data.connectes);
-            var reponse = $.parseJSON(data);
-            //var connectes = reponse.connectes;
-            //alert(data.connectes[0].id);
+            var reponse = eval('('+data+')');
+            var connectes = reponse.connectes;
+            //console.log(connectes);
+            
             $('#listeConnecte').ready(function(){
                 //alert(reponse.connectes);
-                if(reponse.connectes !== null){
+                //console.log(connectes);
+                if(connectes !== null){
                     var content = '';
-                    for(var connecte in reponse.connectes){
-                        content += '<li><a href="#">'+connecte.identifiant+'</a></li>'
+                    for(var i = 0; i< connectes.length; i++){
+                        //console.log(reponse.connectes[i]);
+                        var classeCss = '';
+                        if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
+                        content += '<li><a class="'+classeCss+'" href="#" title="Parties ['+connectes[i].nombrePartieJouees
+                                +'] | Victoires ['+connectes[i].victoire+'] | D&eacute;faites ['+connectes[i].defaite
+                                +'] | Nulles ['+connectes[i].nulle+'] | Points ['+connectes[i].points+']">'
+                                +connectes[i].identifiant+'</a></li>';
                     }
-                    //alert(content);
                     $('#listeConnecte').html(content);
                 }
             });

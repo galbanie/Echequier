@@ -1,4 +1,4 @@
-package com.chess.modeles.entite;
+package com.chess.classes;
 
 /**
  *

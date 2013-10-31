@@ -2,25 +2,26 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.chess.modeles.entite;
+package com.chess.classes;
 
 /**
  *
  * @author galbanie
  */
-public class Chevalier extends Piece{
-    
-    private static final Position[][] POSITIONS = {{new Position(1,2), new Position(8,2)},{new Position(1,7), new Position(8,7)}};
+public class Fou extends Piece{
 
-    public Chevalier(int codeColor, int cote,int emplacement) {
+    private static final Position[][] POSITIONS = {{new Position(1,3), new Position(8,3)},{new Position(1,6), new Position(8,6)}};
+
+    public Fou(int codeColor, int cote,int emplacement) {
         this.setCouleur(codeColor);
         if((cote >= 0 && cote <= 1)&&(emplacement >= 0 && emplacement <= 1)) this.position = POSITIONS[cote][emplacement];
         else this.position = POSITIONS[POSITION_GAUCHE][POSITION_BAS];
     }
-
+    
+    
     @Override
     public boolean deplacer(Position position) {
-        if( Math.abs(Math.abs(this.position.distanceDirectionLigne(position)) - Math.abs(this.position.distanceDirectionColonne(position))) ==  1){
+        if( Math.abs(this.position.distanceDirectionColonne(position)) - Math.abs(this.position.distanceDirectionLigne(position)) == 0 ){
             this.position = position;
             return true;
         }

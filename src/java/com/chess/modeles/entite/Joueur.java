@@ -10,10 +10,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 /*import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;*/
+import javax.persistence.EntityTransaction;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-//import javax.persistence.Persistence;
+import javax.persistence.Persistence;*/
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.json.simple.JSONAware;
@@ -25,7 +25,7 @@ import org.json.simple.JSONObject;
  */
 @Entity
 @Table(name="JOUEUR")
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class Joueur extends Membre implements JSONAware{
 
     @Transient
@@ -175,7 +175,7 @@ public class Joueur extends Membre implements JSONAware{
         
         sb.append(JSONObject.escape("id"));
         sb.append(":");
-        sb.append(getId());
+        sb.append("\""+getId()+"\"");
         
         sb.append(",");
         
@@ -187,37 +187,37 @@ public class Joueur extends Membre implements JSONAware{
         
         sb.append(JSONObject.escape("points"));
         sb.append(":");
-        sb.append(getPoints());
+        sb.append("\""+getPoints()+"\"");
         
         sb.append(",");
         
         sb.append(JSONObject.escape("isPartie"));
         sb.append(":");
-        sb.append(isPartie());
+        sb.append("\""+isPartie()+"\"");
         
         sb.append(",");
         
         sb.append(JSONObject.escape("nombrePartieJouees"));
         sb.append(":");
-        sb.append(getNombrePartieJouees());
+        sb.append("\""+getNombrePartieJouees()+"\"");
         
         sb.append(",");
         
         sb.append(JSONObject.escape("victoire"));
         sb.append(":");
-        sb.append(getVictoire());
+        sb.append("\""+getVictoire()+"\"");
         
         sb.append(",");
         
-        sb.append(JSONObject.escape("null"));
+        sb.append(JSONObject.escape("nulle"));
         sb.append(":");
-        sb.append(getPartieNull());
+        sb.append("\""+getPartieNull()+"\"");
         
         sb.append(",");
         
         sb.append(JSONObject.escape("defaite"));
         sb.append(":");
-        sb.append(getDefaite());
+        sb.append("\""+getDefaite()+"\"");
         
         sb.append("}");
         
