@@ -79,7 +79,7 @@
                 <h4>Connectés</h4>
                 <a href="#" id="btnSC" class="btnS" title="Rechercher un joueur libre."></a>
                 <input type="search" id="searchBarC"  style="display: none;"/>
-                <ol id="listeConnecte" onload="">
+                <ol id="listeConnecte">
                     <!--li><a href="#">galbanie</a></li>
                     <li><a href="#">yanis</a></li-->
                     <%--c:forEach var="joueur" items="${applicationScope.connectes}">
@@ -104,7 +104,7 @@
                 <aside id="demande">
                     <h4>Les demandes</h4>
                     <ol id="listeDemande">
-                        <li><a href="#">galbanie vs yanis</a></li>
+                        <li><a href="#">galbanie</a></li>
                     </ol>
                 </aside>
 

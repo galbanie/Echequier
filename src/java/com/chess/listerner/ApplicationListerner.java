@@ -20,6 +20,7 @@ public class ApplicationListerner implements ServletContextListener{
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().setAttribute("connectes", new LinkedHashSet<Joueur>());
+        sce.getServletContext().setAttribute("syncConnectes", "");
     }
 
     @Override

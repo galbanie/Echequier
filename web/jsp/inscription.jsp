@@ -8,6 +8,7 @@
 <article id="inscription">
     <h3>Inscription</h3>
     <form id="formSignIn" method="POST" action="${pageContext.servletContext.contextPath}/inscrire">
+        <input type="hidden" name="secureSignIn" value="inscription" />
         <div>
             <label>Identifiant : </label>
             <input type="text" name="username" title="Votre pseudonyme Ex : JeanJean" />

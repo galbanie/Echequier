@@ -35,6 +35,7 @@ public class ControleurFrontal extends HttpServlet {
          *  Ex : Pour l'URI : "/Echequier/Jeu/"
          *       On obtient : {}{Echequier}{Jeu}
          */
+        System.out.println("CF***");
         String[] controles = request.getRequestURI().split("/");
         
         Joueur joueur = request.getSession(true).getAttribute("joueur") != null ? (Joueur)request.getSession(true).getAttribute("joueur"): null;
@@ -72,6 +73,11 @@ public class ControleurFrontal extends HttpServlet {
             }
             else if(controles[3].matches("regles")){
                 request.setAttribute("section", controles[3]);
+                this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
+            }
+            // test interface plateau
+            else if(controles[3].matches("plateau")){
+                request.setAttribute("section", "plateau");
                 this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
             }
             else{

@@ -82,8 +82,8 @@ body{
 
 #main{
     display: inline-block;
-    width: 800px;
-    height: 600px;
+    width: 900px;
+    height: 640px;
     background-color: #ccc;
     border: 4px double #000000;
 }
@@ -162,7 +162,7 @@ body{
 }
 
 #inscription form div input{
-    font-size: medium;
+    font-size: large;
     padding: 5px;
 }
 
@@ -173,4 +173,75 @@ body{
 
 .enPartie{
     color: #cd0a0a;
+}
+
+/* Plateau */
+#plateau{
+    
+}
+
+#plateau >div{
+    float: left;
+}
+
+#plateau #plateau-chess table{
+    margin: 5px;
+}
+
+#plateau #plateau-chess table td{
+    width: 70px;
+    height: 70px;
+    border: 1px solid #000000;
+}
+
+#plateau #plateau-droit{
+    width: 287px;
+    height: 635px;
+    
+}
+
+#plateau #plateau-droit #plateau-droit-joueur-haut,
+#plateau #plateau-droit #plateau-droit-joueur-bas{
+    width: 240px;
+    margin: 15px auto;
+}
+
+#plateau #plateau-droit #plateau-droit-joueur-haut-info,
+#plateau #plateau-droit #plateau-droit-joueur-bas-info{
+    
+}
+
+#plateau #plateau-droit #plateau-droit-joueur-haut-info table tr,
+#plateau #plateau-droit #plateau-droit-joueur-bas-info table tr{
+    
+}
+
+#plateau #plateau-droit #plateau-droit-joueur-haut-info table td,
+#plateau #plateau-droit #plateau-droit-joueur-bas-info table td{
+    width: 94px;
+    height: 20px;
+    font-size: medium;
+    font-weight: bolder;
+    text-align: center;
+}
+
+#plateau #plateau-droit #plateau-droit-joueur-haut #pion-capturer-haut,
+#plateau #plateau-droit #plateau-droit-joueur-bas #pion-capturer-bas{
+    width: 188px;
+    margin: 0 auto;
+}
+
+#plateau #plateau-droit #plateau-droit-joueur-haut #pion-capturer-haut td,
+#plateau #plateau-droit #plateau-droit-joueur-bas #pion-capturer-bas td{
+    width: 45px;
+    height: 45px;
+    border: 1px solid #000000;
+}
+
+.position-fonce{
+    background-color: #BD8D46;
+}
+
+.position-clair{
+    background-color: #FCFAE1;
 }

@@ -40,6 +40,7 @@ public class Refresh extends HttpServlet {
         
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
         
+        jsonObjet.put("syncConnectes",(String)this.getServletContext().getAttribute("syncConnectes"));
         jsonObjet.put("connectes", connectes);
         //response.setContentType("application/json");
         response.setContentType("text/plain;charset=UTF-8");

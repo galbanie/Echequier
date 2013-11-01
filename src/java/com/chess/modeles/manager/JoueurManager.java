@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -73,7 +74,12 @@ public class JoueurManager  {
         Joueur joueur;
         query = em.createQuery("SELECT j FROM Joueur j WHERE j.identifiant = :identifiant");
         query.setParameter("identifiant", username);
-        joueur = (Joueur) query.getSingleResult();
+        try{
+            joueur = (Joueur) query.getSingleResult();
+        }catch(NoResultException e){
+            joueur = null;
+        }
+        
         return joueur;
     }
     
