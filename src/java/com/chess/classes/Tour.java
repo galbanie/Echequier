@@ -12,12 +12,12 @@ package com.chess.classes;
  */
 public class Tour extends Piece{
 
-    private static final Position[][] POSITIONS = {{new Position(1,1), new Position(8,1)},{new Position(1,8), new Position(8,8)}};
-
-    public Tour(int codeColor, int cote,int emplacement) {
+    public Tour(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException {
         this.setCouleur(codeColor);
-        if((cote >= 0 && cote <= 1)&&(emplacement >= 0 && emplacement <= 1)) this.position = POSITIONS[cote][emplacement];
-        else this.position = POSITIONS[POSITION_GAUCHE][POSITION_BAS];
+        if(positionStart.compareTo(PositionDepart.TOUR_BAS_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.TOUR_BAS_DROITE) == 0 
+           || positionStart.compareTo(PositionDepart.TOUR_HAUT_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.TOUR_HAUT_DROITE) == 0) 
+            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
+        else throw new PositionIllegalException();
     }
     
     @Override

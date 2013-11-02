@@ -10,15 +10,7 @@ package com.chess.classes;
  */
 public abstract class Piece {
     
-    public final String[] COLORS = {"BLACK","WHITE"};
-    public final int CODE_COLOR_BLACK = 0;
-    public final int CODE_COLOR_WHITE = 1;
-    public static final int POSITION_HAUT = 1;
-    public static final int POSITION_BAS = 0;
-    public static final int POSITION_DROITE = 1;
-    public static final int POSITION_GAUCHE = 0;
-    
-    private String couleur;
+    private ColorPiece couleur;
     private boolean capture = false;
     protected Position position;
 
@@ -41,19 +33,17 @@ public abstract class Piece {
      *
      * @return the value of couleur
      */
-    public String getCouleur() {
+    public ColorPiece getCouleur() {
         return couleur;
     }
 
     /**
      * Set the value of couleur
      *
-     * @param couleur new value of couleur
+     * @param codeColor new value of couleur
      */
-    public void setCouleur(int codeColor) {
-        if(codeColor == CODE_COLOR_BLACK || codeColor == CODE_COLOR_WHITE){
-            this.couleur = COLORS[codeColor];
-        }
+    public void setCouleur(ColorPiece codeColor) {
+            this.couleur = codeColor;
     }
 
     public Position getPosition() {

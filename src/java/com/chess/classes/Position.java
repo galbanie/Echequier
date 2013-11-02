@@ -69,6 +69,11 @@ public final class Position {
         return distanceDirectionColonne(this, p);
     }
     
+    public boolean compareTo(PositionDepart positionStart){
+        
+        return (ligne == positionStart.getLigne() && colonne == positionStart.getColonne());
+    }
+    
     @Override
     public String toString() {
         return "(" + ligne + "," + colonne + ')';

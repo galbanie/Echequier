@@ -10,12 +10,12 @@ package com.chess.classes;
  */
 public class Fou extends Piece{
 
-    private static final Position[][] POSITIONS = {{new Position(1,3), new Position(8,3)},{new Position(1,6), new Position(8,6)}};
-
-    public Fou(int codeColor, int cote,int emplacement) {
+    public Fou(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException {
         this.setCouleur(codeColor);
-        if((cote >= 0 && cote <= 1)&&(emplacement >= 0 && emplacement <= 1)) this.position = POSITIONS[cote][emplacement];
-        else this.position = POSITIONS[POSITION_GAUCHE][POSITION_BAS];
+        if(positionStart.compareTo(PositionDepart.FOU_BAS_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.FOU_BAS_DROITE) == 0 
+           || positionStart.compareTo(PositionDepart.FOU_HAUT_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.FOU_HAUT_DROITE) == 0) 
+            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
+        else throw new PositionIllegalException();
     }
     
     

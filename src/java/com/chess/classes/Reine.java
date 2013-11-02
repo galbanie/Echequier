@@ -9,13 +9,12 @@ package com.chess.classes;
  * @author galbanie
  */
 public class Reine extends Piece{
-    
-    private static final Position[] POSITIONS = {new Position(1,4), new Position(8,4)};
 
-    public Reine(int codeColor, int emplacement) {
+    public Reine(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException {
         this.setCouleur(codeColor);
-        if(emplacement >= 0 && emplacement <= 1) this.position = POSITIONS[emplacement];
-        else this.position = POSITIONS[POSITION_BAS];
+        if(positionStart.compareTo(PositionDepart.REINE_BAS) == 0 || positionStart.compareTo(PositionDepart.REINE_HAUT) == 0 ) 
+            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
+        else throw new PositionIllegalException();
     }
     
     

@@ -9,14 +9,13 @@ package com.chess.classes;
  * @author galbanie
  */
 public class Roi extends Piece{
-    
-     private static final Position[] POSITIONS = {new Position(1,5), new Position(8,5)};
 
 
-    public Roi(int codeColor, int emplacement){
+    public Roi(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException{
         this.setCouleur(codeColor);
-        if(emplacement >= 0 && emplacement <= 1) this.position = POSITIONS[emplacement];
-        else this.position = POSITIONS[POSITION_BAS];
+        if(positionStart.compareTo(PositionDepart.ROI_BAS) == 0 || positionStart.compareTo(PositionDepart.ROI_HAUT) == 0 ) 
+            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
+        else throw new PositionIllegalException();
         
     }
     
