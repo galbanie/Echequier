@@ -6,8 +6,7 @@
 
 package com.chess.outils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  *
@@ -15,18 +14,20 @@ import java.util.Date;
  */
 public class SyncLogIn {
     
-    private static Date date;
-    
-    public static Date getInstant(){
-        if (date == null) date = new Date();
-        return date;
+    public synchronized static long getInstant(){
+        return Calendar.getInstance().getTimeInMillis();
     }
 
-    public static String getStrInstant() {
+    /*public static String getStrInstant() {
         SimpleDateFormat formater = new SimpleDateFormat("yyyyMMddHHmmssS");
         return formater.format(getInstant());
-    }
+    }*/
     
+    
+    /*public static void main(String[] arg){
+        for(int i = 0; i<7; i++)
+        //System.out.println(Calendar.getInstance().getTimeInMillis());
+    }*/
     
     
 }

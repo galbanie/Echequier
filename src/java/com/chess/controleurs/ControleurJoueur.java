@@ -10,7 +10,6 @@ import com.chess.outils.SyncLogIn;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedHashSet;
-import javax.persistence.NoResultException;
 /*import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -57,7 +56,7 @@ public class ControleurJoueur extends HttpServlet {
         String action = (String)request.getAttribute("action");
         String reponseAjax = "";
         
-        LinkedHashSet<Joueur> connectes = new LinkedHashSet<Joueur>();
+        LinkedHashSet<Joueur> connectes;
         
         // on cree un pointeur sur un Joueur null
         Joueur joueur;
@@ -105,6 +104,7 @@ public class ControleurJoueur extends HttpServlet {
                 if(joueur != null){
                     if(request.getParameter("password") != null && joueur.getPassword().equals((String)request.getParameter("password"))) {
                         session.setAttribute("joueur", joueur);
+                        this.getServletContext().setAttribute("syncConnectes", String.valueOf(SyncLogIn.getInstant()));
                         
                         //Syncronisation temps
                         
@@ -113,7 +113,6 @@ public class ControleurJoueur extends HttpServlet {
                         connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
                         if(!connectes.contains(joueur)){
                             connectes.add(joueur);
-                            this.getServletContext().setAttribute("syncConnectes", SyncLogIn.getStrInstant());
                         }
                         this.getServletContext().setAttribute("connectes", connectes);
 
@@ -131,12 +130,13 @@ public class ControleurJoueur extends HttpServlet {
                 joueurManager.closeEntityManager();
                 return;
             }
-            if(request.getParameter("secureSignIn") != null && !request.getParameter("secureSignIn").equals("inscription")){
+            
+            if(request.getParameter("secureSignIn") != null && request.getParameter("secureSignIn").equals("inscription")){
                 joueur = new Joueur((String)request.getParameter("username"), (String)request.getParameter("email"), (String)request.getParameter("password"));
                 joueurManager.createJoueur(joueur);
                 request.setAttribute("section", "home");
             }
-            request.setAttribute("section", "inscription");
+            else request.setAttribute("section", "inscription");
         }
         else if(action.equals("modifier")){
             
@@ -147,11 +147,11 @@ public class ControleurJoueur extends HttpServlet {
         else if(action.equals("deconnexion") && session.getAttribute("joueur") != null){
             session.setAttribute("joueur", null);
             session.removeAttribute("joueur");
+            this.getServletContext().setAttribute("syncConnectes",String.valueOf(SyncLogIn.getInstant()));
             // on recupere et supprime le joueur dans le scope application
             connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
             if(connectes.contains(joueur)){
                 connectes.remove(joueur);
-                this.getServletContext().setAttribute("syncConnectes", SyncLogIn.getStrInstant());
             }
             this.getServletContext().setAttribute("connectes", connectes);
 

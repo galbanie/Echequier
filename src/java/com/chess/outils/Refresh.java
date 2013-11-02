@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
  *
@@ -39,10 +38,12 @@ public class Refresh extends HttpServlet {
         JSONObject jsonObjet = new JSONObject();
         
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
-        
+        //synchronized(this){
         jsonObjet.put("syncConnectes",(String)this.getServletContext().getAttribute("syncConnectes"));
+        //}
+        
         jsonObjet.put("connectes", connectes);
-        //response.setContentType("application/json");
+        
         response.setContentType("text/plain;charset=UTF-8");
         PrintWriter out = response.getWriter();
         

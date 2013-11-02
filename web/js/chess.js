@@ -2,45 +2,10 @@
  * Auteur : galbanie
  */
 
-/*var oXHR = creationXHR();
+var syncConnectes = '';
 
 function refresh(){
-    function processStateChange(){
-        if (oXHR.readyState === 4){ //complété
-            if (oXHR.status === 200) { //réponse OK
-                
-            }
-        }
-    }
-    
-    oXHR.open('POST','/Echequier/refresh');
-    oXHR.send(null);
-}*/
-
-/*function readCookie(name) {
-	var nameEQ = name + "=";
-	var ca = document.cookie.split(';');
-	for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-	}
-	return null;
-}
-
-function createCookie(name,value,days) {
-    if (days) {
-            var date = new Date();
-            date.setTime(date.getTime()+(days*24*60*60*1000));
-            var expires = "; expires="+date.toGMTString();
-    }
-    else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/";
-}*/
-
-function refresh(){
-        /*$('#listeConnecte').load('/Echequier/ #listeConnecte').fadeIn("slow");
-        $('#listePartie').load('/Echequier/ #listePartie').fadeIn("slow");*/
+        
     $.ajax({
         type: 'POST',
         url: '/Echequier/refresh',
@@ -51,16 +16,15 @@ function refresh(){
             var connectes = reponse.connectes;
             //console.log(connectes);
             
+            
             $('#listeConnecte').ready(function(){
-                //alert(reponse.connectes);
-                //console.log(connectes);
-                var cookieSyncConnectes = readCookie('syncConnectes');
-                if(cookieSyncConnectes === null || cookieSyncConnectes !== reponse.syncConnectes){
-                    createCookie('syncConnectes',reponse.syncConnectes);
+                
+                //console.log(syncConnectes+' ---- '+reponse.syncConnectes);
+                if(syncConnectes !== reponse.syncConnectes){
+                    syncConnectes = reponse.syncConnectes;
                     if(connectes !== null){
                         var content = '';
                         for(var i = 0; i< connectes.length; i++){
-                            //console.log(reponse.connectes[i]);
                             var classeCss = '';
                             if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
                             content += '<li><a class="'+classeCss+'" href="#" title="Parties ['+connectes[i].nombrePartieJouees

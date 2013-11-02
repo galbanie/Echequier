@@ -29,7 +29,7 @@ public class SessionListerner implements HttpSessionListener {
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)se.getSession().getServletContext().getAttribute("connectes");
         if(joueur != null && connectes.contains(joueur)){
             connectes.remove(joueur);
-            se.getSession().getServletContext().setAttribute("syncConnectes", SyncLogIn.getStrInstant());
+            se.getSession().getServletContext().setAttribute("syncConnectes", String.valueOf(SyncLogIn.getInstant()));
         }
         se.getSession().getServletContext().setAttribute("connectes", connectes);
     }
