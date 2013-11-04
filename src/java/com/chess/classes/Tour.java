@@ -24,5 +24,11 @@ public class Tour extends Piece{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Tour "+this.getCouleur().getStrColor();
+    }
+    
     
 }

@@ -28,5 +28,12 @@ public class Pion extends Piece{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Pion "+this.getCouleur().getStrColor();
+    }
+    
+    
     
 }

@@ -22,5 +22,10 @@ public class Fou extends Piece{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Fou "+this.getCouleur().getStrColor(); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

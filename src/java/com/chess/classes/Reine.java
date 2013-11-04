@@ -19,5 +19,11 @@ public class Reine extends Piece{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Reine "+this.getCouleur().getStrColor();
+    }
+    
     
 }

@@ -1,21 +1,31 @@
 package com.chess.classes;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author galbanie
  */
-public class Echequier {
-    
+public final class Echequier {
+    // Le plateau Map
     private Map<Position,Piece> plateau;
-    
+    // Etat de l'echequier
     private EtatPlateau etat;
-
-    public Echequier() {
+    // Piece selectionée
+    private Piece selection;
+    
+    public Echequier(boolean initialise) {
         plateau = new HashMap<Position, Piece>(64);
         etat = EtatPlateau.AUCUN;
+        selection = null;
+        if(initialise) this.initialiser();
+    }
+    
+    public Echequier(){
+        this(false);
     }
     
     public void initialiser(){
@@ -80,6 +90,46 @@ public class Echequier {
 
     public EtatPlateau getEtat() {
         return etat;
+    }
+    
+    public boolean selectionner(Position position){
+        if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position)){
+            selection = plateau.get(position);
+            if(selection != null) return true;
+        }
+        return false;
+    }
+    
+    public boolean selectionner(int ligne, int colonne){
+        return selectionner(new Position(ligne, colonne));
+    }
+    
+    public String getNamePieceSelectionnee(){
+        return (selection!=null) ? selection.toString() : "None";
+    }
+    
+    public List<Position> positionsPieces(TypePiece typePiece, ColorPiece color){
+        List<Position> positions =  new LinkedList<Position>();
+        Piece piece;
+        for(int i = 1; i < 9; i++)
+            for(int j = 1; j < 9; j++) {
+                piece = plateau.get(new Position(i,j));
+                if(piece != null && piece.getClass() == typePiece.getClassPiece() && piece.getCouleur().equals(color))
+                    positions.add(new Position(i,j));
+            }
+        return positions;
+    }
+    
+    public List<Position> positionsPieces(TypePiece typePiece){
+        List<Position> positions =  new LinkedList<Position>();
+        positions.addAll(positionsPieces(typePiece, ColorPiece.BLACK));
+        positions.addAll(positionsPieces(typePiece, ColorPiece.WHITE));
+        return positions;
+    }
+    
+    public boolean deplacer(Position position){
+        
+        return false;
     }
     
 }

@@ -17,5 +17,12 @@ public class Chevalier extends Piece{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Chevalier "+this.getCouleur().getStrColor();
+    }
+    
+    
     
 }
