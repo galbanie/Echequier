@@ -11,21 +11,17 @@ package com.chess.classes;
 public class Roi extends Piece{
 
 
-    public Roi(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException{
+    public Roi(ColorPiece codeColor){
         this.setCouleur(codeColor);
-        if(positionStart.compareTo(PositionDepart.ROI_BAS) == 0 || positionStart.compareTo(PositionDepart.ROI_HAUT) == 0 ) 
-            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
-        else throw new PositionIllegalException();
         
     }
     
 
     @Override
-    public boolean deplacer(Position position) {
+    public boolean deplacer(Position actuel, Position emplacement) {
         // algo à valider
-        if(this.position.distanceDirectionColonne(position) <= 1 && this.position.distanceDirectionColonne(position) >= -1){
-            if(this.position.distanceDirectionLigne(position) <= 1 && this.position.distanceDirectionLigne(position) >= -1){
-                this.position = position;
+        if(actuel.distanceDirectionColonne(emplacement) <= 1 && actuel.distanceDirectionColonne(emplacement) >= -1){
+            if(actuel.distanceDirectionLigne(emplacement) <= 1 && actuel.distanceDirectionLigne(emplacement) >= -1){
                 return true;
             }
         }

@@ -4,11 +4,13 @@
  */
 package com.chess.modeles.entite;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-/*import javax.persistence.EntityManager;
+/*import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Inheritance;
@@ -28,8 +30,10 @@ import org.json.simple.JSONObject;
 //@Inheritance(strategy = InheritanceType.JOINED)
 public class Joueur extends Membre implements JSONAware{
 
+    //@ManyToMany(mappedBy = "JOUEUR")
+    //@JoinTable(name = "DEMANDES", joinColumns = @JoinColumn(name = "EMETTEUR"), inverseJoinColumns = @JoinColumn(name = "RECEVEUR"))
     @Transient
-    private Map<Integer,Joueur> inviteurs;
+    private LinkedHashSet<Joueur> demandes;
     @Transient
     private boolean partie = false;
     @Column
@@ -48,7 +52,7 @@ public class Joueur extends Membre implements JSONAware{
 
     public Joueur(String identifiant, String email, String password) {
         super(identifiant, email, password);
-        inviteurs = new HashMap<Integer,Joueur>();
+        demandes = new LinkedHashSet<Joueur>();
     }
     
     /**
@@ -69,40 +73,22 @@ public class Joueur extends Membre implements JSONAware{
         this.partie = partie;
     }
 
-    /**
-     * Get the value of nombreInviteurs
-     *
-     * @return the value of nombreInviteurs
-     */
-    public int getNombreInviteurs() {
-        return inviteurs.size();
+    public LinkedHashSet<Joueur> getDemandes() {
+        return demandes;
     }
 
-
-    /**
-     * Get the value of inviteurs
-     *
-     * @return the value of inviteurs
-     */
-    public Map<Integer,Joueur> getInviteurs() {
-        return inviteurs;
+    public void setDemandes(LinkedHashSet<Joueur> demandes) {
+        this.demandes = demandes;
     }
     
-    public Joueur getInviteur(int key) {
-        return inviteurs.get(new Integer(key));
+    public void demander(Joueur joueur){
+        this.demandes.add(joueur);
+        joueur.getDemandes().add(this);
     }
-
-    /**
-     * Set the value of inviteurs
-     *
-     * @param inviteurs new value of inviteurs
-     */
-    public void setInviteurs(Map<Integer,Joueur> inviteurs) {
-        if(inviteurs != null) this.inviteurs = inviteurs;
-    }
-
-    public void setInviteur(Joueur inviteur) {
-        if(!inviteurs.containsValue(inviteur)) inviteurs.put(new Integer(inviteur.getId()), inviteur);
+    
+    public void supprimerDemande(Joueur joueur){
+        this.demandes.remove(joueur);
+        joueur.getDemandes().remove(this);
     }
 
     public int getPoints() {
@@ -148,7 +134,7 @@ public class Joueur extends Membre implements JSONAware{
     
     
     /*public static void main(String[] argv){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierUP");
         EntityManager em = emf.createEntityManager();
         EntityTransaction transac = em.getTransaction();
         transac.begin();

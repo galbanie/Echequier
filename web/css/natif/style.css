@@ -245,3 +245,21 @@ body{
 .position-clair{
     background-color: #FCFAE1;
 }
+
+
+/* Context Menu */
+#contextmenuConnectes{
+    border: 1px solid #000000;
+    background: url('images/bg_contextmenu.jpg') center repeat;
+    display: none;
+    position: absolute;
+    color: #FFFFFF;
+    font-weight: bolder;
+    z-index: 999;
+}
+
+#contextmenuConnectes td{
+    border-bottom: 1px solid #000000;
+    padding: 3px 5px;
+    cursor: pointer;
+}

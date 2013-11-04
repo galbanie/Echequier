@@ -12,19 +12,14 @@ package com.chess.classes;
  */
 public class Tour extends Piece{
 
-    public Tour(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException {
+    public Tour(ColorPiece codeColor){
         this.setCouleur(codeColor);
-        if(positionStart.compareTo(PositionDepart.TOUR_BAS_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.TOUR_BAS_DROITE) == 0 
-           || positionStart.compareTo(PositionDepart.TOUR_HAUT_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.TOUR_HAUT_DROITE) == 0) 
-            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
-        else throw new PositionIllegalException();
     }
     
     @Override
-    public boolean deplacer(Position position) {
-        if( this.position.distanceDirectionColonne(position) == 0 && (this.position.distanceDirectionLigne(position) >= -7 && this.position.distanceDirectionLigne(position) <= 7) ||
-            this.position.distanceDirectionLigne(position) == 0 && (this.position.distanceDirectionColonne(position) >= -7 && this.position.distanceDirectionColonne(position) <= 7)){
-            this.position = position;
+    public boolean deplacer(Position actuel, Position emplacement) {
+        if(actuel.distanceDirectionColonne(emplacement) == 0 && (actuel.distanceDirectionLigne(emplacement) >= -7 && actuel.distanceDirectionLigne(emplacement) <= 7) ||
+            actuel.distanceDirectionLigne(emplacement) == 0 && (actuel.distanceDirectionColonne(emplacement) >= -7 && actuel.distanceDirectionColonne(emplacement) <= 7)){
             return true;
         }
         return false;

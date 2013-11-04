@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.chess.classes;
 
 /**
@@ -10,18 +6,13 @@ package com.chess.classes;
  */
 public class Chevalier extends Piece{
 
-    public Chevalier(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException {
+    public Chevalier(ColorPiece codeColor){
         this.setCouleur(codeColor);
-        if(positionStart.compareTo(PositionDepart.CHEVALIER_BAS_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.CHEVALIER_BAS_DROITE) == 0 
-           || positionStart.compareTo(PositionDepart.CHEVALIER_HAUT_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.CHEVALIER_HAUT_DROITE) == 0) 
-            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
-        else throw new PositionIllegalException();
     }
 
     @Override
-    public boolean deplacer(Position position) {
-        if( Math.abs(Math.abs(this.position.distanceDirectionLigne(position)) - Math.abs(this.position.distanceDirectionColonne(position))) ==  1){
-            this.position = position;
+    public boolean deplacer(Position actuel, Position emplacement) {
+        if( Math.abs(Math.abs(actuel.distanceDirectionLigne(emplacement)) - Math.abs(actuel.distanceDirectionColonne(emplacement))) ==  1){
             return true;
         }
         return false;

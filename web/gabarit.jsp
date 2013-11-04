@@ -34,6 +34,7 @@
         <title>Echequier</title>
     </head>
     <body onload="setInterval('re()', 1000);">
+        
         <header>
             <nav id="cssmenu">
                 <ul>
@@ -80,8 +81,6 @@
                 <a href="#" id="btnSC" class="btnS" title="Rechercher un joueur libre."></a>
                 <input type="search" id="searchBarC"  style="display: none;"/>
                 <ol id="listeConnecte">
-                    <!--li><a href="#">galbanie</a></li>
-                    <li><a href="#">yanis</a></li-->
                     <%--c:forEach var="joueur" items="${applicationScope.connectes}">
                         <li><a href="#">${joueur.value.identifiant}</a></li>
                     </c:forEach--%>

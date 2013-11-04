@@ -38,9 +38,10 @@ public class Refresh extends HttpServlet {
         JSONObject jsonObjet = new JSONObject();
         
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
-        //synchronized(this){
+        
+        jsonObjet.put("contextPath",(String)this.getServletContext().getContextPath());
+        
         jsonObjet.put("syncConnectes",(String)this.getServletContext().getAttribute("syncConnectes"));
-        //}
         
         jsonObjet.put("connectes", connectes);
         

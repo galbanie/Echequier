@@ -12,7 +12,6 @@ public abstract class Piece {
     
     private ColorPiece couleur;
     private boolean capture = false;
-    protected Position position;
 
     /**
      * Get the value of capture
@@ -46,13 +45,5 @@ public abstract class Piece {
             this.couleur = codeColor;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public abstract boolean deplacer(Position position);
+    public abstract boolean deplacer(Position actuel, Position emplacement);
 }

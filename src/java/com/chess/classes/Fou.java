@@ -10,19 +10,14 @@ package com.chess.classes;
  */
 public class Fou extends Piece{
 
-    public Fou(ColorPiece codeColor, PositionDepart positionStart) throws PositionIllegalException {
+    public Fou(ColorPiece codeColor){
         this.setCouleur(codeColor);
-        if(positionStart.compareTo(PositionDepart.FOU_BAS_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.FOU_BAS_DROITE) == 0 
-           || positionStart.compareTo(PositionDepart.FOU_HAUT_GAUCHE) == 0 || positionStart.compareTo(PositionDepart.FOU_HAUT_DROITE) == 0) 
-            this.position = new Position(positionStart.getLigne(),positionStart.getColonne());
-        else throw new PositionIllegalException();
     }
     
     
     @Override
-    public boolean deplacer(Position position) {
-        if( Math.abs(this.position.distanceDirectionColonne(position)) - Math.abs(this.position.distanceDirectionLigne(position)) == 0 ){
-            this.position = position;
+    public boolean deplacer(Position actuel, Position emplacement) {
+        if( Math.abs(actuel.distanceDirectionColonne(emplacement)) - Math.abs(actuel.distanceDirectionLigne(emplacement)) == 0 ){
             return true;
         }
         return false;

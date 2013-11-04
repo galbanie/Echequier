@@ -11,14 +11,15 @@ function refresh(){
         url: '/Echequier/refresh',
         //dataType: 'JSON',
         success: function(data, textStatus, jqXHR) {
-            //alert(data.connectes);
+            
+            // on transforme la chaine json en objet javascript
             var reponse = eval('('+data+')');
+            
+            // on transmet les listes dans des variables
             var connectes = reponse.connectes;
-            //console.log(connectes);
             
-            
-            $('#listeConnecte').ready(function(){
-                
+            // liste des connectés
+            $('#listeConnecte').ready(function(){ 
                 //console.log(syncConnectes+' ---- '+reponse.syncConnectes);
                 if(syncConnectes !== reponse.syncConnectes){
                     syncConnectes = reponse.syncConnectes;
@@ -27,7 +28,8 @@ function refresh(){
                         for(var i = 0; i< connectes.length; i++){
                             var classeCss = '';
                             if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
-                            content += '<li><a class="'+classeCss+'" href="#" title="Parties ['+connectes[i].nombrePartieJouees
+                            content += '<li><a id="j-'+connectes[i].id+'" class="'+classeCss+'" href="'
+                                    +reponse.contextPath+'/jouer/?contre='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
                                     +'] | Victoires ['+connectes[i].victoire+'] | D&eacute;faites ['+connectes[i].defaite
                                     +'] | Nulles ['+connectes[i].nulle+'] | Points ['+connectes[i].points+']">'
                                     +connectes[i].identifiant+'</a></li>';
@@ -37,7 +39,7 @@ function refresh(){
                 }
                 
             });
-            
+            // liste des parties en cours
             $('#listePartie').ready(function(){
                 
             });
@@ -138,20 +140,20 @@ $(document).ready(function(){
     $('#formSignIn').submit(function(){
         var result = false;
         var inputs = $('#formSignIn input');
-        
-        /*$(inputs[0]).change(function(){
-           
-           alert(this.value);
-           
-        });*/
-        
-        
         for(var i = 0; i < inputs.length; i++){
             if(inputs[i].type === 'text' || inputs[i].type === 'password') result = check[inputs[i].name](inputs[i]) && result;
         }
         return result;
     });
     
+    $(document).bind('contextmenu',function(event){
+        /*$('#contextmenuConnectes').css({'top':event.pageY+'px', 'left': event.pageX+'px'}).show();
+        event.preventDefault();
+        console.log( event.target);*/
+    });
+    $(document).bind('click',function(){
+        //$('#contextmenuConnectes').hide();
+    });
     
     
 });
