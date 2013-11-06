@@ -1,15 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.chess.controleurs;
 
+import com.chess.classes.Demande;
+import com.chess.modeles.entite.Joueur;
+import com.chess.outils.SyncLogIn;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,10 +30,63 @@ public class ControleurJeu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        // on definit le type du contenu a renvoié ici du text simple
+        response.setContentType("text/plain;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
+        // on recupere la session
+        HttpSession session = request.getSession(true);
         
+        // on recupere l'action venant du controleur frontale
+        String action = (String)request.getAttribute("action");
+        String reponseAjax = "";
+        
+        LinkedHashSet<Demande> demandes;
+        
+        Demande demande;
+        
+        
+        if(action.equals("jouer") && session.getAttribute("joueur") != null){
+            
+            Joueur joueur = (Joueur)session.getAttribute("joueur");
+            
+            if(request.getParameter("contre") != null && !request.getParameter("contre").equals(joueur.getIdentifiant())){
+                demande = new Demande(joueur.getIdentifiant(),(String)request.getParameter("contre"));
+                synchronized(this){
+                    this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
+                    demandes = (LinkedHashSet<Demande>)this.getServletContext().getAttribute("demandes");
+                    if(!demandes.contains(demande)){
+                        demandes.add(demande);
+                    }
+                    this.getServletContext().setAttribute("demandes", demandes);
+                }
+                request.setAttribute("section", "home");
+            }
+            
+            else if(request.getParameter("a") != null && request.getParameter("reponse") != null){
+                
+                if(!request.getParameter("a").equals(joueur.getIdentifiant())){
+                    
+                    if(request.getParameter("reponse").equals("oui")){
+                        // on cree une nouvelle partie
+                    }
+                    else if(request.getParameter("reponse").equals("non")){
+                        //
+                    }
+                    
+                    // on supprime la demande du scope Application
+                    
+                }
+                
+            }
+            else request.setAttribute("section", "home");
+            
+        }
+        else if(action.equals("regarder")){
+            
+        }
+        
+        this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
         
     }
 

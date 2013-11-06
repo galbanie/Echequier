@@ -4,7 +4,7 @@
  */
 package com.chess.modeles.entite;
 
-import java.util.LinkedHashSet;
+//import java.util.LinkedHashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 /*import javax.persistence.JoinColumn;
@@ -32,8 +32,8 @@ public class Joueur extends Membre implements JSONAware{
 
     //@ManyToMany(mappedBy = "JOUEUR")
     //@JoinTable(name = "DEMANDES", joinColumns = @JoinColumn(name = "EMETTEUR"), inverseJoinColumns = @JoinColumn(name = "RECEVEUR"))
-    @Transient
-    private LinkedHashSet<Joueur> demandes;
+    /*@Transient
+    private LinkedHashSet<Joueur> demandes;*/
     @Transient
     private boolean partie = false;
     @Column
@@ -52,7 +52,7 @@ public class Joueur extends Membre implements JSONAware{
 
     public Joueur(String identifiant, String email, String password) {
         super(identifiant, email, password);
-        demandes = new LinkedHashSet<Joueur>();
+        //demandes = new LinkedHashSet<Joueur>();
     }
     
     /**
@@ -73,7 +73,7 @@ public class Joueur extends Membre implements JSONAware{
         this.partie = partie;
     }
 
-    public LinkedHashSet<Joueur> getDemandes() {
+    /*public LinkedHashSet<Joueur> getDemandes() {
         return demandes;
     }
 
@@ -89,7 +89,7 @@ public class Joueur extends Membre implements JSONAware{
     public void supprimerDemande(Joueur joueur){
         this.demandes.remove(joueur);
         joueur.getDemandes().remove(this);
-    }
+    }*/
 
     public int getPoints() {
         return points;

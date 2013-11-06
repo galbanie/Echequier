@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.chess.controleurs;
 
 import com.chess.modeles.entite.Joueur;
@@ -104,17 +100,16 @@ public class ControleurJoueur extends HttpServlet {
                 if(joueur != null){
                     if(request.getParameter("password") != null && joueur.getPassword().equals((String)request.getParameter("password"))) {
                         session.setAttribute("joueur", joueur);
-                        this.getServletContext().setAttribute("syncConnectes", String.valueOf(SyncLogIn.getInstant()));
-                        
-                        //Syncronisation temps
-                        
-                        
-                        // on y rajoute le joueur connectée
-                        connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
-                        if(!connectes.contains(joueur)){
-                            connectes.add(joueur);
+                        synchronized(this){
+                            this.getServletContext().setAttribute("syncConnectes", String.valueOf(SyncLogIn.getInstant()));
+
+                            // on y rajoute le joueur connectée
+                            connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+                            if(!connectes.contains(joueur)){
+                                connectes.add(joueur);
+                            }
+                            this.getServletContext().setAttribute("connectes", connectes);
                         }
-                        this.getServletContext().setAttribute("connectes", connectes);
 
                     }
                     else{
@@ -147,13 +142,15 @@ public class ControleurJoueur extends HttpServlet {
         else if(action.equals("deconnexion") && session.getAttribute("joueur") != null){
             session.setAttribute("joueur", null);
             session.removeAttribute("joueur");
-            this.getServletContext().setAttribute("syncConnectes",String.valueOf(SyncLogIn.getInstant()));
-            // on recupere et supprime le joueur dans le scope application
-            connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
-            if(connectes.contains(joueur)){
-                connectes.remove(joueur);
+            synchronized(this){
+                this.getServletContext().setAttribute("syncConnectes",String.valueOf(SyncLogIn.getInstant()));
+                // on recupere et supprime le joueur dans le scope application
+                connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+                if(connectes.contains(joueur)){
+                    connectes.remove(joueur);
+                }
+                this.getServletContext().setAttribute("connectes", connectes);
             }
-            this.getServletContext().setAttribute("connectes", connectes);
 
             request.setAttribute("section", "home");
         }

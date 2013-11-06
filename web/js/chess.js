@@ -3,6 +3,8 @@
  */
 
 var syncConnectes = '';
+var syncDemandes = '';
+var syncParties = '';
 
 function refresh(){
         
@@ -18,6 +20,8 @@ function refresh(){
             // on transmet les listes dans des variables
             var connectes = reponse.connectes;
             
+            var demandes = reponse.demandes;
+            
             // liste des connectés
             $('#listeConnecte').ready(function(){ 
                 //console.log(syncConnectes+' ---- '+reponse.syncConnectes);
@@ -29,7 +33,7 @@ function refresh(){
                             var classeCss = '';
                             if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
                             content += '<li><a id="j-'+connectes[i].id+'" class="'+classeCss+'" href="'
-                                    +reponse.contextPath+'/jouer/?contre='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
+                                    +reponse.contextPath+'/jouer?contre='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
                                     +'] | Victoires ['+connectes[i].victoire+'] | D&eacute;faites ['+connectes[i].defaite
                                     +'] | Nulles ['+connectes[i].nulle+'] | Points ['+connectes[i].points+']">'
                                     +connectes[i].identifiant+'</a></li>';
@@ -42,6 +46,33 @@ function refresh(){
             // liste des parties en cours
             $('#listePartie').ready(function(){
                 
+            });
+            
+            // liste des demandes en cours
+            $('#listeDemande').ready(function(){
+                if(syncDemandes !== reponse.syncDemandes){
+                    syncDemandes = reponse.syncDemandes;
+                    
+                    if(demandes !== null){
+                        var content = '';
+                        for(var i = 0; i< demandes.length; i++){
+                            // si le joueur est l'emetteur de la demande
+                            if(reponse.joueur === demandes[i].emetteur){
+                                content += '<li><a class="" href="'
+                                    +reponse.contextPath+'/jouer?annuler='+demandes[i].receveur+'" >'
+                                    +demandes[i].receveur+'</a></li>';
+                            }
+                            // sinon si il est le receveur de la demande
+                            else if(reponse.joueur === demandes[i].receveur){
+                                content += '<li><a class="" href="'
+                                    +reponse.contextPath+'/jouer?a='+demandes[i].emetteur+'&reponse=oui" >'
+                                    +demandes[i].emetteur+'</a></li>';
+                            }
+                            
+                        }
+                        $('#listeDemande').html(content);
+                    }
+                }
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {

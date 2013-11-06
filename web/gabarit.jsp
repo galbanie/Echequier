@@ -72,7 +72,7 @@
                 <a href="#" id="btnSP" class="btnS" title="Rechercher une partie en cours."></a>
                 <input type="search" id="searchBarP" style="display: none;" />
                 <ol id="listePartie">
-                    <li><a href="#">galbanie vs yanis</a></li>
+                    <!--li><a href="#">galbanie vs yanis</a></li-->
                 </ol>
             </aside>
 
@@ -103,7 +103,7 @@
                 <aside id="demande">
                     <h4>Les demandes</h4>
                     <ol id="listeDemande">
-                        <li><a href="#">galbanie</a></li>
+                        <!--li><a href="#">galbanie</a></li-->
                     </ol>
                 </aside>
 

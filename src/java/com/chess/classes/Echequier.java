@@ -16,9 +16,15 @@ public final class Echequier {
     private EtatPlateau etat;
     // Piece selectionée
     private Piece selection;
+    //Liste des capturés noirs
+    private List<Piece> capturesBlack;
+    //Liste des capturés white
+    private List<Piece> capturesWhite;
     
     public Echequier(boolean initialise) {
         plateau = new HashMap<Position, Piece>(64);
+        capturesBlack = new LinkedList<Piece>();
+        capturesWhite = new LinkedList<Piece>();
         etat = EtatPlateau.AUCUN;
         selection = null;
         if(initialise) this.initialiser();
@@ -30,7 +36,9 @@ public final class Echequier {
     
     public void initialiser(){
         if(!etat.equals(EtatPlateau.PRET)){
-            
+            selection = null;
+            capturesBlack = new LinkedList<Piece>();
+            capturesWhite = new LinkedList<Piece>();
             for(int i = 1; i < 9; i++){
                 for(int j = 1; j < 9; j++){
                     if(i == 1){
@@ -128,8 +136,22 @@ public final class Echequier {
     }
     
     public boolean deplacer(Position position){
-        
+        if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position) && selection != null){
+            
+        }
         return false;
+    }
+
+    public Map<Position, Piece> getPlateau() {
+        return plateau;
+    }
+
+    public List<Piece> getCapturesBlack() {
+        return capturesBlack;
+    }
+
+    public List<Piece> getCapturesWhite() {
+        return capturesWhite;
     }
     
 }

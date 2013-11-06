@@ -7,6 +7,7 @@
 package com.chess.outils;
 
 
+import com.chess.classes.Demande;
 import com.chess.modeles.entite.Joueur;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,13 +38,23 @@ public class Refresh extends HttpServlet {
         
         JSONObject jsonObjet = new JSONObject();
         
+        Joueur joueur = (Joueur)request.getSession().getAttribute("joueur");
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+        LinkedHashSet<Demande> demandes = ( LinkedHashSet<Demande>)this.getServletContext().getAttribute("demandes");
+        
+        String identifiant = (joueur != null) ? joueur.getIdentifiant() : "";
         
         jsonObjet.put("contextPath",(String)this.getServletContext().getContextPath());
+        
+        jsonObjet.put("joueur", identifiant);
         
         jsonObjet.put("syncConnectes",(String)this.getServletContext().getAttribute("syncConnectes"));
         
         jsonObjet.put("connectes", connectes);
+        
+        jsonObjet.put("syncDemandes", (String)this.getServletContext().getAttribute("syncDemandes"));
+        
+        jsonObjet.put("demandes", demandes);
         
         response.setContentType("text/plain;charset=UTF-8");
         PrintWriter out = response.getWriter();

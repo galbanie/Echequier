@@ -6,6 +6,7 @@
 
 package com.chess.listerner;
 
+import com.chess.classes.Demande;
 import com.chess.modeles.entite.Joueur;
 import java.util.LinkedHashSet;
 import javax.servlet.ServletContextEvent;
@@ -21,8 +22,8 @@ public class ApplicationListerner implements ServletContextListener{
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().setAttribute("connectes", new LinkedHashSet<Joueur>());
         sce.getServletContext().setAttribute("syncConnectes", "");
-        /*sce.getServletContext().setAttribute("demandes", new LinkedHashSet<Joueur>());
-        sce.getServletContext().setAttribute("syncDemandes", "");*/
+        sce.getServletContext().setAttribute("demandes", new LinkedHashSet<Demande>());
+        sce.getServletContext().setAttribute("syncDemandes", "");
         sce.getServletContext().setAttribute("parties", new LinkedHashSet<Joueur>());
         sce.getServletContext().setAttribute("syncParties", "");
     }

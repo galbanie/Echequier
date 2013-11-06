@@ -24,14 +24,14 @@ import javax.persistence.Query;
 
 public class JoueurManager  {
     
-    @PersistenceContext(unitName = "EchequierPersistance")
+    @PersistenceContext(unitName = "EchequierUP")
     
     private final EntityManagerFactory emf;
     private final EntityManager em;
     private final EntityTransaction tx;
 
     public JoueurManager() {
-        this.emf = Persistence.createEntityManagerFactory("EchequierPersistance");
+        this.emf = Persistence.createEntityManagerFactory("EchequierUP");
         this.em = emf.createEntityManager();
         this.tx = em.getTransaction();
     }

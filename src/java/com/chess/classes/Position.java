@@ -69,13 +69,34 @@ public final class Position {
         return distanceDirectionColonne(this, p);
     }
     
-    public boolean compareTo(PositionDepart positionStart){
+    /*public boolean compareTo(PositionDepart positionStart){
         
         return (ligne == positionStart.getLigne() && colonne == positionStart.getColonne());
-    }
+    }*/
     
     @Override
     public String toString() {
         return "(" + ligne + "," + colonne + ')';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null){
+            if(obj instanceof Position){
+                Position otherPosition = (Position)obj;
+                if(this.ligne == otherPosition.ligne && this.colonne == otherPosition.colonne) return true;
+            } 
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + this.ligne;
+        hash = 23 * hash + this.colonne;
+        return hash;
+    }
+    
+    
 }
