@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -15,7 +16,7 @@ public final class Echequier {
     // Etat de l'echequier
     private EtatPlateau etat;
     // Piece selectionée
-    private Piece selection;
+    private Entry<Position, Piece> selection;
     //Liste des capturés noirs
     private List<Piece> capturesBlack;
     //Liste des capturés white
@@ -31,7 +32,7 @@ public final class Echequier {
     }
     
     public Echequier(){
-        this(false);
+        this(true);
     }
     
     public void initialiser(){
@@ -102,8 +103,13 @@ public final class Echequier {
     
     public boolean selectionner(Position position){
         if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position)){
-            selection = plateau.get(position);
-            if(selection != null) return true;
+            for(Entry<Position, Piece> entry : plateau.entrySet()) {
+                if(entry.getKey().equals(position)){
+                    selection = entry;
+                    break;
+                }
+            }
+            if(selection != null && selection.getValue() != null) return true;
         }
         return false;
     }
@@ -113,7 +119,7 @@ public final class Echequier {
     }
     
     public String getNamePieceSelectionnee(){
-        return (selection!=null) ? selection.toString() : "None";
+        return (selection!=null && selection.getValue() != null ) ? selection.getValue().toString() : "None";
     }
     
     public List<Position> positionsPieces(TypePiece typePiece, ColorPiece color){
@@ -136,8 +142,46 @@ public final class Echequier {
     }
     
     public boolean deplacer(Position position){
-        if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position) && selection != null){
+        if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position) && selection != null && selection.getValue() != null){
+            Entry<Position, Piece> cible = null;
+            for(Entry<Position, Piece> entry : plateau.entrySet()) {
+                if(entry.getKey().equals(position)){
+                    cible = entry;
+                    break;
+                }
+            }
             
+           // si l'entrée existe dans la map
+           if(cible != null){
+               // si la piece selectionnée peut se déplacer à la position de la cible
+               if(selection.getValue().deplacer(selection.getKey(), cible.getKey())){
+                   // Si à la position de la cible il y a une piece
+                   if(cible.getValue() != null){
+                       // si la piece cible est de la même couleur que la pièce sélectionnée
+                       if(cible.getValue().getCouleur().equals(selection.getValue().getCouleur())){
+                           // si la piece selectionner est un Roi et que la cible de destination est un Pion
+                            if(selection.getValue().getClass().equals(TypePiece.ROI.getClassPiece()) && cible.getValue().getClass().equals(TypePiece.PION.getClass())){
+                                // Le Roi echange de place avec le Pion
+                                plateau.put(cible.getKey(), selection.getValue());
+                                plateau.put(selection.getKey(), cible.getValue());
+                                // on deselectionne
+                                selection = null;
+                                return true;
+                            }
+                       }
+                       else{
+                           if(cible.getValue().getCouleur().equals(ColorPiece.BLACK)) capturesBlack.add(cible.getValue());
+                           else capturesWhite.add(cible.getValue());
+                       }
+                   }
+                   plateau.put(cible.getKey(), selection.getValue());
+                   plateau.put(selection.getKey(), null);
+                   // on deselectionne
+                   selection = null;
+                   return true;
+               }
+           }
+           
         }
         return false;
     }

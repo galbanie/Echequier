@@ -47,6 +47,7 @@ public class Demande implements JSONAware{
             if(obj instanceof Demande){
                 Demande other = (Demande)obj; 
                 if((this.emetteur == null ? other.emetteur == null : this.emetteur.equals(other.emetteur)) && (this.receveur == null ? other.receveur == null : this.receveur.equals(other.receveur))){
+                //if((this.emetteur == other.emetteur || this.emetteur == other.receveur)){
                     return true;
                 }
             }

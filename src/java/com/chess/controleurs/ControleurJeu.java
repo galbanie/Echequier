@@ -53,10 +53,11 @@ public class ControleurJeu extends HttpServlet {
             if(request.getParameter("contre") != null && !request.getParameter("contre").equals(joueur.getIdentifiant())){
                 demande = new Demande(joueur.getIdentifiant(),(String)request.getParameter("contre"));
                 synchronized(this){
-                    this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
+                    
                     demandes = (LinkedHashSet<Demande>)this.getServletContext().getAttribute("demandes");
                     if(!demandes.contains(demande)){
                         demandes.add(demande);
+                        this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
                     }
                     this.getServletContext().setAttribute("demandes", demandes);
                 }
