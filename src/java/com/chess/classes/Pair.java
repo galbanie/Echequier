@@ -13,8 +13,8 @@ package com.chess.classes;
  * @param <S>
  */
 public class Pair<F,S > {
-    public final F first;
-    public final S second;
+    private final F first;
+    private final S second;
 
     /**
      * Constructor for a Pair.
@@ -79,4 +79,6 @@ public class Pair<F,S > {
         return second;
     }
 
+    
+    
 }

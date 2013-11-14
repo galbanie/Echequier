@@ -1,10 +1,13 @@
 package com.chess.classes;
 
+import org.json.simple.JSONAware;
+import org.json.simple.JSONObject;
+
 /**
  *
  * @author galbanie
  */
-public final class Position {
+public final class Position implements JSONAware{
     private int ligne;
     private int colonne;
     
@@ -76,7 +79,7 @@ public final class Position {
     
     @Override
     public String toString() {
-        return "(" + ligne + "," + colonne + ')';
+        return this.toJSONString();
     }
 
     @Override
@@ -96,6 +99,27 @@ public final class Position {
         hash = 23 * hash + this.ligne;
         hash = 23 * hash + this.colonne;
         return hash;
+    }
+
+    @Override
+    public String toJSONString() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("{");
+        
+        sb.append(JSONObject.escape("ligne"));
+        sb.append(":");
+        sb.append("\""+ligne+"\"");
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("colonne"));
+        sb.append(":");
+        sb.append("\""+colonne+"\"");
+        
+        sb.append("}");
+        
+        return sb.toString(); 
     }
     
     

@@ -5,6 +5,8 @@
 var syncConnectes = '';
 var syncDemandes = '';
 var syncParties = '';
+var contextPath = '';
+var pathServeur = '';
 
 function refresh(){
         
@@ -22,18 +24,24 @@ function refresh(){
             
             var demandes = reponse.demandes;
             
+            var parties = reponse.parties;
+            
+            if(contextPath !== reponse.contextPath) contextPath = reponse.contextPath;
+            if(pathServeur !== reponse.pathServeur) pathServeur = reponse.pathServeur;
+            
             // liste des connectés
             $('#listeConnecte').ready(function(){ 
                 //console.log(syncConnectes+' ---- '+reponse.syncConnectes);
                 if(syncConnectes !== reponse.syncConnectes){
                     syncConnectes = reponse.syncConnectes;
+                    
                     if(connectes !== null){
                         var content = '';
                         for(var i = 0; i< connectes.length; i++){
                             var classeCss = '';
                             if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
                             content += '<li><a id="j-'+connectes[i].id+'" class="'+classeCss+'" href="'
-                                    +reponse.contextPath+'/jouer?contre='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
+                                    +reponse.contextPath+'/demander?qui='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
                                     +'] | Victoires ['+connectes[i].victoire+'] | D&eacute;faites ['+connectes[i].defaite
                                     +'] | Nulles ['+connectes[i].nulle+'] | Points ['+connectes[i].points+']">'
                                     +connectes[i].identifiant+'</a></li>';
@@ -45,7 +53,21 @@ function refresh(){
             });
             // liste des parties en cours
             $('#listePartie').ready(function(){
-                
+                //console.log(parties);
+                if(syncParties !== reponse.syncParties){
+                    syncParties = reponse.syncParties;
+                    //console.log(parties);
+                    if(parties !== null){
+                        var content = '';
+                        for(var i = 0; i< parties.length; i++){
+                            content += '<li><a id="p-'+parties[i].id+'" class="" href="'
+                                    +reponse.contextPath+'/regarder?partie='+parties[i].id+'">'
+                                    +parties[i].joueurNoir.joueur.identifiant+' vs '+parties[i].joueurBlanc.joueur.identifiant
+                                    +'</a></li>';
+                        }
+                        $('#listePartie').html(content);
+                    }
+                }
             });
             
             // liste des demandes en cours
@@ -59,13 +81,13 @@ function refresh(){
                             // si le joueur est l'emetteur de la demande
                             if(reponse.joueur === demandes[i].emetteur){
                                 content += '<li><a class="" href="'
-                                    +reponse.contextPath+'/jouer?annuler='+demandes[i].receveur+'" >'
+                                    +reponse.contextPath+'/demander?qui='+demandes[i].receveur+'&action=annuler" >'
                                     +demandes[i].receveur+'</a></li>';
                             }
                             // sinon si il est le receveur de la demande
                             else if(reponse.joueur === demandes[i].receveur){
                                 content += '<li><a class="" href="'
-                                    +reponse.contextPath+'/jouer?a='+demandes[i].emetteur+'&reponse=oui" >'
+                                    +reponse.contextPath+'/jouer?avec='+demandes[i].emetteur+'" >'
                                     +demandes[i].emetteur+'</a></li>';
                             }
                             
@@ -80,6 +102,17 @@ function refresh(){
         }
     });
 }
+
+/*function redirigeAuto(context){
+    if(window.location.href.indexOf('jouer?a=') > -1){
+        alert('ok co 0');
+    }
+    else if(window.location.href.indexOf('connecter') > -1 || window.location.href.indexOf('deconnexion') > -1){
+        window.location.href = context;
+        alert('ok co 1');
+    }
+    else alert('ok co else '+window.location.href);
+}*/
 
 // Section formulaire
 var check = {};
@@ -129,6 +162,10 @@ check['confirm'] = function(element){
 
 
 $(document).ready(function(){
+    
+    $(function(){
+        //redirigeAuto(pathServeur+contextPath);
+    });
     
     // on active les tooltips dans une fonction anonyme
     $(function() {

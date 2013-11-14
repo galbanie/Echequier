@@ -4,6 +4,8 @@
  */
 package com.chess.classes;
 
+import org.json.simple.JSONObject;
+
 /**
  *
  * @author galbanie
@@ -25,7 +27,28 @@ public class Fou extends Piece{
 
     @Override
     public String toString() {
-        return "Fou "+this.getCouleur().getStrColor(); //To change body of generated methods, choose Tools | Templates.
+        return this.toJSONString();
+    }
+
+    @Override
+    public String toJSONString() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("{");
+        
+        sb.append(JSONObject.escape("type"));
+        sb.append(":");
+        sb.append("\"Fou\"");
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("color"));
+        sb.append(":");
+        sb.append("\""+this.getCouleur().name()+"\"");
+        
+        sb.append("}");
+        
+        return sb.toString();
     }
     
 }

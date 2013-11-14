@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+/*import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;*/
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -15,6 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author galbanie
  */
+/*@NamedQueries({
+        @NamedQuery(name = "Membre.findByIdentifiant",query = "SELECT j FROM Joueur j WHERE j.identifiant = :identifiant")
+})*/
 @Entity
 //@Table(name = "membre")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

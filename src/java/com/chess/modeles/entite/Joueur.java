@@ -5,8 +5,11 @@
 package com.chess.modeles.entite;
 
 //import java.util.LinkedHashSet;
+//import com.chess.classes.JoueurEchec;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 /*import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -25,6 +28,10 @@ import org.json.simple.JSONObject;
  *
  * @author galbanie
  */
+@NamedQueries({
+        @NamedQuery(name = "Joueur.findAll",query = "SELECT j FROM Joueur j"),
+        @NamedQuery(name = "Joueur.findByIdentifiant",query = "SELECT j FROM Joueur j WHERE j.identifiant = :identifiant")
+})
 @Entity
 @Table(name="JOUEUR")
 //@Inheritance(strategy = InheritanceType.JOINED)
@@ -139,8 +146,11 @@ public class Joueur extends Membre implements JSONAware{
         EntityTransaction transac = em.getTransaction();
         transac.begin();
         
-        Joueur galbanie = new Joueur("yanis", "rootKiller@moi.toi","1234567");
+        Joueur galbanie = new Joueur("sofiane", "soso@moi.toi","1234567");
         em.persist(galbanie);
+        
+        PartieEchec pe = new PartieEchec(galbanie, galbanie);
+        em.persist(pe);
         
         
         

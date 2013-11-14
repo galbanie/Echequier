@@ -19,7 +19,7 @@ public class EntityManagerSingleton {
     }
 
     private static class EMSingletonHolder{
-        private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierPersistance");
+        private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchequierUP");
         private static final EntityManager em = emf.createEntityManager();
     }
 

@@ -4,71 +4,54 @@
         <filter-name>UrlFiltre</filter-name>
         <filter-class>com.chess.outils.UrlFiltre</filter-class>
     </filter>
-    
     <filter-mapping>
         <filter-name>UrlFiltre</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
     <servlet>
         <servlet-name>ControleurFrontal</servlet-name>
         <servlet-class>com.chess.controleurs.ControleurFrontal</servlet-class>
     </servlet>
-    
-    <servlet>
-        <servlet-name>ControleurJeu</servlet-name>
-        <servlet-class>com.chess.controleurs.ControleurJeu</servlet-class>
-    </servlet>
-    
     <servlet>
         <servlet-name>ControleurJoueur</servlet-name>
         <servlet-class>com.chess.controleurs.ControleurJoueur</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>Refresh</servlet-name>
         <servlet-class>com.chess.outils.Refresh</servlet-class>
     </servlet>
-       
-    
+    <servlet>
+        <servlet-name>ControleurJeu</servlet-name>
+        <servlet-class>com.chess.controleurs.ControleurJeu</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControleurFrontal</servlet-name>
         <url-pattern>/run/*</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>ControleurJoueur</servlet-name>
         <url-pattern>/run/joueur</url-pattern>
-    </servlet-mapping> 
-    
-    <servlet-mapping>
-        <servlet-name>ControleurJeu</servlet-name>
-        <url-pattern>/run/jeu</url-pattern>
     </servlet-mapping>
-    
-
-    
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
     <servlet-mapping>
         <servlet-name>Refresh</servlet-name>
         <url-pattern>/run/refresh</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>ControleurJeu</servlet-name>
+        <url-pattern>/run/jeu</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <listener>
         <listener-class>com.chess.listerner.SessionListerner</listener-class>
     </listener>
-    
     <listener>
         <listener-class>com.chess.listerner.ApplicationListerner</listener-class>
     </listener>
-    
 </web-app>

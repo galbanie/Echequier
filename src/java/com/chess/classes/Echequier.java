@@ -5,17 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.json.simple.JSONArray;
+//import org.json.simple.JSONArray;
+import org.json.simple.JSONAware;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author galbanie
  */
-public final class Echequier {
+public final class Echequier implements JSONAware{
     // Le plateau Map
-    private Map<Position,Piece> plateau;
+    private Plateau plateau;
     // Etat de l'echequier
     private EtatPlateau etat;
-    // Piece selectionée
+    // Piece selectionée à une position
     private Entry<Position, Piece> selection;
     //Liste des capturés noirs
     private List<Piece> capturesBlack;
@@ -23,7 +27,7 @@ public final class Echequier {
     private List<Piece> capturesWhite;
     
     public Echequier(boolean initialise) {
-        plateau = new HashMap<Position, Piece>(64);
+        plateau = new Plateau(64);
         capturesBlack = new LinkedList<Piece>();
         capturesWhite = new LinkedList<Piece>();
         etat = EtatPlateau.AUCUN;
@@ -101,7 +105,7 @@ public final class Echequier {
         return etat;
     }
     
-    public boolean selectionner(Position position){
+    public Piece selectionner(Position position){
         if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position)){
             for(Entry<Position, Piece> entry : plateau.entrySet()) {
                 if(entry.getKey().equals(position)){
@@ -109,12 +113,12 @@ public final class Echequier {
                     break;
                 }
             }
-            if(selection != null && selection.getValue() != null) return true;
+            if(selection != null && selection.getValue() != null) return selection.getValue();
         }
-        return false;
+        return null;
     }
     
-    public boolean selectionner(int ligne, int colonne){
+    public Piece selectionner(int ligne, int colonne){
         return selectionner(new Position(ligne, colonne));
     }
     
@@ -143,6 +147,7 @@ public final class Echequier {
     
     public boolean deplacer(Position position){
         if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position) && selection != null && selection.getValue() != null){
+            
             Entry<Position, Piece> cible = null;
             for(Entry<Position, Piece> entry : plateau.entrySet()) {
                 if(entry.getKey().equals(position)){
@@ -168,6 +173,11 @@ public final class Echequier {
                                 selection = null;
                                 return true;
                             }
+                       }
+                       else if(cible.getValue().getClass().equals(TypePiece.ROI.getClass())){
+                           if(cible.getValue().getCouleur().equals(ColorPiece.BLACK))
+                            etat = EtatPlateau.ECHEC_BLACK;
+                           else etat = EtatPlateau.ECHEC_WHITE;
                        }
                        else{
                            if(cible.getValue().getCouleur().equals(ColorPiece.BLACK)) capturesBlack.add(cible.getValue());
@@ -196,6 +206,54 @@ public final class Echequier {
 
     public List<Piece> getCapturesWhite() {
         return capturesWhite;
+    }
+
+    @Override
+    public String toString() {
+        return this.toJSONString();
+    }
+
+    
+    
+    @Override
+    public String toJSONString() {
+        /*JSONObject jsonObject = new JSONObject();
+        jsonObject.put("etat", etat.name());
+        jsonObject.put("plateau", plateau);
+        jsonObject.put("capturesBlack", capturesBlack);
+        jsonObject.put("capturesWhite", capturesWhite);
+        return jsonObject.toJSONString();*/
+        
+        StringBuilder sb = new StringBuilder();
+        //JSONArray jsonArray = new JSONArray();
+        
+        sb.append("{");
+        
+        sb.append(JSONObject.escape("etat"));
+        sb.append(":");
+        sb.append("\""+etat.name()+"\"");
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("plateau"));
+        sb.append(":");
+        sb.append(plateau.toJSONString());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("capturesBlack"));
+        sb.append(":");
+        sb.append(JSONArray.toJSONString(capturesBlack));
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("capturesWhite"));
+        sb.append(":");
+        sb.append(JSONArray.toJSONString(capturesWhite));
+        
+        sb.append("}");
+        
+        return sb.toString();
     }
     
 }

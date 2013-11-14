@@ -14,7 +14,8 @@ public enum EtatPlateau {
     AUCUN("Aucunes pièces n'est présente sur le plateau."),
     PRET("Les pièces sont positionnées sur le plateau à leur position de départ."),
     EN_COURS("Une ou plusières pièces ne sont plus à leur position initiale."),
-    ECHEC("L'un des Rois est en échec et mat.");
+    ECHEC_BLACK("Le Roi Noir est en échec et mat."),
+    ECHEC_WHITE("Le Roi Blanc est en échec et mat.");
 
     EtatPlateau(String descritption) {
         this.descritpion = descritption;

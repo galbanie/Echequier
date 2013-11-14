@@ -1,5 +1,7 @@
 package com.chess.classes;
 
+import org.json.simple.JSONObject;
+
 /**
  *
  * @author galbanie
@@ -22,7 +24,28 @@ public class Reine extends Piece{
 
     @Override
     public String toString() {
-        return "Reine "+this.getCouleur().getStrColor();
+        return this.toJSONString();
+    }
+
+    @Override
+    public String toJSONString() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("{");
+        
+        sb.append(JSONObject.escape("type"));
+        sb.append(":");
+        sb.append("\"Reine\"");
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("color"));
+        sb.append(":");
+        sb.append("\""+this.getCouleur().name()+"\"");
+        
+        sb.append("}");
+        
+        return sb.toString();
     }
     
     

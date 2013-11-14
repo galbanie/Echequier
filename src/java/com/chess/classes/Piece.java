@@ -4,11 +4,13 @@
  */
 package com.chess.classes;
 
+import org.json.simple.JSONAware;
+
 /**
  *
  * @author galbanie
  */
-public abstract class Piece {
+public abstract class Piece implements JSONAware{
     
     private ColorPiece couleur;
     private boolean capture = false;

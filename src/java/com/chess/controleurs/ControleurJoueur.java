@@ -2,6 +2,8 @@ package com.chess.controleurs;
 
 import com.chess.modeles.entite.Joueur;
 import com.chess.modeles.manager.JoueurManager;
+import com.chess.modeles.manager.Manager;
+import com.chess.outils.EntityManagerSingleton;
 import com.chess.outils.SyncLogIn;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,7 +60,8 @@ public class ControleurJoueur extends HttpServlet {
         Joueur joueur;
         
         // on cree un joueurManager qui sera chargé de faire interface entre la BD et la servlet
-        JoueurManager joueurManager = new JoueurManager();
+        //JoueurManager joueurManager = new JoueurManager();
+        Manager<Joueur> joueurManager = new Manager<Joueur>(EntityManagerSingleton.getInstance());
         
         /*joueurManager.createJoueur(new Joueur("jean", "juju@elle.moi", "123456789"));
         joueurManager.createJoueur(new Joueur("roro", "roro@elle.moi", "123456789"));*/
@@ -81,7 +84,10 @@ public class ControleurJoueur extends HttpServlet {
         if(session.getAttribute("joueur") != null)joueur = (Joueur)session.getAttribute("joueur");
         else {
             if(request.getParameter("username") != null && !request.getParameter("username").equals("")){
-                joueur = joueurManager.findJoueurByUsername((String)request.getParameter("username"));
+                //joueur = joueurManager.findJoueurByUsername((String)request.getParameter("username"));
+                joueurManager.createNamedQuery("Joueur.findByIdentifiant");
+                joueurManager.setParametre("identifiant", (String)request.getParameter("username"));
+                joueur = joueurManager.findSingleResult();
                 if(joueur != null){
                     reponseAjax = "Member";
                 }else{
@@ -122,13 +128,14 @@ public class ControleurJoueur extends HttpServlet {
             if(request.getParameter("method")!= null && request.getParameter("method").equals("ajax")){
 
                 out.print(reponseAjax);
-                joueurManager.closeEntityManager();
+                //joueurManager.closeEntityManager();
                 return;
             }
             
             if(request.getParameter("secureSignIn") != null && request.getParameter("secureSignIn").equals("inscription")){
                 joueur = new Joueur((String)request.getParameter("username"), (String)request.getParameter("email"), (String)request.getParameter("password"));
-                joueurManager.createJoueur(joueur);
+                //joueurManager.createJoueur(joueur);
+                joueurManager.create(joueur);
                 request.setAttribute("section", "home");
             }
             else request.setAttribute("section", "inscription");
@@ -159,7 +166,7 @@ public class ControleurJoueur extends HttpServlet {
         em.close();
         emf.close(); */
         this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
-        joueurManager.closeEntityManager();
+        //joueurManager.closeEntityManager();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
