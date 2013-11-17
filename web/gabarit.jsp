@@ -95,16 +95,20 @@
                 <c:when test="${empty requestScope.section}" >
                     <jsp:include page="jsp/home.jsp" />
                 </c:when>
-                <c:otherwise><jsp:include page="jsp/${requestScope.section}.jsp" /></c:otherwise>
+                <%--c:when test="${not empty applicationScope.partiesSuivies}" >
+                    
+                </c:when--%>
+                <c:otherwise>
+                    <jsp:include page="jsp/${requestScope.section}.jsp" />
+                </c:otherwise>
             </c:choose>
         </section>
         
-        <c:if test="${!empty sessionScope.joueur}" >
+         <c:if test="${!empty sessionScope.joueur}" >
             <section id="sidebarDroit">
                 <aside id="demande">
                     <h4>Les demandes</h4>
                     <ol id="listeDemande">
-                        <!--li><a href="#">galbanie</a></li-->
                     </ol>
                 </aside>
 
@@ -114,6 +118,13 @@
         <footer id="piedPage">
             
         </footer>
+                
+        <div id="dialog-demande" title="Vous avez une demande">
+            <p style="margin: 20px 0;">
+                <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
+                <span id="dialog-demande-identifiant" style="font-size: medium; font-weight: bolder;"></span> ,vous invite à joueur une partie.
+            </p>
+        </div>
         
     </body>
 </html>

@@ -73,11 +73,15 @@ body{
 #parties ol>li>a,
 #connectes ol>li>a,
 #demande ol>li>a{
+    display: block;
+    padding: 2.5px;
+    text-align: center;
     text-decoration: none;
     font-size: medium;
     color: #FFFFFF;
     font-weight: bolder;
     cursor: pointer;
+    border: 1px solid #FFFFFF;
 }
 
 #main{
@@ -262,4 +266,16 @@ body{
     border-bottom: 1px solid #000000;
     padding: 3px 5px;
     cursor: pointer;
+}
+
+.focus{
+    background-color: #ffaf0f;
+}
+
+.demandeur{
+    color: #cd0a0a !important;
+}
+
+.receveur{
+   color: darkgreen !important;
 }

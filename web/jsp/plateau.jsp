@@ -19,100 +19,100 @@
                 <th>g</th>
                 <th>h</th>
             </tr>
-            <tr>
+            <tr id="l8">
                 <th>8</th>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
+                <td id="l8c1" class="position-fonce"></td>
+                <td id="l8c2" class="position-clair"></td>
+                <td id="l8c3" class="position-fonce"></td>
+                <td id="l8c4" class="position-clair"></td>
+                <td id="l8c5" class="position-fonce"></td>
+                <td id="l8c6" class="position-clair"></td>
+                <td id="l8c7" class="position-fonce"></td>
+                <td id="l8c8" class="position-clair"></td>
                 <th>8</th>
             </tr>
-            <tr>
+            <tr id="l7">
                 <th>7</th>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
+                <td id="l7c1" class="position-clair"></td>
+                <td id="l7c2" class="position-fonce"></td>
+                <td id="l7c3" class="position-clair"></td>
+                <td id="l7c4" class="position-fonce"></td>
+                <td id="l7c5" class="position-clair"></td>
+                <td id="l7c6" class="position-fonce"></td>
+                <td id="l7c7" class="position-clair"></td>
+                <td id="l7c8" class="position-fonce"></td>
                 <th>7</th>
             </tr>
-            <tr>
+            <tr id="l6">
                 <th>6</th>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
+                <td id="l6c1" class="position-fonce"></td>
+                <td id="l6c2" class="position-clair"></td>
+                <td id="l6c3" class="position-fonce"></td>
+                <td id="l6c4" class="position-clair"></td>
+                <td id="l6c5" class="position-fonce"></td>
+                <td id="l6c6" class="position-clair"></td>
+                <td id="l6c7" class="position-fonce"></td>
+                <td id="l6c8" class="position-clair"></td>
                 <th>6</th>
             </tr>
-            <tr>
+            <tr id="l5">
                 <th>5</th>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
+                <td id="l5c1" class="position-clair"></td>
+                <td id="l5c2" class="position-fonce"></td>
+                <td id="l5c3" class="position-clair"></td>
+                <td id="l5c4" class="position-fonce"></td>
+                <td id="l5c5" class="position-clair"></td>
+                <td id="l5c6" class="position-fonce"></td>
+                <td id="l5c7" class="position-clair"></td>
+                <td id="l5c8" class="position-fonce"></td>
                 <th>5</th>
             </tr>
-            <tr>
+            <tr id="l4">
                 <th>4</th>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
+                <td id="l4c1" class="position-fonce"></td>
+                <td id="l4c2" class="position-clair"></td>
+                <td id="l4c3" class="position-fonce"></td>
+                <td id="l4c4" class="position-clair"></td>
+                <td id="l4c5" class="position-fonce"></td>
+                <td id="l4c6" class="position-clair"></td>
+                <td id="l4c7" class="position-fonce"></td>
+                <td id="l4c8" class="position-clair"></td>
                 <th>4</th>
             </tr>
-            <tr>
+            <tr id="l3">
                 <th>3</th>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
+                <td id="l3c1" class="position-clair"></td>
+                <td id="l3c2" class="position-fonce"></td>
+                <td id="l3c3" class="position-clair"></td>
+                <td id="l3c4" class="position-fonce"></td>
+                <td id="l3c5" class="position-clair"></td>
+                <td id="l3c6" class="position-fonce"></td>
+                <td id="l3c7" class="position-clair"></td>
+                <td id="l3c8" class="position-fonce"></td>
                 <th>3</th>
             </tr>
-            <tr>
+            <tr id="l2">
                 <th>2</th>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
+                <td id="l2c1" class="position-fonce"></td>
+                <td id="l2c2" class="position-clair"></td>
+                <td id="l2c3" class="position-fonce"></td>
+                <td id="l2c4" class="position-clair"></td>
+                <td id="l2c5" class="position-fonce"></td>
+                <td id="l2c6" class="position-clair"></td>
+                <td id="l2c7" class="position-fonce"></td>
+                <td id="l2c8" class="position-clair"></td>
                 <th>2</th>
             </tr>
-            <tr id="l-1">
+            <tr id="l1">
                 <th>1</th>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
-                <td class="position-clair"></td>
-                <td class="position-fonce"></td>
+                <td id="l1c1" class="position-clair"></td>
+                <td id="l1c2" class="position-fonce"></td>
+                <td id="l1c3" class="position-clair"></td>
+                <td id="l1c4" class="position-fonce"></td>
+                <td id="l1c5" class="position-clair"></td>
+                <td id="l1c6" class="position-fonce"></td>
+                <td id="l1c7" class="position-clair"></td>
+                <td id="l1c8" class="position-fonce"></td>
                 <th>1</th>
             </tr>
             <tr>
@@ -134,16 +134,16 @@
             <div id="plateau-droit-joueur-haut-info">
                 <table border>
                     <tr>
-                        <td colspan="2">Username</td>
-                        <td>#45</td>
+                        <td id="identifiant-joueur-haut" colspan="2"></td>
+                        <td id="classement-joueur-haut"></td>
                     </tr>
                     <tr>
-                        <td colspan="3">14570 points</td>
+                        <td id="points-joueur-haut" colspan="3"></td>
                     </tr>
                     <tr>
-                        <td>V</td>
-                        <td>N</td>
-                        <td>D</td>
+                        <td id="victoire-joueur-haut"></td>
+                        <td id="nulle-joueur-haut"></td>
+                        <td id="defaite-joueur-haut"></td>
                     </tr>
                 </table>
             </div>
@@ -207,16 +207,16 @@
             <div id="plateau-droit-joueur-bas-info">
                 <table border>
                     <tr>
-                        <td colspan="2">Username</td>
-                        <td>#45</td>
+                        <td id="identifiant-joueur-bas" colspan="2"></td>
+                        <td id="classement-joueur-bas">#7</td>
                     </tr>
                     <tr>
-                        <td colspan="3">14570 points</td>
+                        <td id="points-joueur-bas" colspan="3">14570 points</td>
                     </tr>
                     <tr>
-                        <td>V</td>
-                        <td>N</td>
-                        <td>D</td>
+                        <td id="victoire-joueur-bas">V</td>
+                        <td id="nulle-joueur-bas">N</td>
+                        <td id="defaite-joueur-bas">D</td>
                     </tr>
                 </table>
             </div>

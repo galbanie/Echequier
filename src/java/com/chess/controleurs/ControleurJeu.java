@@ -56,22 +56,25 @@ public class ControleurJeu extends HttpServlet {
         
         Demande demande;
         
+        Demande demandeAdverse;
+        
         PartieEchec partie;
         
         Manager<PartieEchec> partieManager = new Manager<PartieEchec>(EntityManagerSingleton.getInstance());
         
         Manager<Joueur> joueurManager = new Manager<Joueur>(EntityManagerSingleton.getInstance());
         
-        
-        // On recupere l'adversaire
-        if((request.getParameter("qui") != null && !request.getParameter("qui").equals(joueur.getIdentifiant())) ||
-           (request.getParameter("avec") != null && !request.getParameter("avec").equals(joueur.getIdentifiant()))){
-            //if(!request.getParameter("qui").equals(joueur.getIdentifiant()) || !request.getParameter("avec").equals(joueur.getIdentifiant())){
-                String identifiant = (request.getParameter("qui") != null)?(String)request.getParameter("qui"):(String)request.getParameter("avec");
-                joueurManager.createNamedQuery("Joueur.findByIdentifiant");
-                joueurManager.setParametre("identifiant", identifiant);
-                adversaire = joueurManager.findSingleResult();
-            //}
+        if(joueur != null){
+            // On recupere l'adversaire
+            if((request.getParameter("qui") != null && !request.getParameter("qui").equals(joueur.getIdentifiant())) ||
+               (request.getParameter("avec") != null && !request.getParameter("avec").equals(joueur.getIdentifiant()))){
+                //if(!request.getParameter("qui").equals(joueur.getIdentifiant()) || !request.getParameter("avec").equals(joueur.getIdentifiant())){
+                    String identifiant = (request.getParameter("qui") != null)?(String)request.getParameter("qui"):(String)request.getParameter("avec");
+                    joueurManager.createNamedQuery("Joueur.findByIdentifiant");
+                    joueurManager.setParametre("identifiant", identifiant);
+                    adversaire = joueurManager.findSingleResult();
+                //}
+            }
         }
         
         /*if(joueur != null){
@@ -121,13 +124,19 @@ public class ControleurJeu extends HttpServlet {
             if(joueur != null && adversaire != null){
                 if(connectes.contains(adversaire)){
                     demande = new Demande(joueur.getIdentifiant(), adversaire.getIdentifiant());
+                    demandeAdverse = new Demande(adversaire.getIdentifiant(), joueur.getIdentifiant());
                     if(action.equals("jouer")){
+                        //demande = new Demande(adversaire.getIdentifiant(), joueur.getIdentifiant());
                         if(request.getParameter("partie") != null){
                             
                         }
                         else{
                             if(demandes.contains(demande)){
                                 demandes.remove(demande);
+                                this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
+                            }
+                            if(demandes.contains(demandeAdverse)){
+                                demandes.remove(demandeAdverse);
                                 this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
                             }
                             partie = new PartieEchec(joueur, adversaire);
@@ -144,14 +153,19 @@ public class ControleurJeu extends HttpServlet {
                         }
                     }
                     else if(action.equals("demander")){
+                        //demande = new Demande(joueur.getIdentifiant(), adversaire.getIdentifiant());
                         if(request.getParameter("action") != null && request.getParameter("action").equals("annuler")){
                             if(demandes.contains(demande)){
                                 demandes.remove(demande);
                                 this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
                             }
+                            if(demandes.contains(demandeAdverse)){
+                                demandes.remove(demandeAdverse);
+                                this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
+                            }
                         }
                         else{
-                            if(!demandes.contains(demande)){
+                            if(!demandes.contains(demande) && !demandes.contains(demandeAdverse)){
                                 demandes.add(demande);
                                 this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
                             }

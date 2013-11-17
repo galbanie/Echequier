@@ -115,6 +115,14 @@ public class PartieEchec implements JSONAware, Serializable{
     }
     }
     }*/
+    public JoueurEchec getPlayerB() {
+        return playerB;
+    }
+
+    public JoueurEchec getPlayerN() {
+        return playerN;
+    }
+    
     public Joueur getGagnant() {
         return gagnant;
     }
