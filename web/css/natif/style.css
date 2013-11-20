@@ -279,3 +279,18 @@ body{
 .receveur{
    color: darkgreen !important;
 }
+
+.victoire{
+    background-color: darkgreen;
+    opacity: .5;
+}
+
+.nulle{
+    background-color: #FFFFFF;
+    opacity: .5;
+}
+
+.defaite{
+    background-color: #cd0a0a;
+    opacity: .5;
+}

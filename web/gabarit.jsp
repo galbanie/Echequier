@@ -59,7 +59,16 @@
                             <li ><a href="#" id="seConnecter">Connexion</a></li>
                         </c:when>
                         <c:otherwise>
-                        <li ><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}" id="identifiantMenu"><c:out value="${sessionScope.joueur.identifiant}" /></a></li>
+                        <li ><a id="identifiantJoueur" href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}" id="identifiantMenu"><c:out value="${sessionScope.joueur.identifiant}" /></a></li>
+                        <c:choose>
+                            <c:when test="${sessionScope.joueur.visible eq true}">
+                            <li><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}?visible=false">visible</a></li>
+                            </c:when>
+                            <c:otherwise>
+                            <li><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}?visible=true">invisible</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <li ><a href="${pageContext.servletContext.contextPath}/deconnexion" id="">deconnexion</a></li>
                         </c:otherwise>
                     </c:choose>

@@ -141,9 +141,9 @@
                         <td id="points-joueur-haut" colspan="3"></td>
                     </tr>
                     <tr>
-                        <td id="victoire-joueur-haut"></td>
-                        <td id="nulle-joueur-haut"></td>
-                        <td id="defaite-joueur-haut"></td>
+                        <td id="victoire-joueur-haut" class="victoire"></td>
+                        <td id="nulle-joueur-haut" class="nulle"></td>
+                        <td id="defaite-joueur-haut" class="defaite"></td>
                     </tr>
                 </table>
             </div>
@@ -208,15 +208,15 @@
                 <table border>
                     <tr>
                         <td id="identifiant-joueur-bas" colspan="2"></td>
-                        <td id="classement-joueur-bas">#7</td>
+                        <td id="classement-joueur-bas"></td>
                     </tr>
                     <tr>
-                        <td id="points-joueur-bas" colspan="3">14570 points</td>
+                        <td id="points-joueur-bas" colspan="3"></td>
                     </tr>
                     <tr>
-                        <td id="victoire-joueur-bas">V</td>
-                        <td id="nulle-joueur-bas">N</td>
-                        <td id="defaite-joueur-bas">D</td>
+                        <td id="victoire-joueur-bas" class="victoire"></td>
+                        <td id="nulle-joueur-bas" class="nulle"></td>
+                        <td id="defaite-joueur-bas" class="defaite"></td>
                     </tr>
                 </table>
             </div>

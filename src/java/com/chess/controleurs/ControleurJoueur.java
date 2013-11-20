@@ -1,7 +1,7 @@
 package com.chess.controleurs;
 
 import com.chess.modeles.entite.Joueur;
-import com.chess.modeles.manager.JoueurManager;
+//import com.chess.modeles.manager.JoueurManager;
 import com.chess.modeles.manager.Manager;
 import com.chess.outils.EntityManagerSingleton;
 import com.chess.outils.SyncLogIn;
@@ -144,6 +144,23 @@ public class ControleurJoueur extends HttpServlet {
             
         }
         else if(joueur != null && action.equals(joueur.getIdentifiant())){
+            if(request.getParameter("visible") != null){
+                if(request.getParameter("visible").equals("true")){
+                    joueur.setVisible(true);
+                    
+                }
+                else if(request.getParameter("visible").equals("false")){
+                    joueur.setVisible(false);
+                }
+                session.setAttribute("joueur", joueur);
+                connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
+                if(connectes.contains(joueur)){
+                    this.getServletContext().setAttribute("syncConnectes",String.valueOf(SyncLogIn.getInstant()));
+                    connectes.remove(joueur);
+                    connectes.add(joueur);
+                }
+                
+            }
             request.setAttribute("section", "profil");
         }
         else if(action.equals("deconnexion") && session.getAttribute("joueur") != null){

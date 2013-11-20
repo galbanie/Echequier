@@ -7,10 +7,23 @@ var syncDemandes = '';
 var syncParties = '';
 var contextPath = '';
 var pathServeur = '';
+var syncjeu = '';
+var identifiantJoueur = '';
+
+$.urlParam = function(name){
+    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results===null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+};
 
 function getTagImagePiece(type,color,id,classe){
     
-    var strImg = '<img id="'+id+'" class="'+classe+'" src="Ressources/';
+    var strImg = '<img id="'+id+'" class="'+classe+''+color.toLowerCase()+'" src="Ressources/';
+    //var strImg = '<img class="" src="Ressources/';
     
     /* 
      * J'aurais pu faire aucun switch si 
@@ -61,7 +74,7 @@ function showPartie(partie){
        $('#defaite-joueur-haut').ready().html(joueurNoir.joueur.defaite);
        // on insere les information sur le joueur du bas
        $('#identifiant-joueur-bas').ready().html(joueurBlanc.joueur.identifiant);
-       $('#classement-joueur-bas').ready().html('#1');
+       $('#classement-joueur-bas').ready().html('#7');
        $('#points-joueur-bas').ready().html(joueurBlanc.joueur.points+' points');
        $('#victoire-joueur-bas').ready().html(joueurBlanc.joueur.victoire);
        $('#nulle-joueur-bas').ready().html(joueurBlanc.joueur.nulle);
@@ -78,9 +91,58 @@ function showPartie(partie){
            var piece = plateau[i].piece;
            
            if(piece !== ""){
+               // on construit l'id des td devant contenir les images
                var idtd = '#l'+position.ligne+'c'+position.colonne;
-               
+               // on place les images dans les td
                $(idtd).ready().html(getTagImagePiece(piece.type,piece.color,'',''));
+               
+               //console.log(identifiantJoueur);
+               
+               if(identifiantJoueur === partie.joueurNoir.joueur.identifiant && partie.joueurNoir.focus === 'true'){
+                   $(idtd+' img.black').draggable({
+                        //appendTo: "body",
+                        helper: "original",
+                        cursor: "move",
+                        scope: "#plateau",
+                        revert: "invalid", // when not dropped, the item will revert back to its initial position
+                        containment: "document",
+                        drag: function( event, ui ) {
+
+                        },
+                        start: function( event, ui ) {
+
+                        }
+                     });
+               }
+               else if(identifiantJoueur === partie.joueurBlanc.joueur.identifiant && partie.joueurBlanc.focus === 'true'){
+                   $(idtd+' img.white').draggable({
+                        //appendTo: "body",
+                        helper: "original",
+                        cursor: "move",
+                        scope: "#plateau-chess td",
+                        revert: "valid", // when not dropped, the item will revert back to its initial position
+                        containment: "document",
+                        drag: function( event, ui ) {
+
+                        },
+                        start: function( event, ui ) {
+
+                        }
+                     });
+               }
+               /*$(idtd+' img').draggable({
+                  appendTo: "body",
+                  helper: "original",
+                  cursor: "crosshair",
+                  scope: "#plateau",
+                  drag: function( event, ui ) {
+
+                  },
+                  start: function( event, ui ) {
+
+                  }
+               });*/
+               
            }
            
        } 
@@ -106,6 +168,10 @@ function refresh(){
             
             var parties = reponse.parties;
             
+            //var identifiantJoueur = '';
+            
+            identifiantJoueur = $('#identifiantJoueur').ready().text();
+            
             if(contextPath !== reponse.contextPath) contextPath = reponse.contextPath;
             if(pathServeur !== reponse.pathServeur) pathServeur = reponse.pathServeur;
             
@@ -118,13 +184,17 @@ function refresh(){
                     if(connectes !== null){
                         var content = '';
                         for(var i = 0; i< connectes.length; i++){
-                            var classeCss = '';
-                            if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
-                            content += '<li><a id="j-'+connectes[i].id+'" class="'+classeCss+'" href="'
-                                    +reponse.contextPath+'/demander?qui='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
-                                    +'] | Victoires ['+connectes[i].victoire+'] | D&eacute;faites ['+connectes[i].defaite
-                                    +'] | Nulles ['+connectes[i].nulle+'] | Points ['+connectes[i].points+']">'
-                                    +connectes[i].identifiant+'</a></li>';
+                            if(connectes[i].visible === 'true' && identifiantJoueur !== connectes[i].identifiant){
+                                var classeCss = '';
+                                if(connectes[i].isPartie === 'true') classeCss = 'enPartie';
+                                content += '<li><a id="j-'+connectes[i].id+'" class="'+classeCss+'" href="'
+                                        +reponse.contextPath+'/demander?qui='+connectes[i].identifiant+'" title="Parties ['+connectes[i].nombrePartieJouees
+                                        +'] | Victoires ['+connectes[i].victoire+'] | D&eacute;faites ['+connectes[i].defaite
+                                        +'] | Nulles ['+connectes[i].nulle+'] | Points ['+connectes[i].points+']">'
+                                        +connectes[i].identifiant+'</a></li>';
+                                
+                            }
+                            
                         }
                         $('#listeConnecte').html(content);
                     }
@@ -140,11 +210,20 @@ function refresh(){
                     if(parties !== null){
                         var content = '';
                         for(var i = 0; i< parties.length; i++){
-                            showPartie(parties[i]);
-                            content += '<li><a id="p-'+parties[i].id+'" class="" href="'
+                            //showPartie(parties[i]);
+                            if(identifiantJoueur === parties[i].joueurNoir.joueur.identifiant || identifiantJoueur === parties[i].joueurBlanc.joueur.identifiant){
+                                content += '<li><a id="p-'+parties[i].id+'" class="" href="'
+                                    +reponse.contextPath+'/jouer?partie='+parties[i].id+'">'
+                                    +parties[i].joueurNoir.joueur.identifiant+' vs '+parties[i].joueurBlanc.joueur.identifiant
+                                    +'</a></li>';
+                            }
+                            else{
+                                content += '<li><a id="p-'+parties[i].id+'" class="" href="'
                                     +reponse.contextPath+'/regarder?partie='+parties[i].id+'">'
                                     +parties[i].joueurNoir.joueur.identifiant+' vs '+parties[i].joueurBlanc.joueur.identifiant
                                     +'</a></li>';
+                            }
+                            
                         }
                         $('#listePartie').html(content);
                     }
@@ -178,13 +257,32 @@ function refresh(){
                         $('#listeDemande').html(content);
                     }
                 }
+                
             });
             
-            /*if(syncDemandes !== reponse.syncDemandes){
-                for(var i = 0; i< demandes.length; i++){
+            $('#plateau').ready(function(){
+                // on verifie si une partie est demander et on affiche celle ci
+                if(location.href.toString().indexOf(contextPath+'/jouer') > -1 || location.href.toString().indexOf(contextPath+'/regarder') > -1 ){
+                    //console.log("debug");
+                    var idPartie = $.urlParam('partie');
                     
+                    //console.log(identifiantJoueur);
+                    if(idPartie !== null){
+                         for(var i = 0; i< parties.length; i++){
+                             if(idPartie === parties[i].id){
+                                 if(parties[i].syncjeu !== syncjeu){
+                                     syncjeu = parties[i].syncjeu;
+                                     showPartie(parties[i]);
+
+                                 }
+                                 break;
+                             }
+                         }
+                    }
                 }
-            }*/
+            });
+            
+            
             
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -192,17 +290,6 @@ function refresh(){
         }
     });
 }
-
-/*function redirigeAuto(context){
-    if(window.location.href.indexOf('jouer?a=') > -1){
-        alert('ok co 0');
-    }
-    else if(window.location.href.indexOf('connecter') > -1 || window.location.href.indexOf('deconnexion') > -1){
-        window.location.href = context;
-        alert('ok co 1');
-    }
-    else alert('ok co else '+window.location.href);
-}*/
 
 // Section formulaire
 var check = {};
@@ -267,8 +354,25 @@ $(document).ready(function(){
         });
     });
     
-    $(function(){
-        //redirigeAuto(pathServeur+contextPath);
+    $('#plateau').ready(function(){
+        
+        $( "#plateau-chess table td" ).droppable({
+          activeClass: "ui-state-default",
+          hoverClass: "ui-state-hover",
+          //accept: ":not(.ui-sortable-helper)",
+          drop: function( event, ui ) {
+            /*$( this ).find( ".placeholder" ).remove();
+            $( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );*/
+          }
+        })/*.sortable({
+          items: "li:not(.placeholder)",
+          sort: function() {
+            // gets added unintentionally by droppable interacting with sortable
+            // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+            $( this ).removeClass( "ui-state-default" );
+          }
+        })*/;
+        
     });
     
     // on active les tooltips dans une fonction anonyme

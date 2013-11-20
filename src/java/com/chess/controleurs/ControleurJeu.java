@@ -118,7 +118,12 @@ public class ControleurJeu extends HttpServlet {
         }*/
         
         if(action.equals("regarder")){
-            
+            request.setAttribute("section", "plateau");
+        }
+        else if(action.equals("jouer") && request.getParameter("partie") != null){
+            // on permet le jeu en asyncrone ajax
+            System.out.println(request.getParameter("partie"));
+            request.setAttribute("section", "plateau");
         }
         else{
             if(joueur != null && adversaire != null){
@@ -128,7 +133,9 @@ public class ControleurJeu extends HttpServlet {
                     if(action.equals("jouer")){
                         //demande = new Demande(adversaire.getIdentifiant(), joueur.getIdentifiant());
                         if(request.getParameter("partie") != null){
-                            
+                            // on permet le jeu en asyncrone ajax
+                            System.out.println(request.getParameter("partie"));
+                            request.setAttribute("section", "plateau");
                         }
                         else{
                             if(demandes.contains(demande)){
@@ -182,7 +189,7 @@ public class ControleurJeu extends HttpServlet {
             this.getServletContext().setAttribute("parties", parties);
             this.getServletContext().setAttribute("partiesSuivies", partiesSuivies);
         }
-        
+        System.out.println(request.getAttribute("section"));
         this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);
         
     }

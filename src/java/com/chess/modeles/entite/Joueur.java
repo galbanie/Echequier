@@ -43,6 +43,8 @@ public class Joueur extends Membre implements JSONAware{
     private LinkedHashSet<Joueur> demandes;*/
     @Transient
     private boolean partie = false;
+    @Transient
+    private boolean visible = false;
     @Column
     private int points;
     @Column
@@ -78,6 +80,14 @@ public class Joueur extends Membre implements JSONAware{
      */
     public void setPartie(boolean partie) {
         this.partie = partie;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     /*public LinkedHashSet<Joueur> getDemandes() {
@@ -184,6 +194,12 @@ public class Joueur extends Membre implements JSONAware{
         sb.append(JSONObject.escape("points"));
         sb.append(":");
         sb.append("\""+getPoints()+"\"");
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("visible"));
+        sb.append(":");
+        sb.append("\""+isVisible()+"\"");
         
         sb.append(",");
         

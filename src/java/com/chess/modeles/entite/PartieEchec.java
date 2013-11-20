@@ -5,6 +5,7 @@ import com.chess.classes.Echequier;
 import com.chess.classes.EtatPlateau;
 import com.chess.classes.JoueurEchec;
 import com.chess.classes.Position;
+import com.chess.outils.SyncLogIn;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,8 @@ public class PartieEchec implements JSONAware, Serializable{
     private JoueurEchec playerB;
     // Temps 
     //private Timer temps;
+    @Transient
+    private String syncjeu;
     
     // gagnant
     @Transient
@@ -53,6 +56,7 @@ public class PartieEchec implements JSONAware, Serializable{
         playerB = new JoueurEchec(joueurB, true, ColorPiece.WHITE);
         playerN = new JoueurEchec(joueurN, false, ColorPiece.BLACK);
         //temps = new Timer();
+        syncjeu = String.valueOf(SyncLogIn.getInstant());
         gagnant = null;
     }
     
@@ -83,6 +87,7 @@ public class PartieEchec implements JSONAware, Serializable{
             playerB.setFocus(true);
             playerN.setFocus(false);
             verifieGagnant();
+            syncjeu = String.valueOf(SyncLogIn.getInstant());
             return chess.deplacer(position);
         }
         return false;
@@ -93,6 +98,7 @@ public class PartieEchec implements JSONAware, Serializable{
             playerB.setFocus(false);
             playerN.setFocus(true);
             verifieGagnant();
+            syncjeu = String.valueOf(SyncLogIn.getInstant());
             return chess.deplacer(position);
         }
         return false;
@@ -160,6 +166,12 @@ public class PartieEchec implements JSONAware, Serializable{
         sb.append(JSONObject.escape("chess"));
         sb.append(":");
         sb.append(chess.toJSONString());
+        
+        sb.append(",");
+        
+        sb.append(JSONObject.escape("syncjeu"));
+        sb.append(":");
+        sb.append("\""+syncjeu+"\"");
         
         sb.append(",");
         
