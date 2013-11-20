@@ -4,6 +4,7 @@ import com.chess.classes.ColorPiece;
 import com.chess.classes.Echequier;
 import com.chess.classes.EtatPlateau;
 import com.chess.classes.JoueurEchec;
+import com.chess.classes.Piece;
 import com.chess.classes.Position;
 import com.chess.outils.SyncLogIn;
 import java.io.Serializable;
@@ -64,44 +65,34 @@ public class PartieEchec implements JSONAware, Serializable{
         //temps.schedule(new PartieEchecTask(), 0,30 * 1000);
     }*/
     
-    public boolean selectionnerNoir(Position position){
+    public boolean selectionner(Position position){
+        Piece piece = chess.selectionner(position);
         if(playerN.isFocus()){
-            if(chess.selectionner(position) != null && chess.selectionner(position).getCouleur().equals(playerN.getColor())){
+            if(piece != null && piece.getCouleur().equals(playerN.getColor())){
                 return true;
             }
         }
-        return false;
-    }
-    
-    public boolean selectionnerBlanc(Position position){
-        if(playerB.isFocus()){
-            if(chess.selectionner(position) != null && chess.selectionner(position).getCouleur().equals(playerB.getColor())){
+        else{
+            if(piece != null && piece.getCouleur().equals(playerB.getColor())){
                 return true;
             }
         }
+        chess.deselectionner();
         return false;
     }
     
-    public boolean deplacerNoir(Position position){
+    public boolean deplacer(Position position){
         if(playerN.isFocus()){
             playerB.setFocus(true);
             playerN.setFocus(false);
-            verifieGagnant();
-            syncjeu = String.valueOf(SyncLogIn.getInstant());
-            return chess.deplacer(position);
         }
-        return false;
-    }
-    
-    public boolean deplacerBlanc(Position position){
-        if(playerB.isFocus()){
+        else{
             playerB.setFocus(false);
             playerN.setFocus(true);
-            verifieGagnant();
-            syncjeu = String.valueOf(SyncLogIn.getInstant());
-            return chess.deplacer(position);
         }
-        return false;
+        verifieGagnant();
+        syncjeu = String.valueOf(SyncLogIn.getInstant());
+        return chess.deplacer(position);
     }
     
     private void verifieGagnant(){

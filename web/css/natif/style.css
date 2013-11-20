@@ -294,3 +294,9 @@ body{
     background-color: #cd0a0a;
     opacity: .5;
 }
+
+/** style when an object is moving hover **/
+.hoverClass{
+    background:#339bfb;
+    color:#ffffff;
+}

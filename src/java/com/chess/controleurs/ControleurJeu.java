@@ -122,7 +122,8 @@ public class ControleurJeu extends HttpServlet {
         }
         else if(action.equals("jouer") && request.getParameter("partie") != null){
             // on permet le jeu en asyncrone ajax
-            System.out.println(request.getParameter("partie"));
+            
+            //System.out.println(request.getParameter("partie"));
             request.setAttribute("section", "plateau");
         }
         else{

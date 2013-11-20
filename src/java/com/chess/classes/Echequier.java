@@ -122,6 +122,10 @@ public final class Echequier implements JSONAware{
         return selectionner(new Position(ligne, colonne));
     }
     
+    public void deselectionner(){
+        selection = null;
+    }
+    
     public String getNamePieceSelectionnee(){
         return (selection!=null && selection.getValue() != null ) ? selection.getValue().toString() : "None";
     }
@@ -193,6 +197,8 @@ public final class Echequier implements JSONAware{
            }
            
         }
+        // on deselectionne
+        selection = null;
         return false;
     }
 

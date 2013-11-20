@@ -9,8 +9,9 @@ var contextPath = '';
 var pathServeur = '';
 var syncjeu = '';
 var identifiantJoueur = '';
+var posDep = '';
 
-$.urlParam = function(name){
+/*$.urlParam = function(name){
     var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results===null){
        return null;
@@ -18,7 +19,7 @@ $.urlParam = function(name){
     else{
        return results[1] || 0;
     }
-};
+};*/
 
 function getTagImagePiece(type,color,id,classe){
     
@@ -92,44 +93,45 @@ function showPartie(partie){
            
            if(piece !== ""){
                // on construit l'id des td devant contenir les images
-               var idtd = '#l'+position.ligne+'c'+position.colonne;
+               var selectorTd = '#l'+position.ligne+'c'+position.colonne;
+               
                // on place les images dans les td
-               $(idtd).ready().html(getTagImagePiece(piece.type,piece.color,'',''));
+               $(selectorTd).ready().html(getTagImagePiece(piece.type,piece.color,'',''));
                
                //console.log(identifiantJoueur);
                
                if(identifiantJoueur === partie.joueurNoir.joueur.identifiant && partie.joueurNoir.focus === 'true'){
-                   $(idtd+' img.black').draggable({
-                        //appendTo: "body",
+                   $(selectorTd+' img.black').draggable({
                         helper: "original",
                         cursor: "move",
-                        scope: "#plateau",
-                        revert: "invalid", // when not dropped, the item will revert back to its initial position
-                        containment: "document",
+                        scope: "#plateau-chess-table",
+                        revert: true,
+                        containment: "#plateau-chess-table",
                         drag: function( event, ui ) {
-
+                            
                         },
                         start: function( event, ui ) {
-
+                            
                         }
                      });
                }
                else if(identifiantJoueur === partie.joueurBlanc.joueur.identifiant && partie.joueurBlanc.focus === 'true'){
-                   $(idtd+' img.white').draggable({
-                        //appendTo: "body",
+                   $(selectorTd+' img.white').draggable({
                         helper: "original",
                         cursor: "move",
-                        scope: "#plateau-chess td",
-                        revert: "valid", // when not dropped, the item will revert back to its initial position
-                        containment: "document",
+                        stack: '#plateau-chess-table',
+                        revert: true,
+                        containment: "#plateau-chess-table",
                         drag: function( event, ui ) {
-
+                            
                         },
                         start: function( event, ui ) {
-
+                            //console.log($(this));
+                            //console.log(ui);
                         }
                      });
                }
+               
                /*$(idtd+' img').draggable({
                   appendTo: "body",
                   helper: "original",
@@ -357,21 +359,27 @@ $(document).ready(function(){
     $('#plateau').ready(function(){
         
         $( "#plateau-chess table td" ).droppable({
-          activeClass: "ui-state-default",
+          activeClass: false,
           hoverClass: "ui-state-hover",
-          //accept: ":not(.ui-sortable-helper)",
+          accept: "#plateau-chess-table tr td>img",
           drop: function( event, ui ) {
-            /*$( this ).find( ".placeholder" ).remove();
-            $( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );*/
+              //console.log($(this).children().length);
+              if($(this).children().length === 0){
+                  ui.draggable.appendTo($(this)).css({
+                        left: '0px',
+                        top:  '0px'
+                    }).draggable({ containment: 'parent' });
+              }
+              /*ui.draggable.appendTo($(this)).css({
+                    left: '0px',
+                    top:  '0px'
+                }).draggable({ containment: 'parent' });*/
+          },
+          out: function( event, ui ) {
+              console.log($(this).attr('id'));
+              
           }
-        })/*.sortable({
-          items: "li:not(.placeholder)",
-          sort: function() {
-            // gets added unintentionally by droppable interacting with sortable
-            // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
-            $( this ).removeClass( "ui-state-default" );
-          }
-        })*/;
+        });
         
     });
     

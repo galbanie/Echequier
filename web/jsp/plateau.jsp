@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <article id="plateau">
     <div id="plateau-chess">
-        <table>
+        <table id="plateau-chess-table">
             <tr>
                 <th></th>
                 <th>a</th>
