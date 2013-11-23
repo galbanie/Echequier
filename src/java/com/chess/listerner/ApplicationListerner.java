@@ -28,8 +28,8 @@ public class ApplicationListerner implements ServletContextListener{
         sce.getServletContext().setAttribute("syncDemandes", "");
         sce.getServletContext().setAttribute("parties", new LinkedHashSet<PartieEchec>());
         sce.getServletContext().setAttribute("syncParties", "");
-        sce.getServletContext().setAttribute("partiesSuivies", new HashMap<String,PartieEchec>());
-        sce.getServletContext().setAttribute("syncPartiesSuivies", "");
+        /*sce.getServletContext().setAttribute("partiesSuivies", new HashMap<String,PartieEchec>());
+        sce.getServletContext().setAttribute("syncPartiesSuivies", "");*/
         //sce.getServletContext().setAttribute("syncjouer", "");
     }
 

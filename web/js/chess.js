@@ -9,7 +9,7 @@ var contextPath = '';
 var pathServeur = '';
 var syncjeu = '';
 var identifiantJoueur = '';
-var posDep = '';
+var pos = new Array();
 
 /*$.urlParam = function(name){
     var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -61,7 +61,7 @@ function showPartie(partie){
     var capturesBlack = partie.chess.capturesBlack;
     var capturesWhite = partie.chess.capturesWhite;
     
-    $('plateau').ready(function(){
+    $('#plateau').ready(function(){
        // background en or pour celui des deux joueurs qui detient le focus.
        if(joueurNoir.focus === 'true') $('#plateau-droit-joueur-haut-info').ready().addClass('focus');
        else $('#plateau-droit-joueur-bas-info').ready().addClass('focus');
@@ -131,7 +131,7 @@ function showPartie(partie){
                         }
                      });
                }
-               
+                
                /*$(idtd+' img').draggable({
                   appendTo: "body",
                   helper: "original",
@@ -363,21 +363,39 @@ $(document).ready(function(){
           hoverClass: "ui-state-hover",
           accept: "#plateau-chess-table tr td>img",
           drop: function( event, ui ) {
-              //console.log($(this).children().length);
-              if($(this).children().length === 0){
+              //console.log($(this).children().attr('class').split(' ')+ '----->'+ $(ui.draggable).attr('class').split(' '));
+              //if($(this).children().length === 0 || $(this).children().attr('class').split(' ')[0] !== $(ui.draggable).attr('class').split(' ')[0]){
                   ui.draggable.appendTo($(this)).css({
                         left: '0px',
                         top:  '0px'
                     }).draggable({ containment: 'parent' });
-              }
+              //}
               /*ui.draggable.appendTo($(this)).css({
                     left: '0px',
                     top:  '0px'
                 }).draggable({ containment: 'parent' });*/
+              var idtdArr = $(this).attr('id');
+              var ligneDep = pos[0].charAt(1);
+              var colonneDep = pos[0].charAt(3);
+              var ligneArr = idtdArr.charAt(1);
+              var colonneArr = idtdArr.charAt(3);
+              pos = new Array();
+              console.log('ligne depart : '+ligneDep+';colonne depart : '+colonneDep);
+              console.log('ligne arrivee : '+ligneArr+';colonne arrivee : '+colonneArr);
+              console.log(pathServeur+contextPath+'/jouer?partie='+$.urlParam('partie'));
+              $.post(pathServeur+contextPath+'/jouer',{
+                  method : 'ajax',
+                  partie : $.urlParam('partie'),
+                  ligneDepart : ligneDep,
+                  colonneDepart : colonneDep,
+                  ligneArrivee : ligneArr,
+                  colonneArrivee : colonneArr
+              });
           },
           out: function( event, ui ) {
-              console.log($(this).attr('id'));
-              
+              //console.log($(this).attr('id'));
+              pos.push($(this).attr('id'));
+              console.log(pos.length+'--->'+pos+'--->'+pos[0]);
           }
         });
         

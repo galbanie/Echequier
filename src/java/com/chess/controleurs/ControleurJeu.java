@@ -1,6 +1,7 @@
 package com.chess.controleurs;
 
 import com.chess.classes.Demande;
+import com.chess.classes.Position;
 import com.chess.modeles.entite.Joueur;
 import com.chess.modeles.entite.PartieEchec;
 import com.chess.modeles.manager.Manager;
@@ -9,6 +10,7 @@ import com.chess.outils.SyncLogIn;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +33,7 @@ public class ControleurJeu extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @SuppressWarnings("empty-statement")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -46,7 +49,7 @@ public class ControleurJeu extends HttpServlet {
         
         LinkedHashSet<PartieEchec> parties = (LinkedHashSet<PartieEchec>)this.getServletContext().getAttribute("parties");
         
-        HashMap<String,PartieEchec> partiesSuivies = (HashMap<String,PartieEchec>)this.getServletContext().getAttribute("partiesSuivies");
+        //HashMap<String,PartieEchec> partiesSuivies = (HashMap<String,PartieEchec>)this.getServletContext().getAttribute("partiesSuivies");
         
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)this.getServletContext().getAttribute("connectes");
         
@@ -122,8 +125,41 @@ public class ControleurJeu extends HttpServlet {
         }
         else if(action.equals("jouer") && request.getParameter("partie") != null){
             // on permet le jeu en asyncrone ajax
+            System.out.println(request.getParameterMap());
             
-            //System.out.println(request.getParameter("partie"));
+            if(request.getParameter("method")!= null && request.getParameter("method").equals("ajax")){
+                if(request.getParameter("partie") != null){
+                    try{
+                        long idPartie =  Long.parseLong(request.getParameter("partie"));
+                    
+                        for (PartieEchec p : parties) {
+                            if(p.getId() == idPartie){
+                                int ligneDep = Integer.parseInt(request.getParameter("ligneDepart"));
+                                int colonneDep = Integer.parseInt(request.getParameter("colonneDepart"));
+                                int ligneArr = Integer.parseInt(request.getParameter("ligneArrivee"));
+                                int colonneArr = Integer.parseInt(request.getParameter("colonneArrivee"));
+                                Position posDep = new Position(ligneDep,colonneDep);
+                                Position posArr = new Position(ligneArr, colonneArr);
+                                if(p.selectionner(posDep)){
+                                    p.deplacer(posArr);
+                                }
+                                //parties.remove(p);
+                                //parties.add(p);
+                                this.getServletContext().setAttribute("syncParties", String.valueOf(SyncLogIn.getInstant()));
+                                /*synchronized(this){
+                                    this.getServletContext().setAttribute("parties", parties);
+                                }
+                                break;*/
+                            }
+                        }
+                    }catch(NumberFormatException e){
+                        out.print(e.getMessage());
+                    }
+                    
+                }
+                //return;
+            }
+            
             request.setAttribute("section", "plateau");
         }
         else{
@@ -133,12 +169,12 @@ public class ControleurJeu extends HttpServlet {
                     demandeAdverse = new Demande(adversaire.getIdentifiant(), joueur.getIdentifiant());
                     if(action.equals("jouer")){
                         //demande = new Demande(adversaire.getIdentifiant(), joueur.getIdentifiant());
-                        if(request.getParameter("partie") != null){
+                        /*if(request.getParameter("partie") != null){
                             // on permet le jeu en asyncrone ajax
                             System.out.println(request.getParameter("partie"));
                             request.setAttribute("section", "plateau");
                         }
-                        else{
+                        else{*/
                             if(demandes.contains(demande)){
                                 demandes.remove(demande);
                                 this.getServletContext().setAttribute("syncDemandes", String.valueOf(SyncLogIn.getInstant()));
@@ -152,13 +188,13 @@ public class ControleurJeu extends HttpServlet {
                                 partieManager.create(partie);
                                 parties.add(partie);
                                 
-                                partiesSuivies.put(joueur.getIdentifiant(), partie);
-                                partiesSuivies.put(adversaire.getIdentifiant(), partie);
+                                /*partiesSuivies.put(joueur.getIdentifiant(), partie);
+                                partiesSuivies.put(adversaire.getIdentifiant(), partie);*/
                                 
                                 this.getServletContext().setAttribute("syncParties", String.valueOf(SyncLogIn.getInstant()));
-                                this.getServletContext().setAttribute("syncPartiesSuivies", String.valueOf(SyncLogIn.getInstant()));
+                                //this.getServletContext().setAttribute("syncPartiesSuivies", String.valueOf(SyncLogIn.getInstant()));
                             }
-                        }
+                        //}
                     }
                     else if(action.equals("demander")){
                         //demande = new Demande(joueur.getIdentifiant(), adversaire.getIdentifiant());
@@ -188,7 +224,7 @@ public class ControleurJeu extends HttpServlet {
         synchronized(this){
             this.getServletContext().setAttribute("demandes", demandes);
             this.getServletContext().setAttribute("parties", parties);
-            this.getServletContext().setAttribute("partiesSuivies", partiesSuivies);
+            //this.getServletContext().setAttribute("partiesSuivies", partiesSuivies);
         }
         System.out.println(request.getAttribute("section"));
         this.getServletContext().getRequestDispatcher("/gabarit.jsp").forward(request, response);

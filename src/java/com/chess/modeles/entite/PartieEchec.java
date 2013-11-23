@@ -99,6 +99,10 @@ public class PartieEchec implements JSONAware, Serializable{
         gagnant = (chess.getEtat().equals(EtatPlateau.ECHEC_BLACK)) ?  playerB.getJoueur() :  playerN.getJoueur();
     }
 
+    public long getId() {
+        return id;
+    }
+
     /*class PartieEchecTask extends TimerTask{
     @Override
     public void run() {
@@ -180,7 +184,7 @@ public class PartieEchec implements JSONAware, Serializable{
         if(obj != null){
             if(obj instanceof PartieEchec){
                 PartieEchec other = (PartieEchec)obj;
-                return this.playerB.equals(other.playerB) && this.playerN.equals(other.playerN);
+                return this.id == other.id;
             }
         }
         return false;

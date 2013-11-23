@@ -28,7 +28,7 @@ public class SessionListerner implements HttpSessionListener {
         LinkedHashSet<Joueur> connectes = (LinkedHashSet<Joueur>)se.getSession().getServletContext().getAttribute("connectes");
         LinkedHashSet<Demande> demandes = ( LinkedHashSet<Demande>)se.getSession().getServletContext().getAttribute("demandes");
         LinkedHashSet<PartieEchec> parties = (LinkedHashSet<PartieEchec>)se.getSession().getServletContext().getAttribute("parties");
-        HashMap<String,PartieEchec> partiesSuivies = (HashMap<String,PartieEchec>)se.getSession().getServletContext().getAttribute("partiesSuivies");
+        //HashMap<String,PartieEchec> partiesSuivies = (HashMap<String,PartieEchec>)se.getSession().getServletContext().getAttribute("partiesSuivies");
         
         if(joueur != null){
             if(connectes.contains(joueur)){
@@ -51,21 +51,21 @@ public class SessionListerner implements HttpSessionListener {
                 }
             }
             
-            if(partiesSuivies.containsKey(joueur.getIdentifiant())){
+            /*if(partiesSuivies.containsKey(joueur.getIdentifiant())){
                 PartieEchec partie = partiesSuivies.get(joueur.getIdentifiant());
                 for (Map.Entry<String,PartieEchec> entry : partiesSuivies.entrySet()) {
                     if(entry.getValue().equals(partie)){
                         partiesSuivies.remove(entry.getKey());
                     }
                 }
-            }
+            }*/
             
         }
         
         se.getSession().getServletContext().setAttribute("connectes", connectes);
         se.getSession().getServletContext().setAttribute("demandes", demandes);
         se.getSession().getServletContext().setAttribute("parties", parties);
-        se.getSession().getServletContext().setAttribute("partiesSuivies", partiesSuivies);
+        //se.getSession().getServletContext().setAttribute("partiesSuivies", partiesSuivies);
     }
     
 }
