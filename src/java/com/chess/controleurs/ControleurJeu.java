@@ -1,7 +1,7 @@
 package com.chess.controleurs;
 
 import com.chess.classes.Demande;
-import com.chess.classes.Position;
+import com.chess.modeles.entite.Position;
 import com.chess.modeles.entite.Joueur;
 import com.chess.modeles.entite.PartieEchec;
 import com.chess.modeles.manager.Manager;
@@ -141,8 +141,10 @@ public class ControleurJeu extends HttpServlet {
                                 Position posDep = new Position(ligneDep,colonneDep);
                                 Position posArr = new Position(ligneArr, colonneArr);
                                 if(p.selectionner(posDep)){
-                                    p.deplacer(posArr);
+                                    partieManager.update(p);
+                                    System.out.println(p.deplacer(posArr));
                                 }
+                                else System.out.println("selection error pos :"+posDep);
                                 //parties.remove(p);
                                 //parties.add(p);
                                 this.getServletContext().setAttribute("syncParties", String.valueOf(SyncLogIn.getInstant()));

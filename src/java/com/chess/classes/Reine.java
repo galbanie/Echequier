@@ -1,5 +1,6 @@
 package com.chess.classes;
 
+import com.chess.modeles.entite.Position;
 import org.json.simple.JSONObject;
 
 /**

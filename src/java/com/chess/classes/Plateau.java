@@ -6,6 +6,7 @@
 
 package com.chess.classes;
 
+import com.chess.modeles.entite.Position;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

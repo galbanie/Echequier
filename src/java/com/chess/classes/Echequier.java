@@ -1,5 +1,6 @@
 package com.chess.classes;
 
+import com.chess.modeles.entite.Position;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -160,8 +161,10 @@ public final class Echequier implements JSONAware{
                 }
             }
             
+           System.out.println(cible);
            // si l'entrée existe dans la map
            if(cible != null){
+               System.out.println(cible.getKey()+"---->"+cible.getValue());
                // si la piece selectionnée peut se déplacer à la position de la cible
                if(selection.getValue().deplacer(selection.getKey(), cible.getKey())){
                    // Si à la position de la cible il y a une piece

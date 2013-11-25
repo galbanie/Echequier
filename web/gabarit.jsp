@@ -62,10 +62,10 @@
                         <li ><a id="identifiantJoueur" href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}" id="identifiantMenu"><c:out value="${sessionScope.joueur.identifiant}" /></a></li>
                         <c:choose>
                             <c:when test="${sessionScope.joueur.visible eq true}">
-                            <li><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}?visible=false">visible</a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}?visible=false">visibilité <span style="color: green; font-weight: bolder;">(on)</span></a></li>
                             </c:when>
                             <c:otherwise>
-                            <li><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}?visible=true">invisible</a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}/${sessionScope.joueur.identifiant}?visible=true">visibilité <span style="color: red; font-weight: bolder;">(off)</span></a></li>
                             </c:otherwise>
                         </c:choose>
                         

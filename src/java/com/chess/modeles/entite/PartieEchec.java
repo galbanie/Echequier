@@ -5,13 +5,16 @@ import com.chess.classes.Echequier;
 import com.chess.classes.EtatPlateau;
 import com.chess.classes.JoueurEchec;
 import com.chess.classes.Piece;
-import com.chess.classes.Position;
 import com.chess.outils.SyncLogIn;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.json.simple.JSONAware;
@@ -47,6 +50,10 @@ public class PartieEchec implements JSONAware, Serializable{
     // gagnant
     @Transient
     private Joueur gagnant;
+    
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn
+    private List<Position> deplacement;
 
     public PartieEchec() {
         this(null,null);
@@ -59,6 +66,7 @@ public class PartieEchec implements JSONAware, Serializable{
         //temps = new Timer();
         syncjeu = String.valueOf(SyncLogIn.getInstant());
         gagnant = null;
+        deplacement = new ArrayList<Position>();
     }
     
     /*public void jouer(){
@@ -92,7 +100,9 @@ public class PartieEchec implements JSONAware, Serializable{
         }
         verifieGagnant();
         syncjeu = String.valueOf(SyncLogIn.getInstant());
-        return chess.deplacer(position);
+        boolean deplacer = chess.deplacer(position);
+        if(deplacer) deplacement.add(position);
+        return deplacer;
     }
     
     private void verifieGagnant(){

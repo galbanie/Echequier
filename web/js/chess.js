@@ -63,8 +63,14 @@ function showPartie(partie){
     
     $('#plateau').ready(function(){
        // background en or pour celui des deux joueurs qui detient le focus.
-       if(joueurNoir.focus === 'true') $('#plateau-droit-joueur-haut-info').ready().addClass('focus');
-       else $('#plateau-droit-joueur-bas-info').ready().addClass('focus');
+       if(joueurNoir.focus === 'true'){
+           $('#plateau-droit-joueur-bas-info').ready().removeClass('focus');
+           $('#plateau-droit-joueur-haut-info').ready().addClass('focus');
+       }
+       else{
+           $('#plateau-droit-joueur-haut-info').ready().removeClass('focus');
+           $('#plateau-droit-joueur-bas-info').ready().addClass('focus');
+       }
        
        // on insere les information sur le joueur du haut
        $('#identifiant-joueur-haut').ready().html(joueurNoir.joueur.identifiant);
@@ -90,11 +96,10 @@ function showPartie(partie){
            
            var position = plateau[i].position;
            var piece = plateau[i].piece;
-           
-           if(piece !== ""){
-               // on construit l'id des td devant contenir les images
-               var selectorTd = '#l'+position.ligne+'c'+position.colonne;
+           // on construit l'id des td devant contenir les images
+           var selectorTd = '#l'+position.ligne+'c'+position.colonne;
                
+           if(piece !== ""){
                // on place les images dans les td
                $(selectorTd).ready().html(getTagImagePiece(piece.type,piece.color,'',''));
                
@@ -146,9 +151,98 @@ function showPartie(partie){
                });*/
                
            }
+           else $(selectorTd).html('');
+           
+           $( selectorTd ).droppable({
+              activeClass: false,
+              hoverClass: "ui-state-hover",
+              accept: selectorTd+">img",
+              drop: function( event, ui ) {
+                  //console.log($(this).children().attr('class').split(' ')+ '----->'+ $(ui.draggable).attr('class').split(' '));
+                  //if($(this).children().length === 0 || $(this).children().attr('class').split(' ')[0] !== $(ui.draggable).attr('class').split(' ')[0]){
+                      ui.draggable.appendTo($(this)).css({
+                            left: '0px',
+                            top:  '0px'
+                        }).draggable({ /*containment: 'parent'*/ });
+                  //}
+                  /*ui.draggable.appendTo($(this)).css({
+                        left: '0px',
+                        top:  '0px'
+                    }).draggable({ containment: 'parent' });*/
+                  var idtdArr = $(this).attr('id');
+                  var ligneDep = pos[0].charAt(1);
+                  var colonneDep = pos[0].charAt(3);
+                  var ligneArr = idtdArr.charAt(1);
+                  var colonneArr = idtdArr.charAt(3);
+                  pos = new Array();
+                  console.log('ligne depart : '+ligneDep+';colonne depart : '+colonneDep);
+                  console.log('ligne arrivee : '+ligneArr+';colonne arrivee : '+colonneArr);
+                  console.log(pathServeur+contextPath+'/jouer?partie='+$.urlParam('partie'));
+                  //if(pos[0] !== idtdArr){
+                      $.post(pathServeur+contextPath+'/jouer',{
+                          method : 'ajax',
+                          partie : $.urlParam('partie'),
+                          ligneDepart : ligneDep,
+                          colonneDepart : colonneDep,
+                          ligneArrivee : ligneArr,
+                          colonneArrivee : colonneArr
+                      });
+                  //}
+
+              },
+              out: function( event, ui ) {
+                  //console.log($(this).attr('id'));
+                  pos.push($(this).attr('id'));
+                  console.log(pos.length+'--->'+pos+'--->'+pos[0]);
+              }
+            });
            
        } 
        
+       /*$( "#plateau-chess table td" ).droppable({
+          activeClass: false,
+          hoverClass: "ui-state-hover",
+          accept: "#plateau-chess-table tr td>img",
+          drop: function( event, ui ) {
+              //console.log($(this).children().attr('class').split(' ')+ '----->'+ $(ui.draggable).attr('class').split(' '));
+              //if($(this).children().length === 0 || $(this).children().attr('class').split(' ')[0] !== $(ui.draggable).attr('class').split(' ')[0]){
+                  ui.draggable.appendTo($(this)).css({
+                        left: '0px',
+                        top:  '0px'
+                    }).draggable({ /*containment: 'parent'*/ //});
+              //}
+              /*ui.draggable.appendTo($(this)).css({
+                    left: '0px',
+                    top:  '0px'
+                }).draggable({ containment: 'parent' });*/
+              /*var idtdArr = $(this).attr('id');
+              var ligneDep = pos[0].charAt(1);
+              var colonneDep = pos[0].charAt(3);
+              var ligneArr = idtdArr.charAt(1);
+              var colonneArr = idtdArr.charAt(3);
+              pos = new Array();
+              console.log('ligne depart : '+ligneDep+';colonne depart : '+colonneDep);
+              console.log('ligne arrivee : '+ligneArr+';colonne arrivee : '+colonneArr);
+              console.log(pathServeur+contextPath+'/jouer?partie='+$.urlParam('partie'));
+              //if(pos[0] !== idtdArr){
+                  $.post(pathServeur+contextPath+'/jouer',{
+                      method : 'ajax',
+                      partie : $.urlParam('partie'),
+                      ligneDepart : ligneDep,
+                      colonneDepart : colonneDep,
+                      ligneArrivee : ligneArr,
+                      colonneArrivee : colonneArr
+                  });
+              //}
+              
+          },
+          out: function( event, ui ) {
+              //console.log($(this).attr('id'));
+              pos.push($(this).attr('id'));
+              console.log(pos.length+'--->'+pos+'--->'+pos[0]);
+          }
+        });*/
+        
     });
 }
 
@@ -358,7 +452,7 @@ $(document).ready(function(){
     
     $('#plateau').ready(function(){
         
-        $( "#plateau-chess table td" ).droppable({
+        /*$( "#plateau-chess table td" ).droppable({
           activeClass: false,
           hoverClass: "ui-state-hover",
           accept: "#plateau-chess-table tr td>img",
@@ -368,13 +462,13 @@ $(document).ready(function(){
                   ui.draggable.appendTo($(this)).css({
                         left: '0px',
                         top:  '0px'
-                    }).draggable({ containment: 'parent' });
+                    }).draggable({ /*containment: 'parent' });*/
               //}
               /*ui.draggable.appendTo($(this)).css({
                     left: '0px',
                     top:  '0px'
                 }).draggable({ containment: 'parent' });*/
-              var idtdArr = $(this).attr('id');
+              /*var idtdArr = $(this).attr('id');
               var ligneDep = pos[0].charAt(1);
               var colonneDep = pos[0].charAt(3);
               var ligneArr = idtdArr.charAt(1);
@@ -397,7 +491,7 @@ $(document).ready(function(){
               pos.push($(this).attr('id'));
               console.log(pos.length+'--->'+pos+'--->'+pos[0]);
           }
-        });
+        });*/
         
     });
     

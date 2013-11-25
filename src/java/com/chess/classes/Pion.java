@@ -4,6 +4,7 @@
  */
 package com.chess.classes;
 
+import com.chess.modeles.entite.Position;
 import org.json.simple.JSONObject;
 
 /**
@@ -19,7 +20,9 @@ public class Pion extends Piece{
     @Override
     public boolean deplacer(Position actuel, Position emplacement) {
        
+        System.out.println(actuel.getLigne());
         if(actuel.getLigne() == 2 || actuel.getLigne() == 7){
+            System.out.println(actuel.distanceDirectionLigne(emplacement));
             if(actuel.distanceDirectionLigne(emplacement) >= 1  && actuel.distanceDirectionLigne(emplacement) <= 2)
             return true;
         }

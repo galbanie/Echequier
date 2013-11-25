@@ -1,5 +1,11 @@
-package com.chess.classes;
+package com.chess.modeles.entite;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import org.json.simple.JSONAware;
 import org.json.simple.JSONObject;
 
@@ -7,8 +13,14 @@ import org.json.simple.JSONObject;
  *
  * @author galbanie
  */
-public final class Position implements JSONAware{
+@Entity
+public class Position implements JSONAware, Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column
     private int ligne;
+    @Column
     private int colonne;
     
     public Position()
@@ -57,7 +69,7 @@ public final class Position implements JSONAware{
     }
     
     public static double distanceDirectionLigne(Position p1, Position p2){
-        return (p1.ligne - p2.ligne);
+        return (p2.ligne - p1.ligne);
     }
     
     public double distanceDirectionLigne(Position p){
@@ -65,7 +77,7 @@ public final class Position implements JSONAware{
     }
     
     public static double distanceDirectionColonne(Position p1, Position p2){
-        return (p1.colonne - p2.colonne);
+        return (p2.colonne - p1.colonne);
     }
     
     public double distanceDirectionColonne(Position p){
@@ -120,6 +132,14 @@ public final class Position implements JSONAware{
         sb.append("}");
         
         return sb.toString(); 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
     
