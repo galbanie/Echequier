@@ -9,6 +9,7 @@ import com.chess.outils.SyncLogIn;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,6 +54,7 @@ public class PartieEchec implements JSONAware, Serializable{
     
     @OneToMany(orphanRemoval = true)
     @JoinColumn
+    //@Embedded
     private List<Position> deplacement;
 
     public PartieEchec() {

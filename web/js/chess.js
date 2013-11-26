@@ -110,7 +110,7 @@ function showPartie(partie){
                         helper: "original",
                         cursor: "move",
                         scope: "#plateau-chess-table",
-                        revert: true,
+                        revert: 'invalid',
                         containment: "#plateau-chess-table",
                         drag: function( event, ui ) {
                             
@@ -125,7 +125,7 @@ function showPartie(partie){
                         helper: "original",
                         cursor: "move",
                         stack: '#plateau-chess-table',
-                        revert: true,
+                        revert: 'invalid',
                         containment: "#plateau-chess-table",
                         drag: function( event, ui ) {
                             
@@ -153,7 +153,7 @@ function showPartie(partie){
            }
            else $(selectorTd).html('');
            
-           $( selectorTd ).droppable({
+           /*$( selectorTd ).droppable({
               activeClass: false,
               hoverClass: "ui-state-hover",
               accept: selectorTd+">img",
@@ -163,13 +163,13 @@ function showPartie(partie){
                       ui.draggable.appendTo($(this)).css({
                             left: '0px',
                             top:  '0px'
-                        }).draggable({ /*containment: 'parent'*/ });
+                        }).draggable({ /*containment: 'parent' });*/
                   //}
                   /*ui.draggable.appendTo($(this)).css({
                         left: '0px',
                         top:  '0px'
                     }).draggable({ containment: 'parent' });*/
-                  var idtdArr = $(this).attr('id');
+                  /*var idtdArr = $(this).attr('id');
                   var ligneDep = pos[0].charAt(1);
                   var colonneDep = pos[0].charAt(3);
                   var ligneArr = idtdArr.charAt(1);
@@ -195,7 +195,7 @@ function showPartie(partie){
                   pos.push($(this).attr('id'));
                   console.log(pos.length+'--->'+pos+'--->'+pos[0]);
               }
-            });
+            });*/
            
        } 
        
@@ -450,49 +450,50 @@ $(document).ready(function(){
         });
     });
     
+    $(function(){
     $('#plateau').ready(function(){
         
-        /*$( "#plateau-chess table td" ).droppable({
+        $( "#plateau-chess table td" ).droppable({
           activeClass: false,
           hoverClass: "ui-state-hover",
-          accept: "#plateau-chess-table tr td>img",
+          accept: "#plateau-chess-table tr td > img",
           drop: function( event, ui ) {
-              //console.log($(this).children().attr('class').split(' ')+ '----->'+ $(ui.draggable).attr('class').split(' '));
-              //if($(this).children().length === 0 || $(this).children().attr('class').split(' ')[0] !== $(ui.draggable).attr('class').split(' ')[0]){
-                  ui.draggable.appendTo($(this)).css({
-                        left: '0px',
-                        top:  '0px'
-                    }).draggable({ /*containment: 'parent' });*/
-              //}
-              /*ui.draggable.appendTo($(this)).css({
-                    left: '0px',
-                    top:  '0px'
-                }).draggable({ containment: 'parent' });*/
-              /*var idtdArr = $(this).attr('id');
+              var idtdArr = $(this).attr('id');
               var ligneDep = pos[0].charAt(1);
               var colonneDep = pos[0].charAt(3);
               var ligneArr = idtdArr.charAt(1);
               var colonneArr = idtdArr.charAt(3);
-              pos = new Array();
-              console.log('ligne depart : '+ligneDep+';colonne depart : '+colonneDep);
-              console.log('ligne arrivee : '+ligneArr+';colonne arrivee : '+colonneArr);
-              console.log(pathServeur+contextPath+'/jouer?partie='+$.urlParam('partie'));
-              $.post(pathServeur+contextPath+'/jouer',{
-                  method : 'ajax',
-                  partie : $.urlParam('partie'),
-                  ligneDepart : ligneDep,
-                  colonneDepart : colonneDep,
-                  ligneArrivee : ligneArr,
-                  colonneArrivee : colonneArr
-              });
+              //console.log($(this).children().attr('class').split(' ')+ '----->'+ $(ui.draggable).attr('class').split(' '));
+              //if($(this).children().length === 0 || $(this).children().attr('class').split(' ')[0] !== $(ui.draggable).attr('class').split(' ')[0]){
+                if(pos[0] !== idtdArr){
+                    ui.draggable.appendTo($(this)).css({
+                        left: '0px',
+                        top:  '0px'
+                    }).draggable({ /*containment: 'parent'*/ });
+                
+              //}
+              
+                  pos = new Array();
+                  console.log('ligne depart : '+ligneDep+';colonne depart : '+colonneDep);
+                  console.log('ligne arrivee : '+ligneArr+';colonne arrivee : '+colonneArr);
+                  console.log(pathServeur+contextPath+'/jouer?partie='+$.urlParam('partie'));
+                  $.post(pathServeur+contextPath+'/jouer',{
+                      method : 'ajax',
+                      partie : $.urlParam('partie'),
+                      ligneDepart : ligneDep,
+                      colonneDepart : colonneDep,
+                      ligneArrivee : ligneArr,
+                      colonneArrivee : colonneArr
+                  });
+              }
           },
           out: function( event, ui ) {
-              //console.log($(this).attr('id'));
               pos.push($(this).attr('id'));
               console.log(pos.length+'--->'+pos+'--->'+pos[0]);
           }
-        });*/
+        });
         
+    });
     });
     
     // on active les tooltips dans une fonction anonyme
