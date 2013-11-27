@@ -52,10 +52,10 @@ public class PartieEchec implements JSONAware, Serializable{
     @Transient
     private Joueur gagnant;
     
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn
+    @OneToMany//(orphanRemoval = true)
+    @JoinColumn(name = "idPartie")
     //@Embedded
-    private List<Position> deplacement;
+    private List<Deplacement> deplacement;
 
     public PartieEchec() {
         this(null,null);
@@ -68,7 +68,7 @@ public class PartieEchec implements JSONAware, Serializable{
         //temps = new Timer();
         syncjeu = String.valueOf(SyncLogIn.getInstant());
         gagnant = null;
-        deplacement = new ArrayList<Position>();
+        deplacement = new ArrayList<Deplacement>();
     }
     
     /*public void jouer(){
@@ -102,8 +102,16 @@ public class PartieEchec implements JSONAware, Serializable{
         }
         verifieGagnant();
         syncjeu = String.valueOf(SyncLogIn.getInstant());
+        Position dep = chess.getPosSelectionner();
         boolean deplacer = chess.deplacer(position);
-        if(deplacer) deplacement.add(position);
+        
+        System.out.println(dep);
+        if(deplacer && dep != null) 
+        {
+            Deplacement d = new Deplacement(dep, position);
+            System.out.println(d);
+            deplacement.add(d);
+        }
         return deplacer;
     }
     
@@ -189,6 +197,14 @@ public class PartieEchec implements JSONAware, Serializable{
         sb.append("}");
         
         return sb.toString();
+    }
+
+    public List<Deplacement> getDeplacement() {
+        return deplacement;
+    }
+
+    public void setDeplacement(List<Deplacement> deplacement) {
+        this.deplacement = deplacement;
     }
 
     @Override

@@ -106,6 +106,10 @@ public final class Echequier implements JSONAware{
         return etat;
     }
     
+    public Position getPosSelectionner(){
+        return (selection != null) ? selection.getKey() : null;
+    }
+    
     public Piece selectionner(Position position){
         if((etat.equals(EtatPlateau.PRET) || etat.equals(EtatPlateau.EN_COURS)) && plateau.containsKey(position)){
             for(Entry<Position, Piece> entry : plateau.entrySet()) {
