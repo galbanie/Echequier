@@ -86,7 +86,7 @@ body{
 
 #main{
     display: inline-block;
-    width: 900px;
+    min-width: 900px;
     height: 640px;
     background-color: #ccc;
     border: 4px double #000000;
